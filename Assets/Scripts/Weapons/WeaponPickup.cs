@@ -14,12 +14,12 @@ public class WeaponPickup : MonoBehaviour
 
     void PickUp(GameObject player)
     {
-        Debug.Log("PickUp called");
+       
 
         WeaponManager weaponManager = player.GetComponent<WeaponManager>();
         if (weaponManager != null)
         {
-            Debug.Log("WeaponManager found");
+            
 
             Weapon newWeapon = Instantiate(weaponPrefab, weaponManager.weaponHolder);
             newWeapon.gameObject.SetActive(false);
@@ -28,9 +28,7 @@ public class WeaponPickup : MonoBehaviour
             {
               
                 newWeapon.transform.SetParent(weaponManager.weaponHolder);
-                Debug.Log("WeaponHolder world position: " + weaponManager.weaponHolder.position);
-                Debug.Log("Weapon world position: " + newWeapon.transform.position);
-                Debug.Log("Weapon local position: " + newWeapon.transform.localPosition);
+               
 
 
                 newWeapon.transform.localPosition = Vector3.zero;
