@@ -19,6 +19,8 @@ public class WeaponManager : MonoBehaviour
             currentWeapon = newWeapon;
             currentWeapon.gameObject.SetActive(true);
         }
+
+        GameManager.instance.UnlockWeapon(newWeapon.weaponName);
     }
 
 }

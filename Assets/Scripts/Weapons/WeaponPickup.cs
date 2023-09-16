@@ -14,8 +14,8 @@ public class WeaponPickup : MonoBehaviour
 
     void PickUp(GameObject player)
     {
-       
 
+        Debug.Log("Weapon is being picked up");
         WeaponManager weaponManager = player.GetComponent<WeaponManager>();
         if (weaponManager != null)
         {

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Weapon
   - Companion
+  - Drumstick
+  - OBow
   layers:
   - Default
   - TransparentFX
