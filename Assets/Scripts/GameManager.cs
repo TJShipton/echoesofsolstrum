@@ -1,70 +1,88 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // Singleton instance
     public static GameManager instance;
 
-    public List<string> UnlockedWeapons = new List<string>(); // List of unlocked weapon names
-    public List<GameObject> weaponPrefabs; // List of all weapon prefabs in the game
-   
-    private void Awake()
+    // Create a list for unlocked weapons
+    public List<GameObject> unlockedWeapons;
+
+    // Create a dictionary to map weapon names to prefabs for easier access
+    private Dictionary<string, GameObject> weaponNameToPrefabMap;
+
+    void Awake()
     {
+        Debug.Log("GameManager Awake called");
+
+        // Singleton setup
         if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            UnlockedWeapons.Add("Drumstick");
-            UnlockedWeapons.Add("OBow");
         }
         else
         {
             Destroy(gameObject);
         }
-    }
 
-    public void UnlockWeapon(string weaponName)
-    {
-        if (!UnlockedWeapons.Contains(weaponName))
+        // Initialize the dictionary
+        weaponNameToPrefabMap = new Dictionary<string, GameObject>();
+
+        // Populate the dictionary using the unlockedWeapons list
+        foreach (GameObject weapon in unlockedWeapons)
         {
-            UnlockedWeapons.Add(weaponName);
-        }
-    }
-
-    // This function returns a random weapon GameObject from the list of unlocked weapons.
-    public GameObject GetRandomWeaponFromPool()
-    {
-        // Create a new list to store weapon prefabs that are unlocked.
-        List<GameObject> unlockedWeaponPrefabs = new List<GameObject>();
-
-        // Loop through each weapon prefab in the full list of weapon prefabs.
-        foreach (GameObject weaponPrefab in weaponPrefabs)
-        {
-            // Try to get the Weapon component from the prefab.
-            Weapon weapon = weaponPrefab.GetComponent<Weapon>();
-
-            // Check if the Weapon component exists and if the weapon is unlocked.
-            if (weapon != null && UnlockedWeapons.Contains(weapon.weaponName))
+            if (weapon != null)
             {
-                // Add this weapon prefab to the list of unlocked weapons.
-                unlockedWeaponPrefabs.Add(weaponPrefab);
+                weaponNameToPrefabMap[weapon.name] = weapon;
             }
         }
-
-        // Check if there are any unlocked weapons.
-        if (unlockedWeaponPrefabs.Count > 0)
-        {
-            // Pick a random index within the list of unlocked weapons.
-            int randomIndex = Random.Range(0, unlockedWeaponPrefabs.Count);
-
-            // Return a random unlocked weapon based on the index.
-            return unlockedWeaponPrefabs[randomIndex];
-        }
-
-        // If no unlocked weapons are found, return null.
-        return null;
     }
 
+    // Function to unlock a weapon by its name
+    public void UnlockWeapon(string weaponName)
+    {
+        if (!weaponNameToPrefabMap.ContainsKey(weaponName))
+        {
+            // Load the weapon prefab based on its name
+            GameObject newWeaponPrefab = Resources.Load<GameObject>("Prefabs/" + weaponName);
 
+            if (newWeaponPrefab != null)
+            {
+                unlockedWeapons.Add(newWeaponPrefab);
+                AddWeapon(newWeaponPrefab);
+            }
+            else
+            {
+                Debug.LogError("Weapon prefab not found: " + weaponName);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Weapon already unlocked: " + weaponName);
+        }
+    }
 
+    public void AddWeapon(GameObject newWeapon)
+    {
+        weaponNameToPrefabMap.Add(newWeapon.name, newWeapon);
+    }
+
+    // Function to get weapon prefab by its name
+    public GameObject GetWeaponPrefabByName(string weaponName)
+    {
+        Debug.Log("Looking for Weapon Prefab: " + weaponName);
+        GameObject weaponPrefab;
+        if (weaponNameToPrefabMap.TryGetValue(weaponName, out weaponPrefab))
+        {
+            return weaponPrefab;
+        }
+        else
+        {
+            Debug.LogError("Weapon not found: " + weaponName);
+            return null;
+        }
+    }
 }

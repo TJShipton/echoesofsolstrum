@@ -1,70 +1,95 @@
-// 3DPrinter.cs renamed to ThreeDPrinter
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ThreeDPrinter : MonoBehaviour
 {
-    public GameObject uiPanel; // UI Panel that holds the buttons for weapon selection
-    public Button[] weaponButtons; // An array of Buttons that will be used to display the weapon options
+    public GameObject uiPanel;
+    public Button[] weaponButtons;
+    public Text debugText;
 
-    // Triggered when something collides with this GameObject
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter called");
-        if (other.tag == "Player") // Check if the collider is tagged as 'Player'
+        if (other == null)
         {
-            ShowWeaponOptions(); // Show the weapon selection UI
+            return;
+        }
+
+        if (other.tag == "Player")
+        {
+            ShowWeaponOptions();
         }
     }
 
-    // Method to activate the weapon selection UI and populate it based on the unlocked weapons
     private void ShowWeaponOptions()
     {
-        uiPanel.SetActive(true); // Make the UI panel visible
+        if (GameManager.instance == null || weaponButtons == null)
+        {
+            return;
+        }
 
-        // Clear existing onClick listeners to avoid stacking
+        uiPanel.SetActive(true);
+
         foreach (Button btn in weaponButtons)
         {
             btn.onClick.RemoveAllListeners();
         }
 
-        // Iterate through each button in the weaponButtons array
         for (int i = 0; i < weaponButtons.Length; i++)
         {
-            // Check if the index 'i' is within the bounds of the UnlockedWeapons list
-            if (i < GameManager.instance.UnlockedWeapons.Count)
+            if (i < GameManager.instance.unlockedWeapons.Count)  // Notice it's Count, not Length, for lists
             {
-                Debug.Log("Activating button: " + i);
-                weaponButtons[i].gameObject.SetActive(true); // Activate this button
-                                                             // Change the button text to the name of the weapon in the UnlockedWeapons list
-                weaponButtons[i].GetComponentInChildren<Text>().text = GameManager.instance.UnlockedWeapons[i];
+                TextMeshProUGUI buttonText = weaponButtons[i].GetComponentInChildren<TextMeshProUGUI>();
+                if (buttonText == null)
+                {
+                    return;
+                }
+                buttonText.text = GameManager.instance.unlockedWeapons[i].name;
+                weaponButtons[i].gameObject.SetActive(true);
 
-                string localWeaponName = GameManager.instance.UnlockedWeapons[i]; // use a local variable
-
-                // Add a click listener to this button that will call the PickWeapon method when clicked
-                weaponButtons[i].onClick.AddListener(() => PickWeapon(localWeaponName));
+                string localWeaponName = GameManager.instance.unlockedWeapons[i].name;
+                AssignListener(weaponButtons[i], localWeaponName);
             }
             else
             {
-                Debug.Log("Deactivating button: " + i);
-                weaponButtons[i].gameObject.SetActive(false); // Deactivate this button as there's no weapon for it
+                weaponButtons[i].gameObject.SetActive(false);
             }
         }
+
+
     }
 
+    private void AssignListener(Button button, string weaponName)
+    {
+        button.onClick.AddListener(() => PickWeapon(weaponName));
+    }
 
-    // Method that's called when a weapon button is clicked
     public void PickWeapon(string weaponName)
     {
-        Debug.Log("PickWeapon called with: " + weaponName);
-        // Get a random weapon from the GameManager's pool of unlocked weapons
-        GameObject weaponPrefab = GameManager.instance.GetRandomWeaponFromPool();
-        if (weaponPrefab != null)
+        Debug.Log("Weapon Name to Pick: " + weaponName);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
         {
-            // Implement logic here to equip this weapon to the player
-            // This can be similar to the PickUp method you have in your WeaponPickup class
+            WeaponManager weaponManager = player.GetComponent<WeaponManager>();
+            if (weaponManager != null)
+            {
+                GameObject weaponPrefab = GameManager.instance.GetWeaponPrefabByName(weaponName);
+                if (weaponPrefab != null)
+                {
+                    Debug.Log("Weapon Prefab to Instantiate: " + weaponPrefab.name);
+                    Weapon newWeapon = Instantiate(weaponPrefab.GetComponent<Weapon>(), weaponManager.weaponHolder);
+                    newWeapon.gameObject.SetActive(false);
+                    newWeapon.transform.SetParent(weaponManager.weaponHolder);
+
+                    newWeapon.transform.localPosition = Vector3.zero;
+                    newWeapon.transform.localRotation = Quaternion.identity;
+
+                    weaponManager.availableWeapons.Add(newWeapon);
+                    weaponManager.SwitchWeapon(newWeapon);
+                }
+            }
         }
 
-        uiPanel.SetActive(false); // Hide the weapon selection UI
+        uiPanel.SetActive(false);
     }
 }
