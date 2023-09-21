@@ -14,31 +14,27 @@ public class WeaponPickup : MonoBehaviour
 
     void PickUp(GameObject player)
     {
-
-        Debug.Log("Weapon is being picked up");
         WeaponManager weaponManager = player.GetComponent<WeaponManager>();
         if (weaponManager != null)
         {
-            
-
             Weapon newWeapon = Instantiate(weaponPrefab, weaponManager.weaponHolder);
             newWeapon.gameObject.SetActive(false);
 
             if (weaponManager.weaponHolder != null)
             {
-              
                 newWeapon.transform.SetParent(weaponManager.weaponHolder);
-               
 
-
-                newWeapon.transform.localPosition = Vector3.zero;
+                // Set both local position and rotation according to the Weapon class
+                newWeapon.transform.localPosition = newWeapon.localPosition;
                 newWeapon.transform.localRotation = Quaternion.identity;
+                newWeapon.transform.localEulerAngles = newWeapon.localOrientation;
             }
+
             weaponManager.availableWeapons.Add(newWeapon);
             weaponManager.SwitchWeapon(newWeapon);
         }
+
         Destroy(gameObject);
     }
-
 
 }

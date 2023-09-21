@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1061939480451898399
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 100000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
+      propertyPath: m_Name
+      value: OBow
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
+      propertyPath: m_TagString
+      value: Drumstick
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.016
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.048
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.074
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7364669
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.6764736
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0000001434236
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 85.137
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: eaffb87fd63eadd469111e80479fbb50,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4619129716921231018}
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: eaffb87fd63eadd469111e80479fbb50,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7980598227775076251}
+  m_SourcePrefab: {fileID: 100100000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
+--- !u!1 &1061939480451996351 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: eaffb87fd63eadd469111e80479fbb50,
+    type: 3}
+  m_PrefabInstance: {fileID: 1061939480451898399}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4619129716921231018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061939480451996351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c002d7e533779fc4b995639d1da624ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponPrefab: {fileID: 7980598227775076251}
+--- !u!114 &7980598227775076251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061939480451996351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3055643239e6de4e83b7df2f664c85f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponName: Obow
+  damage: 0
+  weaponData: {fileID: 11400000, guid: 967fb92c0a03bc14eb200aa7a7c76d7b, type: 2}
+  localOrientation: {x: 0, y: 85, z: 0}
+  localPosition: {x: 0.001, y: 0.023, z: 0.066}

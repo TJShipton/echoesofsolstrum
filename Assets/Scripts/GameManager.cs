@@ -1,23 +1,17 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Singleton instance
     public static GameManager instance;
-
-    // Create a list for unlocked weapons
     public List<GameObject> unlockedWeapons;
-
-    // Create a dictionary to map weapon names to prefabs for easier access
+    public List<WeaponBlueprint> foundWeaponBlueprints = new List<WeaponBlueprint>();
+  
     private Dictionary<string, GameObject> weaponNameToPrefabMap;
 
     void Awake()
     {
-        Debug.Log("GameManager Awake called");
-
-        // Singleton setup
         if (instance == null)
         {
             instance = this;
@@ -28,10 +22,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // Initialize the dictionary
         weaponNameToPrefabMap = new Dictionary<string, GameObject>();
 
-        // Populate the dictionary using the unlockedWeapons list
         foreach (GameObject weapon in unlockedWeapons)
         {
             if (weapon != null)
@@ -41,12 +33,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Function to unlock a weapon by its name
+    public void UnlockWeaponFromBlueprint(WeaponBlueprint blueprint)
+    {
+        foundWeaponBlueprints.Add(blueprint);
+        GameObject newWeaponPrefab = blueprint.weaponPrefab;
+
+        if (newWeaponPrefab != null)
+        {
+            unlockedWeapons.Add(newWeaponPrefab);
+            weaponNameToPrefabMap[newWeaponPrefab.name] = newWeaponPrefab;
+        }
+
+        Debug.Log("Do you want to equip " + blueprint.weaponName + "?");
+    }
+
+    // ... Remaining methods (unchanged) ...
+
     public void UnlockWeapon(string weaponName)
     {
+        if (weaponName == "OBow" || weaponName == "Drumstick")
+        {
+            return;
+        }
+
         if (!weaponNameToPrefabMap.ContainsKey(weaponName))
         {
-            // Load the weapon prefab based on its name
             GameObject newWeaponPrefab = Resources.Load<GameObject>("Prefabs/" + weaponName);
 
             if (newWeaponPrefab != null)
@@ -54,14 +65,6 @@ public class GameManager : MonoBehaviour
                 unlockedWeapons.Add(newWeaponPrefab);
                 AddWeapon(newWeaponPrefab);
             }
-            else
-            {
-                Debug.LogError("Weapon prefab not found: " + weaponName);
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Weapon already unlocked: " + weaponName);
         }
     }
 
@@ -70,10 +73,8 @@ public class GameManager : MonoBehaviour
         weaponNameToPrefabMap.Add(newWeapon.name, newWeapon);
     }
 
-    // Function to get weapon prefab by its name
     public GameObject GetWeaponPrefabByName(string weaponName)
     {
-        Debug.Log("Looking for Weapon Prefab: " + weaponName);
         GameObject weaponPrefab;
         if (weaponNameToPrefabMap.TryGetValue(weaponName, out weaponPrefab))
         {
@@ -81,8 +82,28 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Weapon not found: " + weaponName);
             return null;
         }
     }
+    public List<GameObject> GetRandomUnlockedWeapons(int count)
+    {
+        if (unlockedWeapons.Count <= count)
+        {
+            return new List<GameObject>(unlockedWeapons);
+        }
+
+        List<GameObject> selectedWeapons = new List<GameObject>();
+        List<GameObject> remainingWeapons = new List<GameObject>(unlockedWeapons);
+
+        for (int i = 0; i < count; i++)
+        {
+            int randomIndex = Random.Range(0, remainingWeapons.Count);
+            selectedWeapons.Add(remainingWeapons[randomIndex]);
+            remainingWeapons.RemoveAt(randomIndex);
+        }
+
+        return selectedWeapons;
+    }
+
+
 }

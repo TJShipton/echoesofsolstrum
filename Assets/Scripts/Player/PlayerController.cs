@@ -61,6 +61,9 @@ public class PlayerController : MonoBehaviour, IDamageable
         Debug.Log("Player has died");
         // STILL TO DO --- trigger a death animation, end the game.
     }
+
+   
+
 }
 
 
