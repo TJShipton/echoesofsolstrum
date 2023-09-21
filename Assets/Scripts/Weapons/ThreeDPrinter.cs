@@ -8,11 +8,12 @@ public class ThreeDPrinter : MonoBehaviour
     public GameObject uiPanel;
     public Button weaponButtonPrefab;
     public Dictionary<string, Sprite> weaponThumbnails;
-   
+
     public float buttonOffsetX = 0.0f;
 
     private void Start()
     {
+        //Image paths for weapon select buttons in 3d printer UI
         weaponThumbnails = new Dictionary<string, Sprite>();
 
         Sprite conductiveGloveThumbnail = Resources.Load<Sprite>("WeaponThumbnails/ConductiveGlove");
@@ -24,7 +25,7 @@ public class ThreeDPrinter : MonoBehaviour
         Sprite hyperbassFluteThumbnail = Resources.Load<Sprite>("WeaponThumbnails/HyperbassFlute");
         weaponThumbnails.Add("Hyperbass Flute", hyperbassFluteThumbnail);
 
-        Sprite drumstickThumbnail = Resources.Load<Sprite> ("WeaponThumbnails/Drumstick");
+        Sprite drumstickThumbnail = Resources.Load<Sprite>("WeaponThumbnails/Drumstick");
         weaponThumbnails.Add("Drumstick", drumstickThumbnail);
 
         // Add more thumbnails here...
@@ -80,8 +81,7 @@ public class ThreeDPrinter : MonoBehaviour
             // Assign the button's click listener
             newButton.onClick.AddListener(() => PickWeapon(weapon.name));
 
-            // Debug log to confirm which weapons are being displayed
-            Debug.Log("Displaying weapon: " + weapon.name);
+
         }
     }
 

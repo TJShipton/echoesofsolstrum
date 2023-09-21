@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
-   
+
     public Transform characterModel;
 
     public float speed = 5f;
@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        
+
 
         // Player Movement
         float moveHorizontal = Input.GetAxis("Horizontal");
@@ -38,13 +38,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         rb.velocity = new Vector3(movement.x * speed, rb.velocity.y, movement.z * speed);
 
 
-
-
-
-
-
     }
-    
+
 
     public void TakeDamage(int damage)
     {
@@ -62,8 +57,17 @@ public class PlayerController : MonoBehaviour, IDamageable
         // STILL TO DO --- trigger a death animation, end the game.
     }
 
-   
 
+    private void OnTriggerEnter(Collider other)
+    {
+        SolObject solObject = other.gameObject.GetComponent<SolObject>();
+        if (solObject != null)
+        {
+            solObject.PickUpSol();
+        }
+
+
+    }
 }
 
 
