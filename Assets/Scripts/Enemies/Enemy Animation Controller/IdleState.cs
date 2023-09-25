@@ -16,7 +16,7 @@ public class IdleState : EnemyState
     {
         timeInIdle += Time.deltaTime;
 
-        if (timeInIdle > 5f) // switch to walking after 5 seconds
+        if (timeInIdle > 0f) // switch to walking after x seconds
         {
             enemy.SetState(new WalkingState(enemy, enemy.GetComponent<EnemyAnimationController>()));
         }

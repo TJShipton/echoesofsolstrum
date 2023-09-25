@@ -16,7 +16,7 @@ public class BasicAttack : MonoBehaviour
 
     void Update()
     {
-        float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
+        float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
         if (distanceToPlayer < enemy.Data.attackRange && Time.time > enemy.LastAttackTime + enemy.Data.attackDelay)
         {

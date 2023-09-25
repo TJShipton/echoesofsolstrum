@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WalkingState : EnemyState
 {
-    public float walkSpeed;
-    private Transform enemyTransform;
     private EnemyAnimationController animationController;
+    private Vector3 initialPosition;
+    private float moveDirection = 1f;
+    private bool isPaused = false; // Flag to track if the enemy is paused
+    private float pauseTimer = 0f; // Timer to track pause duration
 
     public WalkingState(Enemy enemy, EnemyAnimationController animationController) : base(enemy)
     {
@@ -16,31 +16,61 @@ public class WalkingState : EnemyState
     public override void EnterState()
     {
         animationController.SetWalking(true);
+        initialPosition = enemy.transform.position;
     }
 
     public override void UpdateState()
     {
-        // Logic for walking. E.g. moving between patrol points.
-        float moveDirection = Mathf.Sign(Mathf.Sin(Time.time)); // Oscillates between -1 and 1
-        enemy.transform.position += new Vector3(moveDirection * enemy.Data.speed * Time.deltaTime, 0, 0);
+        // If the enemy is paused, countdown
+        if (isPaused)
+        {
+            // Log that the enemy is paused
+            Debug.Log("Enemy is paused.");
 
-        // Adjust direction based on moveDirection using localScale
+            // Stop the walking animation
+            animationController.SetWalking(false);
+
+            pauseTimer -= Time.deltaTime;
+            if (pauseTimer <= 0)
+            {
+                // Unpause and change direction
+                isPaused = false;
+                moveDirection *= -1;
+                initialPosition = enemy.transform.position;
+                // Resume the walking animation
+                animationController.SetWalking(true);
+            }
+            return; // Skip the rest of the update
+        }
+
+        // Patrol logic
+        Vector3 currentPosition = enemy.transform.position;
+        float distanceMoved = Mathf.Abs(currentPosition.x - initialPosition.x);
+
+        if (distanceMoved >= enemy.Data.patrolDistance)
+        {
+            // Log that the enemy has reached the end of patrol
+            Debug.Log("Reached the end of patrol, pausing.");
+
+            // Pause the enemy and initialize pauseTimer
+            isPaused = true;
+            pauseTimer = enemy.Data.patrolPauseDuration;
+            return; // Skip the rest of the update
+        }
+
+        Vector3 movement = new Vector3(moveDirection * enemy.Data.speed * Time.deltaTime, 0, 0);
+        enemy.transform.position += movement;
+
         Vector3 localScale = enemy.transform.localScale;
-
         if (moveDirection > 0)
         {
-            localScale.x = Mathf.Abs(localScale.x);  // make it positive
+            enemy.transform.eulerAngles = new Vector3(0, 90, 0);
         }
         else
         {
-            localScale.x = -Mathf.Abs(localScale.x);  // make it negative
+            enemy.transform.eulerAngles = new Vector3(0, -90, 0);
         }
-
-        enemy.transform.localScale = localScale;
     }
-
-
-
 
     public override void ExitState()
     {

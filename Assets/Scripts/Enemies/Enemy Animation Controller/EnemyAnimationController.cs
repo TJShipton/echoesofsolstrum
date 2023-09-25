@@ -23,6 +23,8 @@ public class EnemyAnimationController : MonoBehaviour
     public void SetWalking(bool value)
     {
         animator.SetBool("IsWalking", value);
+      
+        
     }
 
 
