@@ -41,13 +41,13 @@ public class Drumstick : Weapon
 
     public override void PrimaryAttack()
     {
-       // weaponAnimator.SetTrigger("Attack");  // Trigger the attack animation
+        // weaponAnimator.SetTrigger("Attack");  // Trigger the attack animation
 
         if (!isUpgraded)
         {
             BasicAttack();
-            ApplyDamage(weaponData.baseDamage);
             
+
         }
         else
         {
@@ -57,7 +57,7 @@ public class Drumstick : Weapon
 
     private void BasicAttack()
     {
-        
+
         // Animate, sound effects, etc.
     }
 
@@ -85,19 +85,7 @@ public class Drumstick : Weapon
         }
     }
 
-    private void ApplyDamage(float dmg)
-    {
-        Collider[] enemiesToDamage = Physics.OverlapSphere(transform.position, enemyLayers);
-        for (int i = 0; i < enemiesToDamage.Length; i++)
-        {
-            IDamageable enemy = enemiesToDamage[i].GetComponent<IDamageable>();
-            if (enemy != null)
-            {
-                enemy.TakeDamage((int)dmg, uiCanvas); // Passing uiCanvas
-                
-            }
-        }
-    }
+    
 
     private void DetectEnemiesInRadius()
     {
@@ -108,7 +96,7 @@ public class Drumstick : Weapon
             if (enemy != null)
             {
                 enemy.TakeDamage(weaponData.baseDamage, uiCanvas); // Passing uiCanvas
-               
+
             }
         }
     }

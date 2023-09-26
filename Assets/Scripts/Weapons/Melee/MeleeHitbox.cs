@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.UI;
 public class MeleeHitbox : MonoBehaviour
@@ -7,24 +6,37 @@ public class MeleeHitbox : MonoBehaviour
     private Weapon parentWeapon; // Assuming you have some parent Weapon script that holds damage info
 
 
-    [SerializeField]
-    private Canvas uiCanvas; // Drag your UI canvas here from the Unity Editor
+   [SerializeField]
+    private Canvas uiCanvas; 
 
     void Start()
     {
         parentWeapon = GetComponentInParent<Weapon>();
-    }
 
+        // Dynamically find the Canvas if uiCanvas is not set,
+        // this makes sure the health bar appears above the enemy
+        if (uiCanvas == null)
+        {
+            uiCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+            if (uiCanvas == null)
+            {
+                
+            }
+        }
+    }
+    //Apply damage to enemy
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
             IDamageable enemy = other.GetComponent<IDamageable>();
-            if (enemy != null)
+            if (enemy != null && parentWeapon != null)  // Make sure parentWeapon is set
             {
-                enemy.TakeDamage(parentWeapon.damage, uiCanvas);  // Apply the damage here and pass in the canvas
-                Debug.Log("Damage is being applied through MeleeHitbox");  // Debug line to confirm this is being called
+                enemy.TakeDamage(parentWeapon.weaponData.baseDamage, uiCanvas);
+               
             }
         }
     }
+
+
 }

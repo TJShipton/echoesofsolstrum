@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DrumStickData
   m_EditorClassIdentifier: 
   weaponName: Drumstick
-  baseDamage: 10
+  baseDamage: 100
   upgradedDamage: 25
   range: 2
   speed: 5

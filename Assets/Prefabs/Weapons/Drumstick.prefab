@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5614083324257497130}
   - component: {fileID: 1887702613512878384}
-  m_Layer: 0
+  - component: {fileID: 1045307660791261005}
+  m_Layer: 8
   m_Name: HitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,6 +54,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.058009446, y: 0.6783897, z: 0.0845352}
   m_Center: {x: -0.08186158, y: -0.17688888, z: -0.029890882}
+--- !u!114 &1045307660791261005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2592531510749298094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43d84378ffca87d4095102d5b289da2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentWeapon: {fileID: 4936525630916203001}
+  uiCanvas: {fileID: 0}
 --- !u!1 &5323694295545765144
 GameObject:
   m_ObjectHideFlags: 0
@@ -67,7 +82,7 @@ GameObject:
   - component: {fileID: 7950495821981733177}
   - component: {fileID: -3518510482193125501}
   - component: {fileID: 4936525630916203001}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Drumstick
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -189,7 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Drumstick
-  damage: 0
+  damage: 50
   weaponData: {fileID: 11400000, guid: d70ecc16bba4d9b4d85fe2ddd18a75cf, type: 2}
   localOrientation: {x: 0, y: 0, z: 0}
   localPosition: {x: 0, y: 0, z: 0}

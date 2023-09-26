@@ -52,33 +52,32 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damageAmount, Canvas uiCanvas)
     {
+        Debug.Log("TakeDamage called. Damage Amount: " + damageAmount); // Debug 1
+        Debug.Log("Provided Canvas: " + (uiCanvas == null ? "Null" : "Exists")); // Debug 2
+
         currentHealth -= damageAmount; // Deduct the damage received
 
-        // Instantiate the health bar if it doesn't exist
         if (healthBarInstance == null)
         {
             healthBarInstance = Instantiate(healthBarPrefab, uiCanvas.transform);
             healthBarSlider = healthBarInstance.GetComponent<Slider>();
-
-            // Set the max value based on the enemy's current max health.
             healthBarSlider.maxValue = enemyData.health;
-
-            // Set the current value to whatever the enemy's current health is.
             healthBarSlider.value = currentHealth;
+
+            Debug.Log("Health Bar Instance Created."); // Debug 3
         }
-        else // If health bar exists, update its value
+        else
         {
             healthBarSlider.value = currentHealth;
+            Debug.Log("Health Bar Updated. Current Value: " + healthBarSlider.value); // Debug 4
         }
 
-        // Debug.Log("Enemy took damage. Current Health: " + currentHealth);  // Debug log to show that damage was taken
-
-        // Check if health reaches 0 or less
         if (currentHealth <= 0)
         {
             Die();
         }
     }
+
 
 
     private void Die()

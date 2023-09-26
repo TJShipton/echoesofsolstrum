@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour
 {
     public string weaponName;
-    public int damage;
+    //public int damage;
     public WeaponData weaponData;
     public Vector3 localOrientation;
     public Vector3 localPosition;

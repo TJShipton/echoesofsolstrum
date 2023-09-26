@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Vector3 movement = Vector3.zero;
 
     private WeaponManager weaponManager;
-   
+
 
 
     // Start is called before the first frame update
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         health -= damageAmount;
 
         // Add debugging
-        
+
 
         if (health <= 0)
         {
@@ -92,8 +92,3 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     }
 }
-
-
-
-
-

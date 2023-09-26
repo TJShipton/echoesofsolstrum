@@ -1403,7 +1403,7 @@ MonoBehaviour:
   speed: 5
   jumpForce: 5
   attackRange: 0.5
-  health: 100
+  health: 500
 --- !u!136 &759076222
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2283,10 +2283,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.1062846
-  m_Height: 2.2125697
+  m_Radius: 0.8838773
+  m_Height: 1.805619
   m_Direction: 1
-  m_Center: {x: -0.033079624, y: 0.97322035, z: 0.16370249}
+  m_Center: {x: 0.41415668, y: 0.9202466, z: 0.33437896}
 --- !u!1001 &917110884882227005
 PrefabInstance:
   m_ObjectHideFlags: 0

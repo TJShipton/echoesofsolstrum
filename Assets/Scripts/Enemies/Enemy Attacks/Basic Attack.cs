@@ -24,6 +24,7 @@ public class BasicAttack : MonoBehaviour
         {
             Attack();
             enemy.LastAttackTime = Time.time;
+            Debug.Log("Enemy attacking");
         }
     }
 
