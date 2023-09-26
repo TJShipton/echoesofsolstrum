@@ -24,9 +24,6 @@ public class WalkingState : EnemyState
         // If the enemy is paused, countdown
         if (isPaused)
         {
-            // Log that the enemy is paused
-            Debug.Log("Enemy is paused.");
-
             // Stop the walking animation
             animationController.SetWalking(false);
 
@@ -49,9 +46,6 @@ public class WalkingState : EnemyState
 
         if (distanceMoved >= enemy.Data.patrolDistance)
         {
-            // Log that the enemy has reached the end of patrol
-            Debug.Log("Reached the end of patrol, pausing.");
-
             // Pause the enemy and initialize pauseTimer
             isPaused = true;
             pauseTimer = enemy.Data.patrolPauseDuration;

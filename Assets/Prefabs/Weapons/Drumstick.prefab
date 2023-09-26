@@ -1,5 +1,58 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2592531510749298094
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5614083324257497130}
+  - component: {fileID: 1887702613512878384}
+  m_Layer: 0
+  m_Name: HitBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5614083324257497130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2592531510749298094}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.0014652011, y: -0.6293244, z: -0.00659201, w: -0.7771135}
+  m_LocalPosition: {x: 0.06907161, y: 1.265528, z: -0.076131314}
+  m_LocalScale: {x: 1.1016027, y: 1.6128253, z: 1.7658422}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 424882117725071993}
+  m_LocalEulerAnglesHint: {x: -0.606, y: 78, z: 0.481}
+--- !u!65 &1887702613512878384
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2592531510749298094}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.058009446, y: 0.6783897, z: 0.0845352}
+  m_Center: {x: -0.08186158, y: -0.17688888, z: -0.029890882}
 --- !u!1 &5323694295545765144
 GameObject:
   m_ObjectHideFlags: 0
@@ -33,7 +86,8 @@ Transform:
   m_LocalPosition: {x: -0.21430652, y: 0.87361586, z: -0.5842227}
   m_LocalScale: {x: 0.5468, y: 0.5473, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5614083324257497130}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -23.633, y: 283.085, z: -12.008}
 --- !u!33 &4013037615393966081
@@ -143,4 +197,5 @@ MonoBehaviour:
   spinAttackRadius: 2
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
+  uiCanvas: {fileID: 0}

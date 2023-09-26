@@ -11,14 +11,43 @@ public class Drumstick : Weapon
     public float spinAttackRadius = 2f;  // Radius for spin attack
     public LayerMask enemyLayers;
 
+    private Animator playerAnimator;
+
+    [SerializeField]
+    private Canvas uiCanvas;
+
+    void Start()
+    {
+        // Other existing code...
+
+        // Assign the Canvas through code
+        if (uiCanvas == null) // Only look for it if it's not already assigned
+        {
+            uiCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+
+            // Log an error if the canvas still couldn't be found
+            if (uiCanvas == null)
+            {
+                Debug.LogError("Canvas could not be found. Please assign it manually in the Inspector or check the GameObject name.");
+            }
+            else
+            {
+                // This debug statement will appear if uiCanvas is successfully assigned.
+                Debug.Log("Canvas has been found and assigned.");
+            }
+        }
+    }
+
+
     public override void PrimaryAttack()
     {
-        weaponAnimator.SetTrigger("Attack");  // Trigger the attack animation
+       // weaponAnimator.SetTrigger("Attack");  // Trigger the attack animation
 
         if (!isUpgraded)
         {
             BasicAttack();
             ApplyDamage(weaponData.baseDamage);
+            
         }
         else
         {
@@ -28,7 +57,7 @@ public class Drumstick : Weapon
 
     private void BasicAttack()
     {
-        Debug.Log("Basic drumstick hit!");
+        
         // Animate, sound effects, etc.
     }
 
@@ -58,17 +87,31 @@ public class Drumstick : Weapon
 
     private void ApplyDamage(float dmg)
     {
-        // Apply dmg to an enemy
-        // This will require a way to identify the enemy being hit.
-        // As an example:
-        // enemy.TakeDamage(dmg);
+        Collider[] enemiesToDamage = Physics.OverlapSphere(transform.position, enemyLayers);
+        for (int i = 0; i < enemiesToDamage.Length; i++)
+        {
+            IDamageable enemy = enemiesToDamage[i].GetComponent<IDamageable>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage((int)dmg, uiCanvas); // Passing uiCanvas
+                
+            }
+        }
     }
 
     private void DetectEnemiesInRadius()
     {
-        
+        Collider[] enemiesToDamage = Physics.OverlapSphere(transform.position, spinAttackRadius, enemyLayers);
+        for (int i = 0; i < enemiesToDamage.Length; i++)
+        {
+            IDamageable enemy = enemiesToDamage[i].GetComponent<IDamageable>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(weaponData.baseDamage, uiCanvas); // Passing uiCanvas
+               
+            }
+        }
     }
-
     private void Update()
     {
         if (comboCounter > 0 && Time.time - lastAttackTime > comboResetTime)

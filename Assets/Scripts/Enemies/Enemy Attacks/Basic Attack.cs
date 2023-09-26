@@ -6,12 +6,14 @@ public class BasicAttack : MonoBehaviour
     private Enemy enemy;
     private Transform playerTransform;
     private IDamageable playerDamageable;
+    private Canvas uiCanvas; // Canvas variable
 
     void Start()
     {
         enemy = GetComponent<Enemy>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         playerDamageable = playerTransform.GetComponent<IDamageable>();
+        uiCanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<Canvas>(); // Find canvas tagged "UI"
     }
 
     void Update()
@@ -29,7 +31,7 @@ public class BasicAttack : MonoBehaviour
     {
         if (playerDamageable != null)
         {
-            playerDamageable.TakeDamage(enemy.Data.attackDamage);
+            playerDamageable.TakeDamage(enemy.Data.attackDamage, uiCanvas); // Passing uiCanvas
             // Trigger any attack animations or sounds here
         }
     }
