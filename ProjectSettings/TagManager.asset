@@ -10,11 +10,12 @@ TagManager:
   - OBow
   - Weapon Blueprint
   - Enemy
+  - Ground
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - Player

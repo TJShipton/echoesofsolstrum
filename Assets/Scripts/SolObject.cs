@@ -14,8 +14,7 @@ public class SolObject : MonoBehaviour
         // Destroy this Sol object
         Destroy(gameObject);
 
-        // Debug log to confirm Sol was added
-        Debug.Log("Sol picked up");
+       
     }
 }
 

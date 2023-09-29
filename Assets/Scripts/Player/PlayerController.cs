@@ -8,53 +8,97 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Canvas uiCanvas;  // Drag your main UI Canvas here
 
     public Transform characterModel;
+    public LayerMask groundLayer;
 
     public float speed = 5f;
-    public float jumpForce = 5f;
+    public float acceleration = 500f;  // New variable for acceleration, adjust in Inspector as needed
+    [SerializeField]
+    private float jumpVelocity = 10f;  // Default value of 100, adjust in Inspector as needed
+    public float doubleJumpVelocity = 15f;
+    public float extraGravityForce = 0f;
     public float attackRange = 0.5f;
+    
     public int health = 100;
+
+    private bool canDoubleJump = true;
 
     private Rigidbody rb;
     private Animator animator;
-    private Vector3 movement = Vector3.zero;
-
     private WeaponManager weaponManager;
 
-
+    // Flag to check if the player is on the ground
+    private bool isGrounded;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        animator = transform.GetChild(0).GetComponent<Animator>();
-
+        animator = transform.GetComponent<Animator>();
         weaponManager = GetComponent<WeaponManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
-        // Player Movement
         float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
 
-        movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        rb.velocity = new Vector3(movement.x * speed, rb.velocity.y, movement.z * speed);
+        // Using Transform.Translate to move the player
+        transform.Translate(Vector3.right * moveHorizontal * speed * Time.deltaTime, Space.World);
 
-        // Check for a left mouse button click and attack 
+        bool isMoving = moveHorizontal != 0;
+        animator.SetFloat("IsRunning", isMoving ? 1f : 0f);
+
+        if (isMoving)
+        {
+            Vector3 lookDirection = moveHorizontal > 0 ? Vector3.right : Vector3.left;
+            transform.forward = lookDirection;
+        }
+
+        float raycastDistance = 0.2f;
+        Vector3 rayOrigin = transform.position + Vector3.up * 0.2f;
+        isGrounded = Physics.Raycast(rayOrigin, Vector3.down, raycastDistance, groundLayer);
+
+        if (isGrounded)
+        {
+            canDoubleJump = true;
+            animator.ResetTrigger("DoubleJumpTrigger");
+        }
+
+        animator.SetBool("IsGrounded", isGrounded);
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            if (isGrounded)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, 0f);
+                animator.SetTrigger("JumpTrigger");
+            }
+            else if (canDoubleJump)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, doubleJumpVelocity, 0f);
+                canDoubleJump = false;
+                animator.SetTrigger("DoubleJumpTrigger");
+            }
+        }
+
+        // Damping the horizontal velocity to respect the speed limit
+        float clampedVelocityX = Mathf.Clamp(rb.velocity.x, -speed, speed);
+        rb.velocity = new Vector3(clampedVelocityX, rb.velocity.y, 0f);
+
+        // Apply extra gravity force when the player is falling This helps with timing roll animation.
+        if (!isGrounded && rb.velocity.y < 0)
+        {
+            rb.velocity += Vector3.down * extraGravityForce * Time.deltaTime;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             MainAttack();
         }
-
     }
-
-
+    
     private void MainAttack()
     {
-        // Assume weaponManager is a reference to your WeaponManager script attached to the player
         if (weaponManager.currentWeapon != null)
         {
             weaponManager.currentWeapon.PrimaryAttack();
@@ -63,23 +107,19 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damageAmount, Canvas uiCanvas)
     {
-        // Your logic here. For now, let's just reduce health.
         health -= damageAmount;
-
-        // Add debugging
-
 
         if (health <= 0)
         {
             Die();
         }
     }
+
     private void Die()
     {
         Debug.Log("Player has died");
         // STILL TO DO --- trigger a death animation, end the game.
     }
-
 
     private void OnTriggerEnter(Collider other)
     {
@@ -88,7 +128,5 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             solObject.PickUpSol();
         }
-
-
     }
 }
