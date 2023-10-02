@@ -78,6 +78,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 rb.velocity = new Vector3(rb.velocity.x, doubleJumpVelocity, 0f);
                 canDoubleJump = false;
                 animator.SetTrigger("DoubleJumpTrigger");
+                Debug.Log("Double Jump Triggered. Animator State: " + animator.GetCurrentAnimatorStateInfo(0).IsName("Double Jump") + ", Rigidbody Velocity: " + rb.velocity);
             }
         }
 
