@@ -14,7 +14,7 @@ public class SolObject : MonoBehaviour
         // Destroy this Sol object
         Destroy(gameObject);
 
-       
+
     }
 }
 

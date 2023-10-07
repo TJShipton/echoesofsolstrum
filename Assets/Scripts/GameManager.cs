@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,10 +6,10 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public int sol = 0;
-    
+
     public List<GameObject> unlockedWeapons;
     public List<WeaponBlueprint> foundWeaponBlueprints = new List<WeaponBlueprint>();
-  
+
     private Dictionary<string, GameObject> weaponNameToPrefabMap;
 
     void Awake()
@@ -50,7 +49,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Do you want to equip " + blueprint.weaponName + "?");
     }
 
-   
+
 
     public void UnlockWeapon(string weaponName)
     {

@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
     [SerializeField]
-    private Canvas uiCanvas;  // Drag your main UI Canvas here
+    public Canvas EnemyCanvas;  // Drag your main UI Canvas here
 
     public Transform characterModel;
     public LayerMask groundLayer;
@@ -17,7 +15,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public float doubleJumpVelocity = 15f;
     public float extraGravityForce = 0f;
     public float attackRange = 0.5f;
-    
+
     public int health = 100;
 
     private bool canDoubleJump = true;
@@ -97,7 +95,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             MainAttack();
         }
     }
-    
+
     private void MainAttack()
     {
         if (weaponManager.currentWeapon != null)
@@ -106,7 +104,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    public void TakeDamage(int damageAmount, Canvas uiCanvas)
+    public void TakeDamage(int damageAmount, Canvas EnemyCanvas)
     {
         health -= damageAmount;
 

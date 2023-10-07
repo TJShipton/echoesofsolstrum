@@ -50,26 +50,26 @@ public class Enemy : MonoBehaviour, IDamageable
         currentState.EnterState();
     }
 
-    public void TakeDamage(int damageAmount, Canvas uiCanvas)
+    public void TakeDamage(int damageAmount, Canvas EnemyCanvas)
     {
-        Debug.Log("TakeDamage called. Damage Amount: " + damageAmount); // Debug 1
-        Debug.Log("Provided Canvas: " + (uiCanvas == null ? "Null" : "Exists")); // Debug 2
+        //Debug.Log("TakeDamage called. Damage Amount: " + damageAmount); // Debug 1
+        //Debug.Log("Provided Canvas: " + (EnemyCanvas == null ? "Null" : "Exists")); // Debug 2
 
         currentHealth -= damageAmount; // Deduct the damage received
 
         if (healthBarInstance == null)
         {
-            healthBarInstance = Instantiate(healthBarPrefab, uiCanvas.transform);
+            healthBarInstance = Instantiate(healthBarPrefab, EnemyCanvas.transform);
             healthBarSlider = healthBarInstance.GetComponent<Slider>();
             healthBarSlider.maxValue = enemyData.health;
             healthBarSlider.value = currentHealth;
 
-            Debug.Log("Health Bar Instance Created."); // Debug 3
+            //Debug.Log("Health Bar Instance Created."); // Debug 3
         }
         else
         {
             healthBarSlider.value = currentHealth;
-            Debug.Log("Health Bar Updated. Current Value: " + healthBarSlider.value); // Debug 4
+            //Debug.Log("Health Bar Updated. Current Value: " + healthBarSlider.value); // Debug 4
         }
 
         if (currentHealth <= 0)
@@ -95,5 +95,4 @@ public class Enemy : MonoBehaviour, IDamageable
         // Destroy the enemy GameObject
         Destroy(gameObject);
     }
-
 }

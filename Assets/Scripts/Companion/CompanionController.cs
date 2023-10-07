@@ -1,6 +1,6 @@
+using SonicBloom.Koreo;
 using System.Collections;
 using UnityEngine;
-using SonicBloom.Koreo;
 
 public class CompanionController : MonoBehaviour
 
@@ -17,14 +17,14 @@ public class CompanionController : MonoBehaviour
 
     private Vector3 lastPosition;
     private bool isFacingRight = true;
-   // private bool allowFlip = false;
+    // private bool allowFlip = false;
 
     private IEnumerator Start()
     {
         //make sure familiar is facing right when loading in 
         yield return new WaitForSeconds(1f);
         lastPosition = transform.position;
-       // allowFlip = true;
+        // allowFlip = true;
 
         //Call Koreographer to register koreography event id 
         Koreographer.Instance.RegisterForEvents(bassDrumEventID, OnbassDrumEventTriggered);
@@ -52,7 +52,7 @@ public class CompanionController : MonoBehaviour
         // Lerp towards the target position
         transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
 
-       
+
     }
 
     public void Shoot()

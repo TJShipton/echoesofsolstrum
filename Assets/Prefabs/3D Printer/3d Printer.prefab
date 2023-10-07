@@ -119,12 +119,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92a94d6d20395dc4ea139552d5b03ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiPanel: {fileID: 0}
-  weaponButtons:
-  - {fileID: 0}
-  - {fileID: 0}
-  debugText: {fileID: 0}
+  weaponSelectPanel: {fileID: 0}
   weaponButtonPrefab: {fileID: 0}
+  borderMaterial: {fileID: 2100000, guid: 4f798e974a4434d48b2d5561d47d1724, type: 2}
+  clickableLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  mainCamera: {fileID: 0}
+  buttonOffsetX: 0
+  weaponTooltip: {fileID: 0}
+  tooltipText: {fileID: 0}
+  weaponRaritySelector: {fileID: 0}
 --- !u!1001 &4008099470339758121
 PrefabInstance:
   m_ObjectHideFlags: 0

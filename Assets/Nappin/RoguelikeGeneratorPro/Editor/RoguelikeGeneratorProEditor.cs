@@ -893,7 +893,7 @@ namespace RoguelikeGeneratorPro
             _levelSize.vector2IntValue = EditorGUILayout.Vector2IntField("Level Size", script.levelSize);
 
             #endregion
-            
+
 
             #region TileSize
 
@@ -1210,7 +1210,7 @@ namespace RoguelikeGeneratorPro
                     EditorGUILayout.Space(20);
                     DisplayTileObjBlock("Floor Tile - 1 Side", floorTileObj_2_txt, _floorTileObj_2, script.floorTileObj_2);
 
-                    if(_fillAllTiles.boolValue)
+                    if (_fillAllTiles.boolValue)
                     {
                         EditorGUILayout.Space(20);
                         DisplayTileObjBlock("Floor Tile - 1 Side", floorTileObj_3_txt, _floorTileObj_3, script.floorTileObj_3);
@@ -1309,7 +1309,7 @@ namespace RoguelikeGeneratorPro
                         {
                             EditorGUILayout.Space(20);
                             DisplayTileObjBlock("Floor Tile - 3 Corners", floorTileObj_C12_txt, _floorTileObj_C12, script.floorTileObj_C12);
-                            
+
                             EditorGUILayout.Space(20);
                             DisplayTileObjBlock("Floor Tile - 3 Corners", floorTileObj_C13_txt, _floorTileObj_C13, script.floorTileObj_C13);
 
@@ -1559,7 +1559,7 @@ namespace RoguelikeGeneratorPro
                     _drawWallOverlayPatternTiles.boolValue = EditorGUILayout.Toggle("Draw Wall Pattern", script.drawWallOverlayPatternTiles);
                     EditorGUILayout.Space();
 
-                    if(_drawWallOverlayPatternTiles.boolValue)
+                    if (_drawWallOverlayPatternTiles.boolValue)
                     {
                         EditorGUILayout.Space(20);
                         DisplayTileObjBlock("Wall Pattern - 1 Side", wallTilePatternObj_2_txt, _patternWallTileObj_2, script.patternWallTileObj_2);
@@ -2278,7 +2278,7 @@ namespace RoguelikeGeneratorPro
                 EditorGUILayout.BeginVertical();
                 GUILayout.Label("Empty Tile", alignGUILeft, GUILayout.ExpandWidth(true));
 
-                if(_generation == genType.generateObj) _emptyTileObj.objectReferenceValue = EditorGUILayout.ObjectField(script.emptyTileObj, typeof(GameObject), true) as GameObject;
+                if (_generation == genType.generateObj) _emptyTileObj.objectReferenceValue = EditorGUILayout.ObjectField(script.emptyTileObj, typeof(GameObject), true) as GameObject;
                 else _emptyTile.objectReferenceValue = EditorGUILayout.ObjectField(script.emptyTile, typeof(Tile), true) as Tile;
 
                 EditorGUILayout.EndVertical();
@@ -2310,8 +2310,8 @@ namespace RoguelikeGeneratorPro
 
                 EditorGUILayout.BeginVertical();
                 GUILayout.Label("Floor Pattern Tile", alignGUILeft, GUILayout.ExpandWidth(true));
-                
-                if(_generation == genType.generateObj) _patternFloorTileObj.objectReferenceValue = EditorGUILayout.ObjectField(script.patternFloorTileObj, typeof(GameObject), true) as GameObject;
+
+                if (_generation == genType.generateObj) _patternFloorTileObj.objectReferenceValue = EditorGUILayout.ObjectField(script.patternFloorTileObj, typeof(GameObject), true) as GameObject;
                 else _patternFloorTile.objectReferenceValue = EditorGUILayout.ObjectField(script.patternFloorTile, typeof(Tile), true) as Tile;
 
                 EditorGUILayout.EndVertical();

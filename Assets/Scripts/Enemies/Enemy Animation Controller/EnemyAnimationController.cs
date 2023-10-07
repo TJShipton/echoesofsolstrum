@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAnimationController : MonoBehaviour
@@ -23,8 +21,8 @@ public class EnemyAnimationController : MonoBehaviour
     public void SetWalking(bool value)
     {
         animator.SetBool("IsWalking", value);
-      
-        
+
+
     }
 
 

@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 [CreateAssetMenu(fileName = "New EnemyData", menuName = "Game/Enemy Data")]
 public class EnemyData : ScriptableObject

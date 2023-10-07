@@ -12,8 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e33649cea591d24ca8e94221aa6669c, type: 3}
   m_Name: OBowData
   m_EditorClassIdentifier: 
-  weaponName: 
+  weaponName: OBow
+  weaponTier: 0
   baseDamage: 0
+  originalBaseDamage: 0
   upgradedDamage: 0
   range: 0
   speed: 0
+  commonDamageMultiplier: 1
+  rareDamageMultiplier: 1.2
+  epicDamageMultiplier: 1.5
+  legendaryDamageMultiplier: 2
+  hasSpecialEffect: 0
+  specialEffect:
+    effectType: 0
+    effectStrength: 0
+  iconSprite: {fileID: 0}

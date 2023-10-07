@@ -13,7 +13,7 @@ namespace RoguelikeGeneratorPro
         public enum tileType { empty, floor, wall, detail };
         public enum overlayType { empty, wallPattern, wallRandom, floorPattern, floorRandom };
         public enum patternType { perlinNoise, checker, wideChecker, lineLeft, lineRight };
-        public enum levelRotation { XZ, XY , ZY};
+        public enum levelRotation { XZ, XY, ZY };
         public enum genType { generateObj, generateTile, noGeneration };
         private struct pathMaker { public Vector2 direction; public Vector2 position; };
 
@@ -95,7 +95,7 @@ namespace RoguelikeGeneratorPro
         public GameObject floorTileObj_13;
         public GameObject floorTileObj_14;
         public GameObject floorTileObj_15;
-        
+
         public GameObject floorTileObj_C1;
         public GameObject floorTileObj_C2;
         public GameObject floorTileObj_C3;
@@ -229,7 +229,7 @@ namespace RoguelikeGeneratorPro
         public Tile floorTile_13;
         public Tile floorTile_14;
         public Tile floorTile_15;
-        
+
         public Tile floorTile_C1;
         public Tile floorTile_C2;
         public Tile floorTile_C3;
@@ -394,7 +394,7 @@ namespace RoguelikeGeneratorPro
         public void GenerateLevel()
         {
             Setup();
-            
+
             GenerateFloor();
             GenerateWall();
 
@@ -403,7 +403,7 @@ namespace RoguelikeGeneratorPro
             if (drawFloorOverlayPatternTiles) InstanciateFloorOverlay();
             if (drawWallOverlayPatternTiles) InstanciateWallOverlay();
 
-            if(generation != genType.noGeneration) Spawn();
+            if (generation != genType.noGeneration) Spawn();
 
             if (generation == genType.generateObj && createLevelSizedFloorCollider) GenerateFloorCollider();
             else if (generation == genType.generateTile && createWallGridCollider) GenerateWallTileCollider();
@@ -752,7 +752,7 @@ namespace RoguelikeGeneratorPro
             {
                 for (int y = 0; y < levelSize.y - 1; y++)
                 {
-                    if (patternFloor == patternType.perlinNoise && IsFloorTouchingWall(x,y)) CreatePerlinFloor(x, y);
+                    if (patternFloor == patternType.perlinNoise && IsFloorTouchingWall(x, y)) CreatePerlinFloor(x, y);
                     else if (patternFloor == patternType.checker && IsFloorTouchingWall(x, y)) CreateCheckerFloor(x, y);
                     else if (patternFloor == patternType.wideChecker && IsFloorTouchingWall(x, y)) CreateWideCheckerFloor(x, y);
                     else if (patternFloor == patternType.lineLeft && IsFloorTouchingWall(x, y)) CreateLineLeftFloor(x, y);
@@ -950,7 +950,7 @@ namespace RoguelikeGeneratorPro
                         //4 sides
                         if (!wallTop && !wallLeft && !wallBottom && !wallRight)
                         {
-                            if(drawCorners)
+                            if (drawCorners)
                             {
                                 //one side
                                 if (wallTopLeft && !wallTopRight && !wallBottomLeft && !wallBottomRight) floorMap.SetTile(new Vector3Int(x, y, 0), floorTile_C1);
@@ -1474,7 +1474,7 @@ namespace RoguelikeGeneratorPro
                         {
                             if (!deleteFloorBelowOverlay || (deleteFloorBelowOverlay && overlayTiles[x, y] != overlayType.floorPattern && overlayTiles[x, y] != overlayType.floorRandom))
                             {
-                                if(drawCorners && wallBottomRight) SpawnTile(floorTileObj_C27, floorParent.transform, x, y);
+                                if (drawCorners && wallBottomRight) SpawnTile(floorTileObj_C27, floorParent.transform, x, y);
                                 else SpawnTile(floorTileObj_6, floorParent.transform, x, y);
                             }
 
@@ -1586,7 +1586,7 @@ namespace RoguelikeGeneratorPro
                         //one side
                         if (floorTop && !floorLeft && !floorBottom && !floorRight)
                         {
-                            if(drawCorners)
+                            if (drawCorners)
                             {
                                 if (floorBottomLeft && floorBottomRight) SpawnTile(wallTileObj_C17, wallParent.transform, x, y);
                                 else if (floorBottomLeft) SpawnTile(wallTileObj_C15, wallParent.transform, x, y);
@@ -1644,7 +1644,7 @@ namespace RoguelikeGeneratorPro
                         //2 sides
                         else if (floorTop && floorLeft && !floorBottom && !floorRight)
                         {
-                            if(drawCorners && floorBottomRight) SpawnTile(wallTileObj_C27, wallParent.transform, x, y);
+                            if (drawCorners && floorBottomRight) SpawnTile(wallTileObj_C27, wallParent.transform, x, y);
                             else SpawnTile(wallTileObj_6, wallParent.transform, x, y);
 
                             if (overlayTiles[x, y] == overlayType.wallPattern) SpawnTile(patternWallTileObj_6, overlayParent.transform, x, y);
@@ -2233,7 +2233,7 @@ namespace RoguelikeGeneratorPro
 
         private void SpawnTileRotated(GameObject _tileObj, Transform _parentTrm, float _rotation, int _posX, int _posY)
         {
-            if(_tileObj != null)
+            if (_tileObj != null)
             {
                 GameObject instObj = GameObject.Instantiate(_tileObj, new Vector3(_posX * tileSize, 0, _posY * tileSize), _tileObj.transform.rotation * Quaternion.Euler(0f, _rotation, 0f));
                 instObj.transform.parent = _parentTrm;

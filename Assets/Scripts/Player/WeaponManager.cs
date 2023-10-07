@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,25 +7,25 @@ public class WeaponManager : MonoBehaviour
     public Weapon currentWeapon;          // Currently equipped weapon
     public Transform weaponHolder;
     public List<WeaponBlueprint> unlockedWeapons = new List<WeaponBlueprint>();
-    
-    
-    
+
+
+
     public void SwitchWeapon(Weapon newWeapon)
     {
-        
+
 
         if (availableWeapons.Contains(newWeapon))
         {
             // Deactivate current weapon
             if (currentWeapon != null)
             {
-                
+
                 currentWeapon.gameObject.SetActive(false);
             }
 
             // Set and activate new weapon
             currentWeapon = newWeapon;
-           
+
             currentWeapon.gameObject.SetActive(true);
         }
 

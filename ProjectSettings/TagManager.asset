@@ -11,6 +11,8 @@ TagManager:
   - Weapon Blueprint
   - Enemy
   - Ground
+  - 3D Printer
+  - EnemyCanvas
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - Player
   - Companion
   - Enemy
-  - 
+  - 3D Printer
   - 
   - 
   - 

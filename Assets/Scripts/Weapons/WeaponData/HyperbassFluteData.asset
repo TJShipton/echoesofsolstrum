@@ -12,8 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e33649cea591d24ca8e94221aa6669c, type: 3}
   m_Name: HyperbassFluteData
   m_EditorClassIdentifier: 
-  weaponName: 
-  baseDamage: 0
+  weaponName: Hyperbass Flute
+  weaponTier: 0
+  baseDamage: 40
+  originalBaseDamage: 40
   upgradedDamage: 0
   range: 0
   speed: 0
+  commonDamageMultiplier: 1
+  rareDamageMultiplier: 1.2
+  epicDamageMultiplier: 1.5
+  legendaryDamageMultiplier: 2
+  hasSpecialEffect: 0
+  specialEffect:
+    effectType: 0
+    effectStrength: 0
+  iconSprite: {fileID: 21300000, guid: 914659175afad1b4ea5031f5ac015259, type: 3}

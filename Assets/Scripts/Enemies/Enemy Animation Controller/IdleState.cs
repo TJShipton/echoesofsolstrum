@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class IdleState : EnemyState
 {
     public IdleState(Enemy enemy) : base(enemy) { }
-    
+
     private float timeInIdle = 0f;
     public override void EnterState()
     {

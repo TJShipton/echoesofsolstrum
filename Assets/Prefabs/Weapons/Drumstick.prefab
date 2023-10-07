@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 4936525630916203001}
   m_Layer: 8
   m_Name: Drumstick
-  m_TagString: Weapon
+  m_TagString: Drumstick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -204,7 +204,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Drumstick
-  damage: 50
   weaponData: {fileID: 11400000, guid: d70ecc16bba4d9b4d85fe2ddd18a75cf, type: 2}
   localOrientation: {x: 0, y: 0, z: 0}
   localPosition: {x: 0, y: 0, z: 0}

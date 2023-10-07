@@ -10,7 +10,7 @@ namespace RoguelikeGeneratorPro
         [Header("Items reference")]
         public GameObject[] primaryItems;
         public GameObject[] secondaryItems;
-        
+
         [Header("Spawn specifics")]
         [Range(0, 100)]
         public int secondaryItemChance = 15;

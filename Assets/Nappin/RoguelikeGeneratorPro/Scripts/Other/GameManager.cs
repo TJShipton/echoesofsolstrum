@@ -1,5 +1,5 @@
-﻿using static RoguelikeGeneratorPro.RoguelikeGeneratorPro;
-using UnityEngine;
+﻿using UnityEngine;
+using static RoguelikeGeneratorPro.RoguelikeGeneratorPro;
 
 
 namespace RoguelikeGeneratorPro
@@ -64,7 +64,7 @@ namespace RoguelikeGeneratorPro
                 {
                     if (tiles[x, y] == tileType.floor)
                     {
-                        if(generation == genType.generateTile) GameObject.Instantiate(playerObj, new Vector3(x + tilesSize / 2, y + tilesSize / 2, playerHeightOffset) + mainLevelGenerator.transform.localPosition, Quaternion.identity);
+                        if (generation == genType.generateTile) GameObject.Instantiate(playerObj, new Vector3(x + tilesSize / 2, y + tilesSize / 2, playerHeightOffset) + mainLevelGenerator.transform.localPosition, Quaternion.identity);
                         else if (levelRot == levelRotation.XZ) GameObject.Instantiate(playerObj, new Vector3(x * tilesSize, playerHeightOffset, y * tilesSize) + mainLevelGenerator.transform.localPosition, Quaternion.identity);
                         else if (levelRot == levelRotation.XY) GameObject.Instantiate(playerObj, new Vector3(x * tilesSize, y * tilesSize, playerHeightOffset) + mainLevelGenerator.transform.localPosition, Quaternion.identity);
                         else GameObject.Instantiate(playerObj, new Vector3(playerHeightOffset, y * tilesSize, x * tilesSize) + mainLevelGenerator.transform.localPosition, Quaternion.identity);
@@ -74,7 +74,7 @@ namespace RoguelikeGeneratorPro
                 }
             }
 
-            EndLoop: Debug.Log("Player positioning loop ended");
+        EndLoop: Debug.Log("Player positioning loop ended");
         }
 
 
@@ -96,7 +96,7 @@ namespace RoguelikeGeneratorPro
                 }
             }
 
-            EndLoop: Debug.Log("Target positioning loop ended");
+        EndLoop: Debug.Log("Target positioning loop ended");
         }
     }
 }

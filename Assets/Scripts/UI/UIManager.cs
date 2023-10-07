@@ -32,6 +32,6 @@ public class UIManager : MonoBehaviour
     {
         // Display the amount of Sol from GameManager
         solText.text = "Sol: " + GameManager.instance.sol;
-      
+
     }
 }

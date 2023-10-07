@@ -13,7 +13,18 @@ MonoBehaviour:
   m_Name: DrumStickData
   m_EditorClassIdentifier: 
   weaponName: Drumstick
-  baseDamage: 100
+  weaponTier: 0
+  baseDamage: 10
+  originalBaseDamage: 10
   upgradedDamage: 25
   range: 2
   speed: 5
+  commonDamageMultiplier: 1
+  rareDamageMultiplier: 1.2
+  epicDamageMultiplier: 1.5
+  legendaryDamageMultiplier: 2
+  hasSpecialEffect: 0
+  specialEffect:
+    effectType: 0
+    effectStrength: 0
+  iconSprite: {fileID: 21300000, guid: 09864a9a490672042a2289ec2d9dbb52, type: 3}

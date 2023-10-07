@@ -7,7 +7,7 @@ namespace RoguelikeGeneratorPro
     [ExecuteInEditMode]
     public class RotationRandomizer : MonoBehaviour
     {
-        public enum rotationDirection {X, Y, Z};
+        public enum rotationDirection { X, Y, Z };
 
         [Header("Rotation direction")]
         public rotationDirection rotation = rotationDirection.Y;

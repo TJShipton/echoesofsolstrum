@@ -14,28 +14,12 @@ public class Drumstick : Weapon
     private Animator playerAnimator;
 
     [SerializeField]
-    private Canvas uiCanvas;
+    private Canvas EnemyCanvas;
 
     void Start()
     {
-        // Other existing code...
-
-        // Assign the Canvas through code
-        if (uiCanvas == null) // Only look for it if it's not already assigned
-        {
-            uiCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-
-            // Log an error if the canvas still couldn't be found
-            if (uiCanvas == null)
-            {
-                Debug.LogError("Canvas could not be found. Please assign it manually in the Inspector or check the GameObject name.");
-            }
-            else
-            {
-                // This debug statement will appear if uiCanvas is successfully assigned.
-                Debug.Log("Canvas has been found and assigned.");
-            }
-        }
+        
+      
     }
 
 
@@ -46,7 +30,7 @@ public class Drumstick : Weapon
         if (!isUpgraded)
         {
             BasicAttack();
-            
+
 
         }
         else
@@ -85,7 +69,7 @@ public class Drumstick : Weapon
         }
     }
 
-    
+
 
     private void DetectEnemiesInRadius()
     {
@@ -95,7 +79,7 @@ public class Drumstick : Weapon
             IDamageable enemy = enemiesToDamage[i].GetComponent<IDamageable>();
             if (enemy != null)
             {
-                enemy.TakeDamage(weaponData.baseDamage, uiCanvas); // Passing uiCanvas
+                enemy.TakeDamage(weaponData.baseDamage, EnemyCanvas); // Passing EnemyCanvas
 
             }
         }
