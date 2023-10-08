@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 
     public int sol = 0;
 
+    
+
     public List<GameObject> unlockedWeapons;
     public List<WeaponBlueprint> foundWeaponBlueprints = new List<WeaponBlueprint>();
 
@@ -111,7 +113,7 @@ public class GameManager : MonoBehaviour
     {
         sol += amount;
         UIManager.instance.UpdateSolDisplay();  // Update the UI
-        Debug.Log("Total sol: " + sol);
+       // Debug.Log("Total sol: " + sol);
     }
 
 }

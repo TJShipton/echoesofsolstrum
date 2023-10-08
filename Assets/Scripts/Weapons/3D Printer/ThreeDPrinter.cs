@@ -11,15 +11,22 @@ using UnityEngine.UI;
     public GameObject weaponSelectPanel;
     public Button weaponButtonPrefab;
     public Dictionary<string, Sprite> weaponThumbnails;
-    public LayerMask clickableLayer;
-    public Camera mainCamera;
-    public float buttonOffsetX = 0.0f;
-    public GameObject weaponTooltip;  // Reference to the WeaponTooltip panel
-    public TextMeshProUGUI tooltipText;  // Reference to the TextMeshPro text field in the tooltip
+    private bool isWeaponPanelActive = false;
     public WeaponRaritySelector weaponRaritySelector;
+    private List<GameObject> lastRandomWeapons = null;
+    private List<WeaponTier> lastRandomTiers = null;
+    public LayerMask clickableLayer;
+    private Camera mainCamera;
+    public float buttonOffsetX = 0.0f;
+   
 
     private void Start()
     {
+        mainCamera = Camera.main;
+
+
+
+
         //Image paths for weapon select buttons in 3d printer UI
         weaponThumbnails = new Dictionary<string, Sprite>();
 
@@ -43,31 +50,25 @@ using UnityEngine.UI;
         // Check if the left mouse button was clicked
         if (Input.GetMouseButtonDown(0))
         {
-
-
             // Create a ray from the camera to the mouse cursor position
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);  // Use mainCamera here
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-
-
-
 
             // Perform the raycast with the layer mask
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, clickableLayer))
             {
-
-
                 // Check if the raycast hit this 3D printer object
-                if (hit.collider.gameObject == this.gameObject)
+                if (hit.collider.gameObject == this.gameObject && !isWeaponPanelActive) 
                 {
-
-
+                   
                     // Show the weapon options UI
                     weaponSelectPanel.SetActive(true);
                     ShowWeaponOptions();
+
+                    isWeaponPanelActive = true; // Set the flag to true
+                    
                 }
             }
-
         }
     }
 
@@ -86,24 +87,43 @@ using UnityEngine.UI;
             Destroy(child.gameObject);
         }
 
-        // Get random 3 weapons from the list of unlocked weapons
-        List<GameObject> randomWeapons = GameManager.instance.GetRandomUnlockedWeapons(3);
+        // Initialize lastRandomTiers if it's null
+        if (lastRandomTiers == null)
+        {
+            lastRandomTiers = new List<WeaponTier>();
+        }
+
+        // Get random 3 weapons from the list of unlocked weapons, only if lastRandomWeapons is null
+        if (lastRandomWeapons == null)
+        {
+           
+            lastRandomWeapons = GameManager.instance.GetRandomUnlockedWeapons(3);
+            lastRandomTiers.Clear();  // Clear the lastRandomTiers list
+
+            // Loop through each randomly selected weapon to assign and store a random tier
+            foreach (GameObject weapon in lastRandomWeapons)
+            {
+                WeaponTier randomTier = weaponRaritySelector.GetRandomTier();
+                lastRandomTiers.Add(randomTier);  // Store the random tier
+            }
+        }
 
         // Loop through each randomly selected weapon
-        foreach (GameObject weapon in randomWeapons)
+        for (int i = 0; i < lastRandomWeapons.Count; i++)
         {
+            GameObject weapon = lastRandomWeapons[i];
+            WeaponTier randomTier = lastRandomTiers[i];  // Use the stored tier
+
             // Decide the tier rarity before displaying the button
-            WeaponTier randomTier = weaponRaritySelector.GetRandomTier();
             Weapon weaponComponent = weapon.GetComponent<Weapon>();
             if (weaponComponent != null)
             {
                 weaponComponent.weaponData.weaponTier = randomTier;
-                Debug.Log($"Assigned {randomTier} tier to {weapon.name}");  // Debug log to verify tier assignment
+                
             }
 
             // Instantiate the button and parent it to the UI panel
             Button newButton = Instantiate(weaponButtonPrefab, weaponSelectPanel.transform);
-
 
             // Access and update the WeaponButtonUI component with the weapon data
             WeaponButtonUI weaponButtonUI = newButton.GetComponentInChildren<WeaponButtonUI>();
@@ -123,9 +143,9 @@ using UnityEngine.UI;
             {
                 buttonImage.sprite = weaponThumbnails[weapon.name];
             }
-            Material borderMaterial = GetComponent<Renderer>().material;
 
-           // Determine the outline color based on tier
+
+            // Determine the outline color based on tier
             string rarityColorHex;
             switch (randomTier)
             {
@@ -134,6 +154,7 @@ using UnityEngine.UI;
                 case WeaponTier.Legendary: rarityColorHex = "#F6FF03"; break;  // Hex for gold
                 default: rarityColorHex = "#03FF08"; break;  // Hex for green (common tier)
             }
+
             // Convert the hex string to a Unity Color object
             Color rarityColor = ColorHelper.HexToColor(rarityColorHex);  // Assuming you have a HexToColor method in ColorHelper
 
@@ -146,16 +167,16 @@ using UnityEngine.UI;
             }
             else
             {
-                Debug.LogWarning("Outline component is missing on ThumbnailImage prefab");
+               // Debug.LogWarning("Outline component is missing on ThumbnailImage prefab");
             }
 
             // Assign the button's click listener
             newButton.onClick.AddListener(() => PickWeapon(weapon.name));
 
-            // Debug log for verifying the updated weapon button
-            Debug.Log($"Updated button for weapon {weaponComponent.weaponData.weaponName}");
+          
         }
     }
+
 
 
 
@@ -167,6 +188,7 @@ using UnityEngine.UI;
 
     public void PickWeapon(string weaponName)
     {
+       
         if (string.IsNullOrEmpty(weaponName))
         {
             return;
@@ -198,6 +220,9 @@ using UnityEngine.UI;
         }
 
         weaponSelectPanel.SetActive(false);
+
+        isWeaponPanelActive = false; // Reset the flag to false
+       
     }
 }
 
