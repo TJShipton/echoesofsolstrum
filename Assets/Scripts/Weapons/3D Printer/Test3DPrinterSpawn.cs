@@ -11,6 +11,6 @@ public class Test3DPrinterSpawn : MonoBehaviour
         Instantiate(threeDPrinterPrefab, spawnLocation, Quaternion.identity);
 
         // Debug log to confirm that the 3D printer was spawned
-        Debug.Log($"Spawned 3D printer at position: {spawnLocation}");
+       // Debug.Log($"Spawned 3D printer at position: {spawnLocation}");
     }
 }

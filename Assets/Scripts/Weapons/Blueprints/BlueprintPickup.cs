@@ -10,16 +10,16 @@ public class BlueprintPickup : MonoBehaviour
         if (other.tag == "Player")
         {
 
-            GameManager gameManager = FindObjectOfType<GameManager>();
+            WeaponManager weaponManager = FindObjectOfType<WeaponManager>();
 
-            if (gameManager == null)
+            if (weaponManager == null)
             {
-                Debug.LogError("GameManager not found in the scene!"); // Error log if GameManager is not found
+                Debug.LogError("WeaponManager not found in the scene!"); // Error log if WeaponManager is not found
             }
             else
             {
-                // Call UnlockWeaponFromBlueprint instead of UnlockWeapon
-                gameManager.UnlockWeaponFromBlueprint(blueprint);
+                // Use the instance of WeaponManager to call the method
+                weaponManager.UnlockWeaponFromBlueprint(blueprint);
             }
 
             Destroy(gameObject);  // Remove the blueprint object from the scene

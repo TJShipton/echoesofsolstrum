@@ -5,17 +5,18 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public int sol = 0;
+    public string LastInputMethod { get; set; } = "keyboard";  // Property to store last input method
+    private float joystickTimer = 0f;  // Timer to track joystick input
+    private float joystickThreshold = 0.4f;  // Time in seconds to wait before setting to "controller"
 
     
 
-    public List<GameObject> unlockedWeapons;
-    public List<WeaponBlueprint> foundWeaponBlueprints = new List<WeaponBlueprint>();
-
-    private Dictionary<string, GameObject> weaponNameToPrefabMap;
 
     void Awake()
     {
+
+        // Singleton pattern
+        
         if (instance == null)
         {
             instance = this;
@@ -26,94 +27,53 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        weaponNameToPrefabMap = new Dictionary<string, GameObject>();
+   
+    }
 
-        foreach (GameObject weapon in unlockedWeapons)
+
+    private void Update()
+    {
+        // Detect last input method
+        if (Input.GetMouseButtonDown(0) || Input.anyKeyDown ||
+            Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
+            Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) ||
+            Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) ||
+            Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
         {
-            if (weapon != null)
+            LastInputMethod = "keyboard";
+            joystickTimer = 0f;  // Reset the joystick timer
+        }
+
+        // Detect joystick button press
+        if (Input.GetButtonDown("Fire2"))
+        {
+            LastInputMethod = "controller";
+        }
+
+        // Detect joystick movement
+        float horizontalAxis = Input.GetAxis("Horizontal");
+        float verticalAxis = Input.GetAxis("Vertical");
+
+        // Check if there is significant movement in either axis
+        if (Mathf.Abs(horizontalAxis) > 0.1f || Mathf.Abs(verticalAxis) > 0.1f)
+        {
+            joystickTimer += Time.deltaTime;  // Increment the joystick timer
+            if (joystickTimer >= joystickThreshold)
             {
-                weaponNameToPrefabMap[weapon.name] = weapon;
+                LastInputMethod = "controller";
             }
-        }
-    }
-
-    public void UnlockWeaponFromBlueprint(WeaponBlueprint blueprint)
-    {
-        foundWeaponBlueprints.Add(blueprint);
-        GameObject newWeaponPrefab = blueprint.weaponPrefab;
-
-        if (newWeaponPrefab != null)
-        {
-            unlockedWeapons.Add(newWeaponPrefab);
-            weaponNameToPrefabMap[newWeaponPrefab.name] = newWeaponPrefab;
-        }
-
-        Debug.Log("Do you want to equip " + blueprint.weaponName + "?");
-    }
-
-
-
-    public void UnlockWeapon(string weaponName)
-    {
-        if (weaponName == "OBow" || weaponName == "Drumstick")
-        {
-            return;
-        }
-
-        if (!weaponNameToPrefabMap.ContainsKey(weaponName))
-        {
-            GameObject newWeaponPrefab = Resources.Load<GameObject>("Prefabs/" + weaponName);
-
-            if (newWeaponPrefab != null)
-            {
-                unlockedWeapons.Add(newWeaponPrefab);
-                AddWeapon(newWeaponPrefab);
-            }
-        }
-    }
-
-    public void AddWeapon(GameObject newWeapon)
-    {
-        weaponNameToPrefabMap.Add(newWeapon.name, newWeapon);
-    }
-
-    public GameObject GetWeaponPrefabByName(string weaponName)
-    {
-        GameObject weaponPrefab;
-        if (weaponNameToPrefabMap.TryGetValue(weaponName, out weaponPrefab))
-        {
-            return weaponPrefab;
         }
         else
         {
-            return null;
+            joystickTimer = 0f;  // Reset the joystick timer
         }
     }
-    public List<GameObject> GetRandomUnlockedWeapons(int count)
-    {
-        if (unlockedWeapons.Count <= count)
-        {
-            return new List<GameObject>(unlockedWeapons);
-        }
 
-        List<GameObject> selectedWeapons = new List<GameObject>();
-        List<GameObject> remainingWeapons = new List<GameObject>(unlockedWeapons);
 
-        for (int i = 0; i < count; i++)
-        {
-            int randomIndex = Random.Range(0, remainingWeapons.Count);
-            selectedWeapons.Add(remainingWeapons[randomIndex]);
-            remainingWeapons.RemoveAt(randomIndex);
-        }
+    
 
-        return selectedWeapons;
-    }
 
-    public void AddSol(int amount)
-    {
-        sol += amount;
-        UIManager.instance.UpdateSolDisplay();  // Update the UI
-       // Debug.Log("Total sol: " + sol);
-    }
+
+
 
 }

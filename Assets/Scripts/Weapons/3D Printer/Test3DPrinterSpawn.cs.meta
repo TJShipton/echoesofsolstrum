@@ -3,7 +3,9 @@ guid: d5c2413028194d643ac66a41015a1408
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - threeDPrinterPrefab: {fileID: 7507171186431749294, guid: 88a0b4ed3e455f947a211fad37f6d08e,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

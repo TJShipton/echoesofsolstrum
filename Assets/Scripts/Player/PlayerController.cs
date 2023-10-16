@@ -15,17 +15,18 @@ public class PlayerController : MonoBehaviour, IDamageable
     public float doubleJumpVelocity = 15f;
     public float extraGravityForce = 0f;
     public float attackRange = 0.5f;
-
     public int health = 100;
 
-    private bool canDoubleJump = true;
-
+    private bool hasDoubleJumpUpgrade = false;
+    private bool canDoubleJump = false;
+    private bool isGrounded;
     private Rigidbody rb;
     private Animator animator;
     private WeaponManager weaponManager;
 
-    // Flag to check if the player is on the ground
-    private bool isGrounded;
+    private CurrencyManager currencyManager;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,11 +34,16 @@ public class PlayerController : MonoBehaviour, IDamageable
         rb = GetComponent<Rigidbody>();
         animator = transform.GetComponent<Animator>();
         weaponManager = GetComponent<WeaponManager>();
+        currencyManager = CurrencyManager.instance;
+
+        // Apply permanent upgrades
+        UpgradeManager.instance.ApplyPermanentUpgrades(this);
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         float moveHorizontal = Input.GetAxis("Horizontal");
 
         // Using Transform.Translate to move the player
@@ -70,15 +76,21 @@ public class PlayerController : MonoBehaviour, IDamageable
             {
                 rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, 0f);
                 animator.SetTrigger("JumpTrigger");
+
+                // Only enable double jump if the upgrade has been purchased
+                if (hasDoubleJumpUpgrade)
+                {
+                    canDoubleJump = true;
+                }
             }
-            else if (canDoubleJump)
+            else if (canDoubleJump && hasDoubleJumpUpgrade)  // Check if hasDoubleJumpUpgrade is true
             {
                 rb.velocity = new Vector3(rb.velocity.x, doubleJumpVelocity, 0f);
                 canDoubleJump = false;
                 animator.SetTrigger("DoubleJumpTrigger");
-                Debug.Log("Double Jump Triggered. Animator State: " + animator.GetCurrentAnimatorStateInfo(0).IsName("Double Jump") + ", Rigidbody Velocity: " + rb.velocity);
             }
         }
+
 
         // Damping the horizontal velocity to respect the speed limit
         float clampedVelocityX = Mathf.Clamp(rb.velocity.x, -speed, speed);
@@ -127,5 +139,34 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             solObject.PickUpSol();
         }
+    }
+
+    public void InteractWithSolfather()
+    {
+
+        if (Input.GetKeyDown(KeyCode.E))  // Assuming E is the interact key. You can change it.
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 3f))  // 3f is the interaction range.
+            {
+                Solfather solfather = hit.collider.GetComponent<Solfather>();
+                if (solfather != null)
+                {
+                    solfather.Interact();
+                }
+            }
+        }
+
+    }
+
+    public void ApplyUpgrade(IPlayerUpgrade upgrade)
+    {
+        upgrade.ApplyUpgrade(this);
+    }
+
+    public void EnableDoubleJump()
+    {
+        // Set hasDoubleJumpUpgrade to true when the upgrade is applied
+        hasDoubleJumpUpgrade = true;
     }
 }

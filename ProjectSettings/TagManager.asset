@@ -13,6 +13,7 @@ TagManager:
   - Ground
   - 3D Printer
   - EnemyCanvas
+  - TotalSol
   layers:
   - Default
   - TransparentFX
@@ -49,4 +50,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: SolCrystal
+    uniqueID: 3436849269
     locked: 0
