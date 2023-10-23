@@ -161,7 +161,7 @@ public class ThreeDPrinter : MonoBehaviour
         }
     }
 
-     private void ShowWeaponOptions()
+    private void ShowWeaponOptions()
     {
         // Early return if GameManager instance is not available
         if (GameManager.instance == null)
@@ -244,7 +244,7 @@ public class ThreeDPrinter : MonoBehaviour
 
     private void OnWeaponButtonClicked(string weaponName)  // New method to handle button click
     {
-        bool wasWeaponPicked = weaponManager.PickWeapon(weaponName);
+        bool wasWeaponPicked = InventoryManager.instance.PickWeapon(weaponName, weaponManager.weaponHolder);
         if (wasWeaponPicked)
         {
             // Find the InventoryItem corresponding to the picked weapon.
@@ -256,8 +256,7 @@ public class ThreeDPrinter : MonoBehaviour
             weaponSelectPanel.SetActive(false);
             isWeaponPanelActive = false;
 
-            // Call the SwapWeapon method in InventoryManager
-            InventoryManager.instance.SwapWeapon(newWeaponInventoryItem); // Provide the new weapon item here
+
         }
     }
 

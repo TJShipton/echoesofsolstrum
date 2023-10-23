@@ -12,8 +12,8 @@ public class InventoryManager : MonoBehaviour
     public InventorySlot currentSelectedSlot = null;  // Slot of the currently equipped weapon
     public WeaponButtonCreator weaponButtonCreator;
     public Transform weaponInventoryPanel;  // UI panel to hold weapon buttons
-
-
+    public Transform weaponHolder;
+    private WeaponManager weaponManager;
 
     void Awake()
     {
@@ -26,9 +26,6 @@ public class InventoryManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-
-
 
     }
 
@@ -95,26 +92,40 @@ public class InventoryManager : MonoBehaviour
 
     public void AddItem(InventoryItem item)
     {
-        Debug.Log("Trying to add item: " + item.ItemId); // Add Debug here
-                                                         // Check if item is a weapon item
+        Debug.Log("Trying to add item: " + item.ItemId);  // Add Debug here
+
+        // Check if item is a weapon item
         if (item is WeaponInventoryItem weaponItem)
         {
-            Debug.Log("Item is a WeaponInventoryItem."); // Add Debug here
+            Debug.Log("Item is a WeaponInventoryItem.");  // Add Debug here
             InventorySlot availableSlot = FindEmptySlot();  // Look for an empty slot
 
+            // If no empty slot is found and there's only one slot (your scenario)
+            if (availableSlot == null && slots.Count == 1)
+            {
+                availableSlot = slots[0];  // Use the existing slot
+                Debug.Log("Reusing existing InventorySlot.");  // Add Debug here
+
+                // Remove the current weapon from the slot before adding the new one
+                if (availableSlot.Item != null)
+                {
+                    RemoveItem(availableSlot.Item);
+                    Debug.Log("Removed current weapon from slot.");  // Add Debug here
+                }
+            }
             // If no empty slot is found and there's room to expand the inventory, create a new slot
-            if (availableSlot == null && CountCurrentWeapons() < maxWeaponSlots)
+            else if (availableSlot == null && CountCurrentWeapons() < maxWeaponSlots)
             {
                 availableSlot = new InventorySlot(slots.Count);  // Create a new slot
                 slots.Add(availableSlot);  // Add the new slot to the slots list
-                Debug.Log("Created new InventorySlot."); // Add Debug here
+                Debug.Log("Created new InventorySlot.");  // Add Debug here
             }
 
             // If an available slot is found or created, add the item to it
             if (availableSlot != null)
             {
                 availableSlot.addItem(item);  // Add the item to the available slot
-                Debug.Log($"Item {item.ItemId} added to Slot {availableSlot.SlotNumber}"); // Debug already exists, good!
+                Debug.Log($"Item {item.ItemId} added to Slot {availableSlot.SlotNumber}");  // Debug already exists, good!
 
                 // Create a button for this weapon
                 Button newButton = weaponButtonCreator.CreateWeaponButton(
@@ -128,20 +139,16 @@ public class InventoryManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning($"No available slot for item {item.ItemId}, and inventory is full."); // Debug already exists, good!
+                Debug.LogWarning($"No available slot for item {item.ItemId}, and inventory is full.");  // Debug already exists, good!
             }
         }
     }
 
 
-
-
-    // InventoryManager.cs
     public void RemoveItem(InventoryItem itemToRemove)
     {
         if (itemToRemove is WeaponInventoryItem weaponItem)
         {
-
             for (int i = 0; i < slots.Count; i++)
             {
                 InventorySlot slotToRemove = slots[i];
@@ -159,91 +166,26 @@ public class InventoryManager : MonoBehaviour
                         Debug.LogWarning("slotToRemove.UIButton is null");
                     }
 
+                    if (weaponItem.weaponPrefab != null)
+                    {
+                        Destroy(weaponItem.weaponPrefab);  // Destroy the weapon game object
+                    }
+
                     slotToRemove.Item = null;  // Assume InventorySlot.Item has a setter method
-                    UpdateInventoryUI();  // Assume this method updates the UI to reflect changes
                     break;  // Exit the loop once the item is removed
                 }
             }
+
+            UpdateInventoryUI();
         }
     }
+
 
     // Method to swap weapons
     public void SwapWeapon(InventoryItem newWeaponInventoryItem)
     {
-        Debug.Log("Attempting to swap weapon.");
 
-        // Check if the item being swapped is actually a weapon.
-        if (newWeaponInventoryItem is WeaponInventoryItem)
-        {
-            Debug.Log("Item is a WeaponInventoryItem.");
-
-            // Initialize selected slot index to -1 (indicating no slot is selected)
-            int selectedSlotIndex = 0;
-
-            // Find the first available slot index to swap the weapon
-            for (int i = 0; i < slots.Count; i++)
-            {
-                if (slots[i].IsSelected)
-                {
-                    selectedSlotIndex = i;
-                    Debug.Log($"Selected slot index found: {i}");
-                    break;
-                }
-            }
-
-            Debug.Log($"Current selected slot index: {selectedSlotIndex}");
-
-            
-
-            // Check if we found a selected slot
-            if (selectedSlotIndex == 0)
-            {
-                Debug.LogWarning("No slot is selected for weapon swap.");
-                return;
-            }
-
-            // Here, call SelectSlot with the selectedSlotIndex.
-            SelectSlot(selectedSlotIndex);
-
-           
-
-            // Perform the swap
-            try
-            {
-                InventoryItem oldWeapon = slots[selectedSlotIndex].Item;
-                slots[selectedSlotIndex].Item = newWeaponInventoryItem;
-                Debug.Log($"Successfully swapped {oldWeapon.ItemId} with {newWeaponInventoryItem.ItemId}.");
-            }
-            catch (ArgumentOutOfRangeException e)
-            {
-                Debug.LogError($"ArgumentOutOfRangeException: {e.Message}");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Item is not a WeaponInventoryItem. Swap aborted.");
-        }
     }
-
-
-
-
-
-    public void UpdateInventoryUI()
-    {
-        // Example logic to update UI
-        foreach (InventorySlot slot in slots)
-        {
-            // Assume each slot has a reference to a UI element
-            if (slot.UIButton != null)
-            {
-                slot.UIButton.gameObject.SetActive(slot.Item != null);
-            }
-        }
-
-        LogInventoryState();
-    }
-
     public void LogInventoryState()
     {
         string inventoryState = "Inventory State:\n";
@@ -261,4 +203,64 @@ public class InventoryManager : MonoBehaviour
         Debug.Log(inventoryState);
     }
 
+    public bool PickWeapon(string weaponName, Transform weaponHolder)
+    {
+        GameObject weaponPrefab = WeaponManager.instance.GetWeaponPrefabByName(weaponName);
+        if (weaponPrefab == null)
+        {
+            return false;  // Return false if weaponPrefab is null
+        }
+
+        Weapon newWeapon = WeaponManager.instance.InstantiateNewWeapon(weaponPrefab, weaponHolder);
+        if (newWeapon == null)
+        {
+            return false;  // Return false if newWeapon instantiation failed
+        }
+
+        AddWeaponToInventory(newWeapon);  // Add the new weapon to the inventory
+
+        UpdateInventoryUI();
+
+        return true;  // Return true to indicate success
+    }
+
+
+    private void AddWeaponToInventory(Weapon newWeapon)
+    {
+        // Create a new InventoryItem for the picked weapon
+        InventoryItem newWeaponItem = new WeaponInventoryItem(newWeapon.weaponName)
+        {
+            weaponPrefab = newWeapon.gameObject,
+            // ... initialize other properties as needed ...
+        };
+
+        // Add the new weapon to the inventory
+        AddItem(newWeaponItem);
+    }
+
+    public void UpdateInventoryUI()
+    {
+        // Example logic to update UI
+        foreach (InventorySlot slot in slots)
+        {
+            // Assume each slot has a reference to a UI element
+            if (slot.UIButton != null)
+            {
+                // Update the UI button to reflect the current item in the slot
+                if (slot.Item != null)
+                {
+                    // Assuming you have a method to update the button with the new item information
+                    UpdateButton(slot.UIButton, slot.Item, slot);
+
+                    slot.UIButton.gameObject.SetActive(true);  // Ensure the button is active
+                }
+                else
+                {
+                    slot.UIButton.gameObject.SetActive(false);  // Hide the button if the slot is empty
+                }
+            }
+        }
+
+        LogInventoryState();
+    }
 }

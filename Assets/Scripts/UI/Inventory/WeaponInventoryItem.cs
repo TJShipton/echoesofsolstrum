@@ -13,7 +13,7 @@ public class WeaponInventoryItem : InventoryItem
     }
     public override void Use()
     {
-        WeaponManager.instance.AddWeapon(weaponPrefab.GetComponent<Weapon>());
+        //WeaponManager.instance.AddWeapon(weaponPrefab.GetComponent<Weapon>());
 
 
     }

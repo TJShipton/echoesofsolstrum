@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class WeaponPickup : MonoBehaviour
@@ -14,27 +15,33 @@ public class WeaponPickup : MonoBehaviour
 
     void PickUp(GameObject player)
     {
-        WeaponManager weaponManager = player.GetComponent<WeaponManager>();
-        if (weaponManager != null)
+        // Get the singleton instance of InventoryManager
+        InventoryManager inventoryManager = InventoryManager.instance;
+        if (inventoryManager != null)
         {
-            Weapon newWeapon = Instantiate(weaponPrefab, weaponManager.weaponHolder);
-            newWeapon.gameObject.SetActive(false);
-
-            if (weaponManager.weaponHolder != null)
+            // Call InstantiateNewWeapon method from InventoryManager
+            Weapon newWeapon = WeaponManager.instance.InstantiateNewWeapon(weaponPrefab.gameObject, inventoryManager.weaponHolder);
+            if (newWeapon != null) // Check if new weapon was successfully instantiated
             {
-                newWeapon.transform.SetParent(weaponManager.weaponHolder);
+                // Create a new InventoryItem for the picked weapon
+                InventoryItem newWeaponItem = new WeaponInventoryItem(newWeapon.weaponName)
+                {
+                    weaponPrefab = newWeapon.gameObject,
+                    
+                };
 
-                // Set both local position and rotation according to the Weapon class
-                newWeapon.transform.localPosition = newWeapon.localPosition;
-                newWeapon.transform.localRotation = Quaternion.identity;
-                newWeapon.transform.localEulerAngles = newWeapon.localOrientation;
+                // Add the new weapon item to the inventory
+                inventoryManager.AddItem(newWeaponItem);
             }
 
-            weaponManager.availableWeapons.Add(newWeapon);
-            weaponManager.AddWeapon(newWeapon);
+            // Destroy the weapon pickup object
+            Destroy(gameObject);
         }
-
-        Destroy(gameObject);
     }
 
+
+
 }
+
+
+
