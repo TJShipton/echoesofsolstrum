@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -6,17 +5,18 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public string LastInputMethod { get; set; } = "keyboard";  // Property to store last input method
-    private float joystickTimer = 0f;  // Timer to track joystick input
-    private float joystickThreshold = 0.4f;  // Time in seconds to wait before setting to "controller"
 
-    
+    public int sol = 0;
+
+    private float joystickTimer = 0f;  // Timer to track joystick input
+    private float joystickThreshold = 0.5f;  // Time in seconds to wait before setting to "controller"
 
 
     void Awake()
     {
 
         // Singleton pattern
-        
+
         if (instance == null)
         {
             instance = this;
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-   
+
     }
 
 
@@ -45,9 +45,13 @@ public class GameManager : MonoBehaviour
         }
 
         // Detect joystick button press
-        if (Input.GetButtonDown("Fire2"))
+        for (int i = 0; i < 20; i++)  // Iterate through 20 possible joystick buttons
         {
-            LastInputMethod = "controller";
+            if (Input.GetKeyDown("joystick button " + i))
+            {
+                LastInputMethod = "controller";
+                break;
+            }
         }
 
         // Detect joystick movement
@@ -69,8 +73,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    
 
 
 

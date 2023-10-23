@@ -18,8 +18,8 @@ public class Drumstick : Weapon
 
     void Start()
     {
-        
-      
+
+
     }
 
 

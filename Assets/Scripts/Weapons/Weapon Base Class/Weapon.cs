@@ -21,7 +21,7 @@ public abstract class Weapon : MonoBehaviour
         this.weaponAnimator = animator;
     }
 
-   
+
     public string GetTierName()
     {
         return weaponData.weaponTier.ToString();
@@ -60,10 +60,10 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
-   
 
 
-public virtual void PrimaryAttack()
+
+    public virtual void PrimaryAttack()
     {
         // Code for initiating the animation can go here later
 
@@ -72,8 +72,8 @@ public virtual void PrimaryAttack()
 
 
     //default attack logic
-   
-    
+
+
     public abstract void Upgrade();
 
     //upgrade logic

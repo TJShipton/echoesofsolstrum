@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e33649cea591d24ca8e94221aa6669c, type: 3}
   m_Name: GlocknSteelData
   m_EditorClassIdentifier: 
-  weaponName: Glock 'n' Steel
-  weaponTier: 2
-  baseDamage: 22
+  weaponName: Glock N Steel
+  weaponTier: 1
+  baseDamage: 18
   originalBaseDamage: 15
   upgradedDamage: 0
   range: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   specialEffect:
     effectType: 0
     effectStrength: 0
-  iconSprite: {fileID: 21300000, guid: c843b25ea29b1f54da9b04d83baafc4a, type: 3}
+  iconSprite: {fileID: 0}

@@ -4,13 +4,13 @@ using UnityEngine;
 public class WeaponData : ScriptableObject
 {
     public string weaponName;
-    public WeaponTier weaponTier;  
+    public WeaponTier weaponTier;
     public int baseDamage;
     public int originalBaseDamage;
     public int upgradedDamage;
     public int range;
     public int speed;
-    
+
 
     public float commonDamageMultiplier = 1.0f;
     public float rareDamageMultiplier = 1.2f;

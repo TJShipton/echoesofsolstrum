@@ -31,7 +31,7 @@ public class WeaponPickup : MonoBehaviour
             }
 
             weaponManager.availableWeapons.Add(newWeapon);
-            weaponManager.SwitchWeapon(newWeapon);
+            weaponManager.AddWeapon(newWeapon);
         }
 
         Destroy(gameObject);

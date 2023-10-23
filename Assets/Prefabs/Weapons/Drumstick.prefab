@@ -212,4 +212,4 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 256
-  uiCanvas: {fileID: 0}
+  EnemyCanvas: {fileID: 0}

@@ -5,7 +5,7 @@ public class DoubleJumpUpgrade : IPlayerUpgrade
     public string UpgradeName => "Double Jump";
 
     public string UpgradeDescription => "Hendric can jump one more time mid-air";
-    public int UpgradeCost => 1000;  
+    public int UpgradeCost => 1000;
 
     public int AmountSpent { get; set; }
 

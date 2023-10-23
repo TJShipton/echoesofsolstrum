@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
@@ -15,7 +17,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     public float doubleJumpVelocity = 15f;
     public float extraGravityForce = 0f;
     public float attackRange = 0.5f;
-    public int health = 100;
+    public int maxHealth = 100;
+    public int currentHealth;
+    public Slider playerHealthBar;
+    public TextMeshProUGUI playerHealthText;
 
     private bool hasDoubleJumpUpgrade = false;
     private bool canDoubleJump = false;
@@ -36,6 +41,10 @@ public class PlayerController : MonoBehaviour, IDamageable
         weaponManager = GetComponent<WeaponManager>();
         currencyManager = CurrencyManager.instance;
 
+        currentHealth = maxHealth;
+        //playerHealthText.text = currentHealth.ToString();
+        UpdateHealthUI();  // Ensure the UI is correct when the game starts
+
         // Apply permanent upgrades
         UpgradeManager.instance.ApplyPermanentUpgrades(this);
     }
@@ -43,7 +52,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        
+
         float moveHorizontal = Input.GetAxis("Horizontal");
 
         // Using Transform.Translate to move the player
@@ -116,16 +125,29 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    public void TakeDamage(int damageAmount, Canvas EnemyCanvas)
+    public void TakeDamage(int damageAmount, Canvas HUDCanvas)
     {
-        health -= damageAmount;
+        currentHealth -= damageAmount;
 
-        if (health <= 0)
+        Debug.Log("Player health: " + currentHealth);  // Log to check the current health
+
+        if (currentHealth > 0)
+        {
+            UpdateHealthUI();
+        }
+        if (currentHealth <= 0)  // Check if current health is 0 or below
         {
             Die();
+            Destroy(gameObject);
         }
     }
 
+    public void UpdateHealthUI()
+    {
+        playerHealthBar.maxValue = maxHealth;
+        playerHealthBar.value = currentHealth;
+        playerHealthText.text = currentHealth.ToString();
+    }
     private void Die()
     {
         Debug.Log("Player has died");
@@ -141,23 +163,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    public void InteractWithSolfather()
-    {
 
-        if (Input.GetKeyDown(KeyCode.E))  // Assuming E is the interact key. You can change it.
-        {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 3f))  // 3f is the interaction range.
-            {
-                Solfather solfather = hit.collider.GetComponent<Solfather>();
-                if (solfather != null)
-                {
-                    solfather.Interact();
-                }
-            }
-        }
-
-    }
 
     public void ApplyUpgrade(IPlayerUpgrade upgrade)
     {

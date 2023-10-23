@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: HyperbassFluteData
   m_EditorClassIdentifier: 
   weaponName: Hyperbass Flute
-  weaponTier: 0
-  baseDamage: 40
+  weaponTier: 3
+  baseDamage: 80
   originalBaseDamage: 40
   upgradedDamage: 0
   range: 0

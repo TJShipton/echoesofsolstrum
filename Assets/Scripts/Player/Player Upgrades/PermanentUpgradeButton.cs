@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class PermanentUpgradeButton : MonoBehaviour
@@ -35,18 +34,18 @@ public class PermanentUpgradeButton : MonoBehaviour
 
     private void Update()
     {
-       
 
-      
+
+
     }
 
-   
+
     // Method to assign upgrade
     public void AssignUpgrade(IPlayerUpgrade upgrade)
     {
         associatedUpgrade = upgrade;
         upgradeName = upgrade.UpgradeName;
-        upgradeDescription = upgrade.UpgradeDescription; // You can modify this later
+        upgradeDescription = upgrade.UpgradeDescription;
         totalCost = upgrade.UpgradeCost;
 
         // Call the Start method to initialize the UI

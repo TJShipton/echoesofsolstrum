@@ -27,4 +27,4 @@ MonoBehaviour:
   specialEffect:
     effectType: 0
     effectStrength: 0
-  iconSprite: {fileID: 21300000, guid: 2fdb40cdb1461804d8e63f67b7584527, type: 3}
+  iconSprite: {fileID: 0}
