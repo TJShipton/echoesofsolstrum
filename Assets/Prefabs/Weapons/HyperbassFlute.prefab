@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3113632105688689799
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7092160460443069324}
+  m_Layer: 0
+  m_Name: ProjectileSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7092160460443069324
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3113632105688689799}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.441, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6819527279671948957}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5964058242973796341
 GameObject:
   m_ObjectHideFlags: 0
@@ -29,13 +60,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5964058242973796341}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7274256, w: 0.6861866}
   m_LocalPosition: {x: 0.81, y: 0.38, z: 0.11275202}
   m_LocalScale: {x: 0.16915, y: 0.16915, z: 0.16915}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7092160460443069324}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 93.342}
 --- !u!33 &461260177591802022
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -125,6 +157,7 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: df6e4290f8ff2dc4b8abd4bc9d97675f, type: 2}
   localOrientation: {x: 0, y: 0, z: 0}
   localPosition: {x: 0, y: 0, z: 0}
+  projectileSpawnPoint: {fileID: 7092160460443069324}
 --- !u!114 &-3117146739968293166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,4 +170,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c002d7e533779fc4b995639d1da624ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 0}
+  weaponPrefab: {fileID: 6392727526436643081}

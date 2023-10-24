@@ -74,7 +74,7 @@ public abstract class Weapon : MonoBehaviour
     //default attack logic
 
 
-    public abstract void Upgrade();
+    //public abstract void Upgrade();
 
     //upgrade logic
 

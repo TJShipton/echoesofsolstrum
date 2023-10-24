@@ -7,9 +7,14 @@ public class WeaponData : ScriptableObject
     public WeaponTier weaponTier;
     public int baseDamage;
     public int originalBaseDamage;
-    public int upgradedDamage;
+    //public int upgradedDamage;
     public int range;
     public int speed;
+
+    public GameObject projectilePrefab;
+
+    public int projectileSpeed;
+    
 
 
     public float commonDamageMultiplier = 1.0f;

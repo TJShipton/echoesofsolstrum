@@ -23,10 +23,7 @@ public class OBow : Weapon
         }
     }
 
-    public override void Upgrade()
-    {
-        isUpgraded = true;
-    }
+
 
     public void ToggleRangedMode(bool ranged)
     {

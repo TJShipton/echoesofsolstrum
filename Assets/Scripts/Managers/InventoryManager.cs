@@ -13,8 +13,7 @@ public class InventoryManager : MonoBehaviour
     public WeaponButtonCreator weaponButtonCreator;
     public Transform weaponInventoryPanel;  // UI panel to hold weapon buttons
     public Transform weaponHolder;
-    private WeaponManager weaponManager;
-
+    
     void Awake()
     {
         if (instance == null)
@@ -92,25 +91,25 @@ public class InventoryManager : MonoBehaviour
 
     public void AddItem(InventoryItem item)
     {
-        Debug.Log("Trying to add item: " + item.ItemId);  // Add Debug here
+       
 
         // Check if item is a weapon item
         if (item is WeaponInventoryItem weaponItem)
         {
-            Debug.Log("Item is a WeaponInventoryItem.");  // Add Debug here
+            
             InventorySlot availableSlot = FindEmptySlot();  // Look for an empty slot
 
             // If no empty slot is found and there's only one slot (your scenario)
             if (availableSlot == null && slots.Count == 1)
             {
                 availableSlot = slots[0];  // Use the existing slot
-                Debug.Log("Reusing existing InventorySlot.");  // Add Debug here
+                
 
                 // Remove the current weapon from the slot before adding the new one
                 if (availableSlot.Item != null)
                 {
                     RemoveItem(availableSlot.Item);
-                    Debug.Log("Removed current weapon from slot.");  // Add Debug here
+                   
                 }
             }
             // If no empty slot is found and there's room to expand the inventory, create a new slot
@@ -118,15 +117,14 @@ public class InventoryManager : MonoBehaviour
             {
                 availableSlot = new InventorySlot(slots.Count);  // Create a new slot
                 slots.Add(availableSlot);  // Add the new slot to the slots list
-                Debug.Log("Created new InventorySlot.");  // Add Debug here
+               
             }
 
             // If an available slot is found or created, add the item to it
             if (availableSlot != null)
             {
                 availableSlot.addItem(item);  // Add the item to the available slot
-                Debug.Log($"Item {item.ItemId} added to Slot {availableSlot.SlotNumber}");  // Debug already exists, good!
-
+                
                 // Create a button for this weapon
                 Button newButton = weaponButtonCreator.CreateWeaponButton(
                     weaponItem.weaponPrefab, weaponInventoryPanel, weaponItem.weaponPrefab.GetComponent<Weapon>().weaponData.weaponTier);
@@ -139,7 +137,7 @@ public class InventoryManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning($"No available slot for item {item.ItemId}, and inventory is full.");  // Debug already exists, good!
+                Debug.LogWarning($"No available slot for item {item.ItemId}, and inventory is full.");  
             }
         }
     }
@@ -152,10 +150,10 @@ public class InventoryManager : MonoBehaviour
             for (int i = 0; i < slots.Count; i++)
             {
                 InventorySlot slotToRemove = slots[i];
-                if (slotToRemove != null && slotToRemove.Item == itemToRemove)  // Added null check here
+                if (slotToRemove != null && slotToRemove.Item == itemToRemove)  
                 {
-                    Debug.Log("Checking slot " + i + ": " + slotToRemove.Item.ItemId);
-                    if (slotToRemove.UIButton != null)  // Added null check here
+                   
+                    if (slotToRemove.UIButton != null)  
                     {
                         Debug.Log("Button: " + slotToRemove.UIButton.name);
                         slotToRemove.UIButton.name = "Empty Slot";
@@ -200,7 +198,7 @@ public class InventoryManager : MonoBehaviour
                 inventoryState += "Empty Slot\n";
             }
         }
-        Debug.Log(inventoryState);
+       
     }
 
     public bool PickWeapon(string weaponName, Transform weaponHolder)
@@ -209,6 +207,12 @@ public class InventoryManager : MonoBehaviour
         if (weaponPrefab == null)
         {
             return false;  // Return false if weaponPrefab is null
+        }
+
+        // Remove the current weapon from the weaponHolder, if any
+        foreach (Transform child in weaponHolder)
+        {
+            Destroy(child.gameObject);
         }
 
         Weapon newWeapon = WeaponManager.instance.InstantiateNewWeapon(weaponPrefab, weaponHolder);
@@ -225,14 +229,11 @@ public class InventoryManager : MonoBehaviour
     }
 
 
+
     private void AddWeaponToInventory(Weapon newWeapon)
     {
         // Create a new InventoryItem for the picked weapon
-        InventoryItem newWeaponItem = new WeaponInventoryItem(newWeapon.weaponName)
-        {
-            weaponPrefab = newWeapon.gameObject,
-            // ... initialize other properties as needed ...
-        };
+        InventoryItem newWeaponItem = new WeaponInventoryItem(newWeapon.weaponName, newWeapon.gameObject);
 
         // Add the new weapon to the inventory
         AddItem(newWeaponItem);

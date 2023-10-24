@@ -71,9 +71,6 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-
-
-
     public GameObject GetWeaponPrefabByName(string weaponName)
     {
         GameObject weaponPrefab;
@@ -111,8 +108,7 @@ public class WeaponManager : MonoBehaviour
 
     public Weapon InstantiateNewWeapon(GameObject weaponPrefab, Transform holder)
     {
-        Debug.Log("Trying to instantiate weapon from prefab: " + weaponPrefab.name);
-
+        
         Weapon newWeapon = Instantiate(weaponPrefab.GetComponent<Weapon>(), holder);
         newWeapon.gameObject.SetActive(false);
         newWeapon.transform.SetParent(holder);
@@ -126,8 +122,7 @@ public class WeaponManager : MonoBehaviour
         //holder.gameObject.SetActive(true);  // Ensure holder is active
         newWeapon.gameObject.SetActive(true);  // Activate newWeapon
 
-        Debug.Log("Weapon " + newWeapon.name + " instantiated.");
-
+        
         return newWeapon;
     }
 

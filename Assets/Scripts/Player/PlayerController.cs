@@ -2,11 +2,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class PlayerController : MonoBehaviour, IDamageable
 {
     [SerializeField]
     public Canvas EnemyCanvas;  // Drag your main UI Canvas here
-
+   
     public Transform characterModel;
     public LayerMask groundLayer;
 
@@ -22,6 +23,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     public Slider playerHealthBar;
     public TextMeshProUGUI playerHealthText;
 
+  
+
     private bool hasDoubleJumpUpgrade = false;
     private bool canDoubleJump = false;
     private bool isGrounded;
@@ -31,6 +34,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private CurrencyManager currencyManager;
 
+   
 
 
     // Start is called before the first frame update

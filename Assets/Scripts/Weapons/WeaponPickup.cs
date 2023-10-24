@@ -24,11 +24,11 @@ public class WeaponPickup : MonoBehaviour
             if (newWeapon != null) // Check if new weapon was successfully instantiated
             {
                 // Create a new InventoryItem for the picked weapon
-                InventoryItem newWeaponItem = new WeaponInventoryItem(newWeapon.weaponName)
-                {
-                    weaponPrefab = newWeapon.gameObject,
-                    
-                };
+                InventoryItem newWeaponItem = new WeaponInventoryItem(newWeapon.weaponName, newWeapon.gameObject);
+                
+                  
+
+                
 
                 // Add the new weapon item to the inventory
                 inventoryManager.AddItem(newWeaponItem);

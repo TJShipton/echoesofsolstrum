@@ -12,8 +12,5 @@ public class ConductiveGlove : Weapon
         // Add logic to move projectile
     }
 
-    public override void Upgrade()
-    {
-        // Upgrade logic if applicable
-    }
+    
 }

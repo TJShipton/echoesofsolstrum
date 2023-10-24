@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class Drumstick : Weapon
 {
-    // Drumstick specific properties
-    private bool isUpgraded = false;
+    
     private int comboCounter = 0;
     private float lastAttackTime = 0;
 
@@ -25,28 +24,7 @@ public class Drumstick : Weapon
 
     public override void PrimaryAttack()
     {
-        // weaponAnimator.SetTrigger("Attack");  // Trigger the attack animation
-
-        if (!isUpgraded)
-        {
-            BasicAttack();
-
-
-        }
-        else
-        {
-            ComboAttack();
-        }
-    }
-
-    private void BasicAttack()
-    {
-
-        // Animate, sound effects, etc.
-    }
-
-    private void ComboAttack()
-    {
+        
         comboCounter++;
         lastAttackTime = Time.time;
 
@@ -92,8 +70,8 @@ public class Drumstick : Weapon
         }
     }
 
-    public override void Upgrade()
-    {
-        isUpgraded = true;
-    }
+    //public override void Upgrade()
+    //{
+    //    isUpgraded = true;
+    //}
 }

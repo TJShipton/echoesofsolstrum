@@ -74,9 +74,6 @@ public class ThreeDPrinter : MonoBehaviour
 
         }
 
-
-
-
         // Check for mouse click
         if (Input.GetMouseButtonDown(0))
         {
@@ -103,12 +100,12 @@ public class ThreeDPrinter : MonoBehaviour
             if (canSelectWeapon)
             {
                 ToggleWeaponSelectPanel();
-                canSelectWeapon = false;  // Disable weapon selection
-                Invoke("EnableWeaponSelection", 0.5f);  // Enable it after 0.5 seconds
+                            
             }
         }
     }
     private void UpdatePromptText()
+
     {
         if (!isPlayerNear || isWeaponPanelActive)  // Added isWeaponPanelActive to the condition
         {
@@ -121,7 +118,7 @@ public class ThreeDPrinter : MonoBehaviour
 
         if (GameManager.instance.LastInputMethod == "controller")
         {
-            promptText.text = "Press X";
+            promptText.text = "Press B";
         }
         else
         {
@@ -162,6 +159,7 @@ public class ThreeDPrinter : MonoBehaviour
     }
 
     private void ShowWeaponOptions()
+
     {
         // Early return if GameManager instance is not available
         if (GameManager.instance == null)
@@ -234,9 +232,9 @@ public class ThreeDPrinter : MonoBehaviour
 
 
     private void UpdateButtonAppearance(Button button, bool isSelected)
+
     {
         // Change the button's appearance based on whether it's selected or not
-        // For example, you can change the button's color
         Color targetColor = isSelected ? Color.green : Color.white;
         button.GetComponent<Image>().color = targetColor;
     }
@@ -247,20 +245,24 @@ public class ThreeDPrinter : MonoBehaviour
         bool wasWeaponPicked = InventoryManager.instance.PickWeapon(weaponName, weaponManager.weaponHolder);
         if (wasWeaponPicked)
         {
-            // Find the InventoryItem corresponding to the picked weapon.
-            // Pass the weaponName as id to the WeaponInventoryItem constructor.
-            InventoryItem newWeaponInventoryItem = new WeaponInventoryItem(weaponName);
+            // get the weapon prefab by name
+            GameObject weaponPrefab = weaponManager.GetWeaponPrefabByName(weaponName);
+            if (weaponPrefab != null)
+            {
+                
+                InventoryItem newWeaponInventoryItem = new WeaponInventoryItem(weaponName, weaponPrefab);
 
-            // Update UI and state in ThreeDPrinter
-            InventoryManager.instance.UpdateInventoryUI();
-            weaponSelectPanel.SetActive(false);
-            isWeaponPanelActive = false;
-
-
+                // Update UI and state in ThreeDPrinter
+                InventoryManager.instance.UpdateInventoryUI();
+                weaponSelectPanel.SetActive(false);
+                isWeaponPanelActive = false;
+            }
+            else
+            {
+                Debug.LogWarning("Could not find weapon prefab for weapon name: " + weaponName);
+            }
         }
     }
-
-
 
     public void ClearLastRandomWeapons()
     {

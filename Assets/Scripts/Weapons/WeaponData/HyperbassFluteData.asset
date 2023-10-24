@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: HyperbassFluteData
   m_EditorClassIdentifier: 
   weaponName: Hyperbass Flute
-  weaponTier: 3
-  baseDamage: 80
-  originalBaseDamage: 40
-  upgradedDamage: 0
+  weaponTier: 0
+  baseDamage: 10
+  originalBaseDamage: 10
   range: 0
-  speed: 0
+  speed: 5
+  projectilePrefab: {fileID: 8101888920058242435, guid: ced1072127c322a4c9c0f9d5d0ccb145,
+    type: 3}
+  projectileSpeed: 0
+  projectileSpawnPoint: {fileID: 0}
   commonDamageMultiplier: 1
   rareDamageMultiplier: 1.2
   epicDamageMultiplier: 1.5

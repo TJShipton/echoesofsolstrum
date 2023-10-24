@@ -55,7 +55,7 @@ public class PermanentUpgradeButton : MonoBehaviour
     // Call this method when the button is clicked
     public void OnButtonClick()
     {
-        int solToContribute = 100; // Amount of Sol to contribute on each button click
+        int solToContribute = 1000; // Amount of Sol to contribute on each button click
 
         // Deduct sol from the player's total and add to amountSpent
         if (CurrencyManager.instance.SpendSol(solToContribute))
