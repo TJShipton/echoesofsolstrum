@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 92a94d6d20395dc4ea139552d5b03ce8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - weaponSelectPanel: {fileID: 2301250411631528363, guid: d973db3d7b33241448139807e58e4177,
+      type: 3}
+  - weaponButtonPrefab: {fileID: 2223145248309898766, guid: 234a28c3aacd3b04dac117e3ebbc4df0,
+      type: 3}
+  - weaponRaritySelector: {fileID: 849498827072983382, guid: 61cf3c748d1c60c4199903b2fa25f150,
+      type: 3}
+  - mainCamera: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
