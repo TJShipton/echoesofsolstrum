@@ -80,7 +80,7 @@ public class Solfather : MonoBehaviour
 
         if (GameManager.instance.LastInputMethod == "controller")
         {
-            promptText.text = "Press X";
+            promptText.text = "Press B";
         }
         else
         {
