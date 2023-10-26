@@ -1,40 +1,48 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
+    private float movementX;
+    private float movementY;
+    private Vector2 movementInput;  // Store the movement input
+
+
     [SerializeField]
     public Canvas EnemyCanvas;  // Drag your main UI Canvas here
-   
+
     public Transform characterModel;
     public LayerMask groundLayer;
 
-    public float speed = 5f;
-    public float acceleration = 500f;  // New variable for acceleration, adjust in Inspector as needed
+    public float speed = 50f;
+
     [SerializeField]
-    private float jumpVelocity = 10f;  // Default value of 100, adjust in Inspector as needed
+    private float jumpForce = 10f;  // Default value of 100, adjust in Inspector as needed
     public float doubleJumpVelocity = 15f;
-    public float extraGravityForce = 0f;
+
     public float attackRange = 0.5f;
     public int maxHealth = 100;
     public int currentHealth;
     public Slider playerHealthBar;
     public TextMeshProUGUI playerHealthText;
 
-  
 
+    private bool shouldJump = false;
     private bool hasDoubleJumpUpgrade = false;
     private bool canDoubleJump = false;
+    private bool shouldDoubleJump = false;
     private bool isGrounded;
+    public float groundCheckDistance = 0.1f;
     private Rigidbody rb;
     private Animator animator;
     private WeaponManager weaponManager;
 
     private CurrencyManager currencyManager;
 
-   
+
 
 
     // Start is called before the first frame update
@@ -57,77 +65,166 @@ public class PlayerController : MonoBehaviour, IDamageable
     void Update()
     {
 
-        float moveHorizontal = Input.GetAxis("Horizontal");
 
-        // Using Transform.Translate to move the player
-        transform.Translate(Vector3.right * moveHorizontal * speed * Time.deltaTime, Space.World);
+    }
 
-        bool isMoving = moveHorizontal != 0;
-        animator.SetFloat("IsRunning", isMoving ? 1f : 0f);
+    private void FixedUpdate()
+    {
 
-        if (isMoving)
+        // Update the horizontal movement
+        Vector3 movement = new Vector3(movementInput.x, 0.0f);
+        rb.AddForce(movement * speed, ForceMode.VelocityChange);
+
+        // Jump
+        isGrounded = IsGrounded();  // Update the isGrounded variable
+
+        if (shouldJump)  // Check if jump input was received
         {
-            Vector3 lookDirection = moveHorizontal > 0 ? Vector3.right : Vector3.left;
+            Jump();
+            shouldJump = false;  // Reset flag after jump is handled
+            if (hasDoubleJumpUpgrade)
+            {
+                canDoubleJump = true;  // Enable double jump if the upgrade is active
+                Debug.Log("Double jump enabled.");
+            }
+        }
+        else if (shouldDoubleJump && canDoubleJump)  // Check if double jump input was received and double jump is allowed
+        {
+            DoubleJump();
+            shouldDoubleJump = false;  // Reset flag after double jump is handled
+            canDoubleJump = false;  // Disable further double jumps until grounded again
+        }
+
+
+    }
+    private bool IsGrounded()
+    {
+        Vector3 origin = transform.position + Vector3.up * 0.1f;  // Slightly raised origin to ensure the raycast starts above the ground
+        Ray ray = new Ray(origin, Vector3.down);
+        return Physics.Raycast(ray, groundCheckDistance, groundLayer);
+    }
+
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        movementInput = context.ReadValue<Vector2>();  // Read the input value from the context
+
+        // Update the animator
+        animator.SetFloat("IsRunning", Mathf.Abs(movementInput.x) > 0 ? 1f : 0f);
+
+        // Determine the look direction
+        if (Mathf.Abs(movementInput.x) > 0)
+        {
+            Vector3 lookDirection = movementInput.x > 0 ? Vector3.right : Vector3.left;
             transform.forward = lookDirection;
         }
+    }
 
-        float raycastDistance = 0.2f;
-        Vector3 rayOrigin = transform.position + Vector3.up * 0.2f;
-        isGrounded = Physics.Raycast(rayOrigin, Vector3.down, raycastDistance, groundLayer);
-
-        if (isGrounded)
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.started)
         {
-            canDoubleJump = true;
-            animator.ResetTrigger("DoubleJumpTrigger");
-        }
-
-        animator.SetBool("IsGrounded", isGrounded);
-
-        if (Input.GetButtonDown("Jump"))
-        {
-            if (isGrounded)
+            if (isGrounded)  // Only jump if grounded and input just started
             {
-                rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, 0f);
-                animator.SetTrigger("JumpTrigger");
+                shouldJump = true;  // Set flag to true when jump input is received
+            }
+            else if (canDoubleJump)  // Allow double jump if not grounded but double jump is allowed
+            {
+                shouldDoubleJump = true;  // Set flag to true when double jump input is received
+                Debug.Log("Double jump input received.");  // Log when double jump input is received
+            }
+        }
+    }
 
-                // Only enable double jump if the upgrade has been purchased
-                if (hasDoubleJumpUpgrade)
+
+    private void Jump()
+    {
+        Vector3 jumpVector = new Vector3(0f, jumpForce, 0f);
+        rb.AddForce(jumpVector, ForceMode.VelocityChange);
+    }
+
+    private void DoubleJump()
+    {
+        Vector3 doubleJumpVector = new Vector3(0f, doubleJumpVelocity, 0f);
+        rb.velocity = new Vector3(rb.velocity.x, 0f, 0f);  // Reset the vertical velocity before applying double jump force
+        rb.AddForce(doubleJumpVector, ForceMode.VelocityChange);
+    }
+
+
+    public void OnAtck1(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Atck1();
+        }
+    }
+
+    public void OnAtck2(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Atck2();
+        }
+    }
+
+    private void Atck1()
+    {
+        // Select the slot 0
+        InventoryManager.instance.SelectSlot(0);
+        // Trigger the attack on the weapon in slot 0
+        TriggerAttack();
+    }
+
+    private void Atck2()
+    {
+        // Check if there's a weapon in slot 1
+        if (InventoryManager.instance.slots.Count > 1)
+        {
+            // Select the slot 1
+            InventoryManager.instance.SelectSlot(1);
+            // Trigger the attack on the weapon in slot 1
+            TriggerAttack();
+        }
+        else
+        {
+            Debug.Log("No slot 1 available.");
+        }
+    }
+
+    public void TriggerAttack()
+    {
+        Weapon currentWeapon = InventoryManager.instance.GetCurrentWeapon();
+        if (currentWeapon != null)
+        {
+            if (!currentWeapon.gameObject.activeSelf)
+            {
+                // If the current weapon is not active, activate it
+                currentWeapon.gameObject.SetActive(true);
+
+                // Optionally, deactivate the other weapon(s)
+                foreach (Weapon weapon in InventoryManager.instance.GetAllWeapons())
                 {
-                    canDoubleJump = true;
+                    if (weapon != currentWeapon)
+                    {
+                        weapon.gameObject.SetActive(false);
+                    }
                 }
             }
-            else if (canDoubleJump && hasDoubleJumpUpgrade)  // Check if hasDoubleJumpUpgrade is true
-            {
-                rb.velocity = new Vector3(rb.velocity.x, doubleJumpVelocity, 0f);
-                canDoubleJump = false;
-                animator.SetTrigger("DoubleJumpTrigger");
-            }
+
+            // Now trigger the attack
+            currentWeapon.PrimaryAttack();
         }
-
-
-        // Damping the horizontal velocity to respect the speed limit
-        float clampedVelocityX = Mathf.Clamp(rb.velocity.x, -speed, speed);
-        rb.velocity = new Vector3(clampedVelocityX, rb.velocity.y, 0f);
-
-        // Apply extra gravity force when the player is falling This helps with timing roll animation.
-        if (!isGrounded && rb.velocity.y < 0)
+        else
         {
-            rb.velocity += Vector3.down * extraGravityForce * Time.deltaTime;
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            MainAttack();
+            //Debug.LogWarning("No weapon is selected!");
         }
     }
 
-    private void MainAttack()
-    {
-        if (weaponManager.currentWeapon != null)
-        {
-            weaponManager.currentWeapon.PrimaryAttack();
-        }
-    }
+
+
+
+
+
 
     public void TakeDamage(int damageAmount, Canvas HUDCanvas)
     {

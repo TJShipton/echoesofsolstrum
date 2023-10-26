@@ -1,10 +1,13 @@
+using UnityEngine;
 using UnityEngine.UI;
 
 public class InventorySlot
 {
     public InventoryItem Item { get; set; }
     public Button UIButton { get; set; }
-    public int SlotNumber { get; private set; }
+    public int SlotNumber { get; set; }
+
+
     public bool IsSelected { get; set; }  // Add this line to indicate if this slot is selected
 
     public InventorySlot(int slotNumber)
@@ -29,4 +32,18 @@ public class InventorySlot
             UIButton = null;
         }
     }
+
+    public void Attack()
+    {
+        if (Item is WeaponInventoryItem weaponItem && weaponItem.weaponPrefab.GetComponent<Weapon>() is Weapon weapon)
+        {
+            Debug.Log("Weapon component accessed. Initiating attack.");
+            weapon.PrimaryAttack();
+        }
+        else
+        {
+            Debug.LogWarning("Failed to access Weapon component or initiate attack.");
+        }
+    }
+
 }

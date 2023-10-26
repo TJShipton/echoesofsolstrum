@@ -3,26 +3,21 @@ using UnityEngine;
 public class HyperbassFlute : Weapon
 {
     public Transform projectileSpawnPoint;
-
-    void Update()
+    private Animator animator;
+    private void Awake()  // Changed to Awake from Start
     {
-
-        if (Input.GetButtonDown("Fire1"))
-        {
-            PrimaryAttack();
-        }
-
-
+        animator = GetComponentInParent<Animator>();  // Changed to GetComponentInParent
     }
-
     public override void PrimaryAttack()
     {
+        //Debug.Log("PrimaryAttack called on HyperbassFlute");
+
         if (weaponData.projectilePrefab != null && projectileSpawnPoint != null)
         {
             // Instantiate a new projectile at the spawn point
             GameObject projectile = Instantiate(weaponData.projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
 
-            // You might want to set other properties of the projectile here, like its damage value
+            // set other properties of the projectile here, like its damage value
             // Assuming your projectile has a script with a SetDamage method
             // projectile.GetComponent<ProjectileScript>().SetDamage(weaponData.baseDamage);
 
@@ -33,9 +28,13 @@ public class HyperbassFlute : Weapon
                 Vector3 shootDirection = projectileSpawnPoint.forward;
                 projectileRigidbody.velocity = shootDirection * weaponData.projectileSpeed;
             }
+            if (animator != null)
+            {
+                animator.SetTrigger("PrimaryAttack");
+            }
             else
             {
-                Debug.LogWarning("Projectile lacks a Rigidbody component, cannot apply force to shoot it.");
+                Debug.LogWarning("Animator component is missing, can't trigger animation.");
             }
         }
         else
@@ -43,5 +42,5 @@ public class HyperbassFlute : Weapon
             Debug.LogWarning("Projectile prefab or spawn point is missing, can't shoot projectile.");
         }
     }
+    
 }
-

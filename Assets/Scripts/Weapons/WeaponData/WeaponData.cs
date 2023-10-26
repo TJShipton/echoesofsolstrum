@@ -14,7 +14,7 @@ public class WeaponData : ScriptableObject
     public GameObject projectilePrefab;
 
     public int projectileSpeed;
-    
+
 
 
     public float commonDamageMultiplier = 1.0f;

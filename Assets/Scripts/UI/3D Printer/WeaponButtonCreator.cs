@@ -50,7 +50,7 @@ public class WeaponButtonCreator : MonoBehaviour
             weaponButtonUI.nameText.text = weaponComponent.weaponData.weaponName;
             weaponButtonUI.damageText.text = $"Damage: {weaponComponent.weaponData.baseDamage}";
             weaponButtonUI.rarityText.text = weaponComponent.GetTierName();
-          
+
 
         }
 
