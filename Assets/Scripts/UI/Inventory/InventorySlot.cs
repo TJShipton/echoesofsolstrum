@@ -1,13 +1,13 @@
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventorySlot
 {
     public InventoryItem Item { get; set; }
     public Button UIButton { get; set; }
-    public int SlotNumber { get;  set; }
+    public int SlotNumber { get; set; }
 
-    
+
     public bool IsSelected { get; set; }  // Add this line to indicate if this slot is selected
 
     public InventorySlot(int slotNumber)

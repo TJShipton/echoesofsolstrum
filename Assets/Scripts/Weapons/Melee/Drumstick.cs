@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Drumstick : Weapon
 {
-    
+
     private int comboCounter = 0;
     private float lastAttackTime = 0;
 
@@ -24,7 +24,7 @@ public class Drumstick : Weapon
 
     public override void PrimaryAttack()
     {
-        
+
         comboCounter++;
         lastAttackTime = Time.time;
 

@@ -3,10 +3,14 @@ using UnityEngine;
 public class HyperbassFlute : Weapon
 {
     public Transform projectileSpawnPoint;
-     
+    private Animator animator;
+    private void Awake()  // Changed to Awake from Start
+    {
+        animator = GetComponentInParent<Animator>();  // Changed to GetComponentInParent
+    }
     public override void PrimaryAttack()
     {
-        Debug.Log("PrimaryAttack called on HyperbassFlute");
+        //Debug.Log("PrimaryAttack called on HyperbassFlute");
 
         if (weaponData.projectilePrefab != null && projectileSpawnPoint != null)
         {
@@ -24,9 +28,13 @@ public class HyperbassFlute : Weapon
                 Vector3 shootDirection = projectileSpawnPoint.forward;
                 projectileRigidbody.velocity = shootDirection * weaponData.projectileSpeed;
             }
+            if (animator != null)
+            {
+                animator.SetTrigger("PrimaryAttack");
+            }
             else
             {
-                Debug.LogWarning("Projectile lacks a Rigidbody component, cannot apply force to shoot it.");
+                Debug.LogWarning("Animator component is missing, can't trigger animation.");
             }
         }
         else
@@ -34,5 +42,5 @@ public class HyperbassFlute : Weapon
             Debug.LogWarning("Projectile prefab or spawn point is missing, can't shoot projectile.");
         }
     }
+    
 }
-

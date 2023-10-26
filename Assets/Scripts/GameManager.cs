@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
         {
             joystickTimer = 0f;  // Reset the joystick timer
         }
-}
+    }
 
 
 

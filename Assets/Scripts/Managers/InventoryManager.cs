@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,7 +30,7 @@ public class InventoryManager : MonoBehaviour
 
     private void Start()
     {
-        
+
         InventoryManager.instance.slots.Add(new InventorySlot(0));  // Add one slot for the initial weapon
         weaponButtonCreator.Initialize();  // Ensure WeaponButtonCreator is initialized
         if (slots.Count > 0)
@@ -176,10 +175,10 @@ public class InventoryManager : MonoBehaviour
             for (int i = 0; i < slots.Count; i++)
             {
                 InventorySlot slotToRemove = slots[i];
-                if (slotToRemove != null && slotToRemove.Item == itemToRemove)  
+                if (slotToRemove != null && slotToRemove.Item == itemToRemove)
                 {
-                   
-                    if (slotToRemove.UIButton != null)  
+
+                    if (slotToRemove.UIButton != null)
                     {
                         Debug.Log("Button: " + slotToRemove.UIButton.name);
                         slotToRemove.UIButton.name = "Empty Slot";
@@ -212,7 +211,7 @@ public class InventoryManager : MonoBehaviour
 
 
     // Method to swap weapons
-   
+
     public void LogInventoryState()
     {
         string inventoryState = "Inventory State:\n";
@@ -227,7 +226,7 @@ public class InventoryManager : MonoBehaviour
                 inventoryState += "Empty Slot\n";
             }
         }
-       
+
     }
 
     public bool PickWeapon(string weaponName, Transform weaponHolder)
@@ -280,23 +279,23 @@ public class InventoryManager : MonoBehaviour
             //Debug.Log("Current Selected Weapon: " + weaponItem.weaponPrefab.name);  // Log the current weapon name
             return weaponItem.weaponPrefab.GetComponent<Weapon>();
         }
-      
+
         return null;
     }
 
     public List<Weapon> GetAllWeapons()
+    {
+        List<Weapon> weapons = new List<Weapon>();
+        foreach (var slot in slots)
         {
-            List<Weapon> weapons = new List<Weapon>();
-            foreach (var slot in slots)
+            if (slot.Item is WeaponInventoryItem weaponItem)
             {
-                if (slot.Item is WeaponInventoryItem weaponItem)
-                {
-                    weapons.Add(weaponItem.weaponPrefab.GetComponent<Weapon>());
-                }
+                weapons.Add(weaponItem.weaponPrefab.GetComponent<Weapon>());
             }
-            return weapons;
         }
-    
+        return weapons;
+    }
+
 
 
     public void UpdateInventoryUI()

@@ -100,7 +100,7 @@ public class ThreeDPrinter : MonoBehaviour
             if (canSelectWeapon)
             {
                 ToggleWeaponSelectPanel();
-                            
+
             }
         }
     }
@@ -249,7 +249,7 @@ public class ThreeDPrinter : MonoBehaviour
             GameObject weaponPrefab = weaponManager.GetWeaponPrefabByName(weaponName);
             if (weaponPrefab != null)
             {
-                
+
                 InventoryItem newWeaponInventoryItem = new WeaponInventoryItem(weaponName, weaponPrefab);
 
                 // Update UI and state in ThreeDPrinter

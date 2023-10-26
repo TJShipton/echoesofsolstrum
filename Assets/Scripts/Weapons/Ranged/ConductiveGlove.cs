@@ -12,5 +12,5 @@ public class ConductiveGlove : Weapon
         // Add logic to move projectile
     }
 
-    
+
 }

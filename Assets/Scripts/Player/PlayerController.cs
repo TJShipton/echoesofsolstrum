@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 
 public class PlayerController : MonoBehaviour, IDamageable
@@ -13,16 +13,16 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     [SerializeField]
     public Canvas EnemyCanvas;  // Drag your main UI Canvas here
-   
+
     public Transform characterModel;
     public LayerMask groundLayer;
 
     public float speed = 50f;
-    
+
     [SerializeField]
     private float jumpForce = 10f;  // Default value of 100, adjust in Inspector as needed
     public float doubleJumpVelocity = 15f;
-   
+
     public float attackRange = 0.5f;
     public int maxHealth = 100;
     public int currentHealth;
@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private CurrencyManager currencyManager;
 
-   
+
 
 
     // Start is called before the first frame update
@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         else
         {
-            Debug.LogWarning("No weapon is selected!");
+            //Debug.LogWarning("No weapon is selected!");
         }
     }
 

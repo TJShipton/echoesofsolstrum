@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 
 public class WeaponPickup : MonoBehaviour
@@ -25,10 +24,10 @@ public class WeaponPickup : MonoBehaviour
             {
                 // Create a new InventoryItem for the picked weapon
                 InventoryItem newWeaponItem = new WeaponInventoryItem(newWeapon.weaponName, newWeapon.gameObject);
-                
-                  
 
-                
+
+
+
 
                 // Add the new weapon item to the inventory
                 inventoryManager.AddItem(newWeaponItem);
