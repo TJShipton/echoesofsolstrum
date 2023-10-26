@@ -689,6 +689,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1525218576529477831, guid: 889d24f8fc349cf45b463fb9b13b0143,
         type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525218576529477831, guid: 889d24f8fc349cf45b463fb9b13b0143,
+        type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
@@ -763,6 +768,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1190354148}
+    - targetCorrespondingSourceObject: {fileID: 1525218576529477831, guid: 889d24f8fc349cf45b463fb9b13b0143,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1190354152}
     - targetCorrespondingSourceObject: {fileID: 1525218576529477831, guid: 889d24f8fc349cf45b463fb9b13b0143,
         type: 3}
       insertIndex: -1
@@ -930,7 +939,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
-  m_LocalPosition: {x: 0.1547866, y: 3.243379, z: -4.5905423}
+  m_LocalPosition: {x: 0.15475453, y: 3.243379, z: -4.5905423}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1291,7 +1300,7 @@ PrefabInstance:
     - target: {fileID: 920440565479371788, guid: 34115fd4eff069845a47d22ce756724e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -6.474884
+      value: -6.4749146
       objectReference: {fileID: 0}
     - target: {fileID: 1240526424534636112, guid: 34115fd4eff069845a47d22ce756724e,
         type: 3}
@@ -1496,6 +1505,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HyperbassFlute
       objectReference: {fileID: 0}
+    - target: {fileID: 5964058242973796341, guid: 7499c687a57f789408d3e6520610ce4c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6819527279671948957, guid: 7499c687a57f789408d3e6520610ce4c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1648,7 +1662,7 @@ PrefabInstance:
     - target: {fileID: 1696014694992928748, guid: d079cd0e6137a44b58864c3a91ad119a,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2437060625171721727, guid: d079cd0e6137a44b58864c3a91ad119a,
         type: 3}
@@ -1757,6 +1771,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &844049039 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8907984587532235605, guid: 3ac2d43f35765c440898e97f65d179fc,
+    type: 3}
+  m_PrefabInstance: {fileID: 3968542798422722713}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e7fce76356c4674f911856edaf33ca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &881385210
 GameObject:
   m_ObjectHideFlags: 0
@@ -1941,7 +1967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f10700028fbd5c4aafe0077531c9571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  availableWeapons: []
+  inventoryManager: {fileID: 844049039}
   currentWeapon: {fileID: 0}
   weaponInventory: []
   weaponHolder: {fileID: 25081439}
@@ -1965,16 +1991,15 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  speed: 10
-  acceleration: 2
-  jumpVelocity: 10
-  doubleJumpVelocity: 8
-  extraGravityForce: 0
-  attackRange: 1
+  speed: 7
+  jumpForce: 10
+  doubleJumpVelocity: 10
+  attackRange: 0.5
   maxHealth: 100
   currentHealth: 0
   playerHealthBar: {fileID: 1017565290}
   playerHealthText: {fileID: 1249433774}
+  groundCheckDistance: 0.1
 --- !u!136 &1190354148
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2006,7 +2031,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1190354139}
   serializedVersion: 4
-  m_Mass: 20
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -2037,8 +2062,137 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0d040e229db9464b995f4e6842fb984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeWeaponSlot: 0
-  weaponHolder: {fileID: 25081439}
+--- !u!114 &1190354152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190354139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 767a09b3e19849d47af5ed5a8ca7657d,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1190354147}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 011927a9-3da4-4c06-8107-aeadeef7b93a
+    m_ActionName: Player/Move[/DualSenseGamepadHID/leftStick,/XInputControllerWindows/leftStick,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1190354147}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b15ef706-4697-422f-8eff-a8c2136684f8
+    m_ActionName: Player/Jump[/DualSenseGamepadHID/buttonSouth,/XInputControllerWindows/buttonSouth,/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1190354147}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnAtck1
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 492b6924-742b-4d1b-8465-8a611f50831c
+    m_ActionName: Player/Atck1[/DualSenseGamepadHID/buttonWest,/XInputControllerWindows/buttonWest,/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PlayerWeaponManager, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3e814bb5-432c-46c0-8608-4ab96a0ef7cf
+    m_ActionName: Player/Atck2[/DualSenseGamepadHID/buttonNorth,/XInputControllerWindows/buttonNorth,/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 205bcb48-488c-4187-85ba-7b043764dbab
+    m_ActionName: Player/SwapWeapon[/DualSenseGamepadHID/rightShoulder,/XInputControllerWindows/rightShoulder,/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 427bca04-648e-4c87-b60d-d27b5b183b60
+    m_ActionName: Player/Cast[/DualSenseGamepadHID/leftShoulder,/XInputControllerWindows/leftShoulder,/Keyboard/leftCtrl]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5cfdaa1c-230b-4227-9243-eee91fffee3c
+    m_ActionName: UI/Navigate[/DualSenseGamepadHID/dpad,/XInputControllerWindows/dpad,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 27602cdf-39e7-4f17-8b2c-166e954baad5
+    m_ActionName: UI/Submit[/Keyboard/enter,/DualSenseGamepadHID/buttonSouth,/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3d727235-0380-4a76-8188-977ca99043f9
+    m_ActionName: UI/Cancel[/Keyboard/escape,/DualSenseGamepadHID/buttonEast,/XInputControllerWindows/buttonEast]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cb296d23-59a0-4959-82cf-a8aff826763a
+    m_ActionName: UI/Point[/Mouse/position,/DualSenseGamepadHID/rightStick,/XInputControllerWindows/rightStick]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0e4603aa-00bd-45cd-bec2-1de3a8f1f798
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b6dc1550-09d5-446c-b298-ea784b929905
+    m_ActionName: UI/Scrollwheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a61df3c7-87e5-4d9f-98b5-33821e3b5da6
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1195422499 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4024657915402203352, guid: f8877b02425dbab499e5172a1c8e464a,
@@ -2255,6 +2409,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3346277235970600977, guid: 88a0b4ed3e455f947a211fad37f6d08e,
         type: 3}
+      propertyPath: weaponManager
+      value: 
+      objectReference: {fileID: 1190354146}
+    - target: {fileID: 3346277235970600977, guid: 88a0b4ed3e455f947a211fad37f6d08e,
+        type: 3}
       propertyPath: weaponButtonCreator
       value: 
       objectReference: {fileID: 21636473}
@@ -2399,7 +2558,7 @@ Transform:
   m_GameObject: {fileID: 1254253605}
   serializedVersion: 2
   m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
-  m_LocalPosition: {x: 0.1547866, y: 3.243379, z: -4.5905423}
+  m_LocalPosition: {x: 0.15475453, y: 3.243379, z: -4.5905423}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3162,6 +3321,11 @@ PrefabInstance:
       propertyPath: weaponHolder
       value: 
       objectReference: {fileID: 25081439}
+    - target: {fileID: 8907984587532235605, guid: 3ac2d43f35765c440898e97f65d179fc,
+        type: 3}
+      propertyPath: maxWeaponSlots
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3926,10 +4090,10 @@ SceneRoots:
   - {fileID: 8567789870218200815}
   - {fileID: 8867908286928395119}
   - {fileID: 3318451993917615307}
+  - {fileID: 592793018}
   - {fileID: 834389453}
   - {fileID: 126973591}
   - {fileID: 90677832}
-  - {fileID: 592793018}
   - {fileID: 881385214}
   - {fileID: 835053097}
   - {fileID: 749166546}

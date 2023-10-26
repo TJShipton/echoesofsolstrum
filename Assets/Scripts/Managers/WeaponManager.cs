@@ -5,8 +5,9 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviour
 {
     public static WeaponManager instance; // Singleton instance
+    public InventoryManager inventoryManager;
 
-    public List<Weapon> availableWeapons; // List of weapons the player has
+    //public List<Weapon> availableWeapons; // List of weapons the player has
     public Weapon currentWeapon;
     public List<Weapon> weaponInventory;  // Existing inventory list
 
@@ -108,7 +109,7 @@ public class WeaponManager : MonoBehaviour
 
     public Weapon InstantiateNewWeapon(GameObject weaponPrefab, Transform holder)
     {
-        
+
         Weapon newWeapon = Instantiate(weaponPrefab.GetComponent<Weapon>(), holder);
         newWeapon.gameObject.SetActive(false);
         newWeapon.transform.SetParent(holder);
@@ -122,8 +123,42 @@ public class WeaponManager : MonoBehaviour
         //holder.gameObject.SetActive(true);  // Ensure holder is active
         newWeapon.gameObject.SetActive(true);  // Activate newWeapon
 
-        
+
         return newWeapon;
+    }
+
+    public void UpdateWeapons()
+    {
+        if (inventoryManager != null)
+        {
+            Weapon newCurrentWeapon = inventoryManager.GetCurrentWeapon();
+            weaponInventory = inventoryManager.GetAllWeapons();
+            // Log the newCurrentWeapon and currentWeapon before they are updated
+            Debug.Log("New Current Weapon: " + (newCurrentWeapon ? newCurrentWeapon.name : "null"));
+            Debug.Log("Current Weapon before update: " + (currentWeapon ? currentWeapon.name : "null"));
+            // Deactivate the previous weapon and activate the new weapon
+            if (currentWeapon != null && newCurrentWeapon != currentWeapon)
+            {
+                currentWeapon.gameObject.SetActive(false);  // Deactivate the previous weapon
+            }
+            if (newCurrentWeapon != null)
+            {
+                newCurrentWeapon.gameObject.SetActive(true);  // Activate the new weapon
+            }
+
+            currentWeapon = newCurrentWeapon;  // Update the current weapon reference
+            Debug.Log("Current Weapon after update: " + (currentWeapon ? currentWeapon.name : "null"));
+        }
+        else
+        {
+            Debug.LogWarning("InventoryManager is not set on WeaponManager.");
+        }
+
+        // Log the current weapon in WeaponManager
+        if (currentWeapon != null)
+        {
+            //Debug.Log("Current Weapon in WeaponManager: " + currentWeapon.name);
+        }
     }
 
 }

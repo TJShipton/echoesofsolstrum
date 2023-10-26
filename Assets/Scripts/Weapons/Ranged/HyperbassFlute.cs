@@ -3,26 +3,17 @@ using UnityEngine;
 public class HyperbassFlute : Weapon
 {
     public Transform projectileSpawnPoint;
-
-    void Update()
-    {
-
-        if (Input.GetButtonDown("Fire1"))
-        {
-            PrimaryAttack();
-        }
-
-
-    }
-
+     
     public override void PrimaryAttack()
     {
+        Debug.Log("PrimaryAttack called on HyperbassFlute");
+
         if (weaponData.projectilePrefab != null && projectileSpawnPoint != null)
         {
             // Instantiate a new projectile at the spawn point
             GameObject projectile = Instantiate(weaponData.projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
 
-            // You might want to set other properties of the projectile here, like its damage value
+            // set other properties of the projectile here, like its damage value
             // Assuming your projectile has a script with a SetDamage method
             // projectile.GetComponent<ProjectileScript>().SetDamage(weaponData.baseDamage);
 
