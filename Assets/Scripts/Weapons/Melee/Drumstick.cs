@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Drumstick : Weapon
 {
+    public Canvas EnemyCanvas;
 
     private int comboCounter = 0;
     private float lastAttackTime = 0;
@@ -12,19 +13,17 @@ public class Drumstick : Weapon
 
     private Animator playerAnimator;
 
-    [SerializeField]
-    private Canvas EnemyCanvas;
-
     void Start()
     {
-
-
+        // Access the GameManager to get the EnemyCanvas
+        if (EnemyCanvas == null)
+        {
+            EnemyCanvas = GameManager.EnemyCanvas;
+        }
     }
-
 
     public override void PrimaryAttack()
     {
-
         comboCounter++;
         lastAttackTime = Time.time;
 
@@ -47,8 +46,6 @@ public class Drumstick : Weapon
         }
     }
 
-
-
     private void DetectEnemiesInRadius()
     {
         Collider[] enemiesToDamage = Physics.OverlapSphere(transform.position, spinAttackRadius, enemyLayers);
@@ -57,11 +54,23 @@ public class Drumstick : Weapon
             IDamageable enemy = enemiesToDamage[i].GetComponent<IDamageable>();
             if (enemy != null)
             {
-                enemy.TakeDamage(weaponData.baseDamage, EnemyCanvas); // Passing EnemyCanvas
-
+                enemy.TakeDamage(weaponData.baseDamage, EnemyCanvas);
             }
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            IDamageable enemy = other.GetComponent<IDamageable>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(weaponData.baseDamage, EnemyCanvas);
+            }
+        }
+    }
+
     private void Update()
     {
         if (comboCounter > 0 && Time.time - lastAttackTime > comboResetTime)
@@ -69,9 +78,4 @@ public class Drumstick : Weapon
             comboCounter = 0;
         }
     }
-
-    //public override void Upgrade()
-    //{
-    //    isUpgraded = true;
-    //}
 }
