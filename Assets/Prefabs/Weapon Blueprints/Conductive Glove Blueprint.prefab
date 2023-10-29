@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint: {fileID: 11400000, guid: 806b5bef89f4bb74cb673e977b77e421, type: 2}
+  unlockText: {fileID: 0}
+  displayDuration: 2
 --- !u!65 &927335383118870896
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -171,5 +173,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.34126163, y: 0.4332648, z: 0.11458492}
-  m_Center: {x: -0.13104033, y: -0.21634427, z: 0.44270754}
+  m_Size: {x: 0.3458873, y: 0.4332648, z: 0.050468087}
+  m_Center: {x: -0.1287275, y: -0.21634427, z: 0.47476596}

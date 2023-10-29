@@ -13,8 +13,12 @@ PrefabInstance:
       value: OBow
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
       propertyPath: m_TagString
-      value: Drumstick
+      value: OBow
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: eaffb87fd63eadd469111e80479fbb50, type: 3}
       propertyPath: m_LocalScale.x
@@ -113,7 +117,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Obow
-  damage: 0
   weaponData: {fileID: 11400000, guid: 967fb92c0a03bc14eb200aa7a7c76d7b, type: 2}
   localOrientation: {x: 0, y: 85, z: 0}
   localPosition: {x: 0.001, y: 0.023, z: 0.066}
+  projectileSpawnPoint: {fileID: 0}
+  playerTransform: {fileID: 0}

@@ -50,21 +50,29 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        // Only find and set the solTextMenu if it's not already set
-        if (solTextMenu == null)
-        {
-            GameObject menuObject = GameObject.Find("TotalSol");
-            if (menuObject != null)
-            {
-                solTextMenu = menuObject.GetComponent<TextMeshProUGUI>();
-            }
-        }
+        // Subscribe to the OnSolfatherSpawned event to update solTextMenu
+        TestSolfatherSpawn.OnSolfatherSpawned += UpdateSolTextMenuReference;
 
         UpdateSolDisplay();
     }
 
+    // This function will update the solTextMenu reference
+    private void UpdateSolTextMenuReference(GameObject solfather)
+    {
+        Transform parentTransform = solfather.transform.Find("SolfatherCanvas");
+        Transform panelTransform = parentTransform ? parentTransform.Find("PlayerUpgradePanel") : null;
+        if (panelTransform != null)
+        {
+            GameObject menuObject = panelTransform.Find("TotalSol").gameObject;
+            if (menuObject != null)
+            {
+                solTextMenu = menuObject.GetComponent<TextMeshProUGUI>();
+                Debug.Log("TotalSol reference updated");
+            }
+        }
+    }
 
-    // Function to update the display of Sol 
+    // Function to update the display of Sol
     public void UpdateSolDisplay()
     {
         // Update Sol display in HUD
@@ -79,5 +87,4 @@ public class UIManager : MonoBehaviour
             solTextMenu.text = " " + CurrencyManager.instance.solCurrency;
         }
     }
-
 }

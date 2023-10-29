@@ -70,6 +70,8 @@ public class PermanentUpgradeButton : MonoBehaviour
                 ApplyUpgrade();
             }
         }
+
+
     }
 
     void UpdateProgressBar(int amountSpent)

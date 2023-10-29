@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class GameManager : MonoBehaviour
     private float joystickThreshold = 0.5f;  // Time in seconds to wait before setting to "controller"
 
     public static Canvas EnemyCanvas;
+
+    [SerializeField]
+    private TextMeshProUGUI weaponUnlockText; //weapon unlock text 
 
 
     void Awake()
@@ -76,7 +80,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
+    public TextMeshProUGUI GetUnlockText()
+    {
+        return weaponUnlockText;
+    }
 
 
 

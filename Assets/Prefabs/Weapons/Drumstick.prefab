@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7950495821981733177}
   - component: {fileID: -3518510482193125501}
   - component: {fileID: 4936525630916203001}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Drumstick
   m_TagString: Drumstick
   m_Icon: {fileID: 0}
@@ -138,8 +138,7 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: d70ecc16bba4d9b4d85fe2ddd18a75cf, type: 2}
   localOrientation: {x: 0, y: 0, z: 0}
   localPosition: {x: 0, y: 0, z: 0}
-  EnemyCanvas: {fileID: 5764559808028434689, guid: 7e836d47bfed1864ba45345e70e4fecd,
-    type: 3}
+  EnemyCanvas: {fileID: 0}
   comboResetTime: 2
   spinAttackRadius: 2
   enemyLayers:

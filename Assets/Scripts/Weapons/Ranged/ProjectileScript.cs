@@ -56,9 +56,9 @@ public class ProjectileScript : MonoBehaviour
         var hit = collision.gameObject.GetComponent<IDamageable>();
         if (hit != null)
         {
-            Debug.Log("EnemyCanvas before TakeDamage: " + (GameManager.EnemyCanvas == null ? "null" : "set"));
+            
             hit.TakeDamage(damage, GameManager.EnemyCanvas);
-            Debug.Log("EnemyCanvas after TakeDamage: " + (GameManager.EnemyCanvas == null ? "null" : "set"));
+          
         }
     }
 

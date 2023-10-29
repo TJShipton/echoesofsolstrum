@@ -1,33 +1,69 @@
+using UnityEngine;
+
 public class OBow : Weapon
 {
-    // O-Bow specific properties
-    private bool isRanged = true;  // To switch between ranged and melee
-    private bool isUpgraded = false;
+    public Transform projectileSpawnPoint;
+    public Transform playerTransform;  // Reference to the player's transform
+    private Animator animator;
+    private Rigidbody playerRigidbody;  // Reference to the player's rigidbody
+
+    private void Awake()
+    {
+        animator = GetComponentInParent<Animator>();
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        if (playerTransform != null)
+        {
+            playerRigidbody = playerTransform.GetComponent<Rigidbody>();
+        }
+        else
+        {
+            Debug.LogError("Player object not found in the scene.");
+        }
+    }
 
     public override void PrimaryAttack()
     {
-        if (isRanged)
+        if (weaponData.projectilePrefab != null && projectileSpawnPoint != null)
         {
-            if (!isUpgraded)
+            GameObject projectile = Instantiate(weaponData.projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+            Rigidbody projectileRigidbody = projectile.GetComponent<Rigidbody>();
+            ProjectileScript projectileScript = projectile.GetComponent<ProjectileScript>();  // Get the ProjectileScript component
+
+            if (projectileScript != null)
             {
-                // Basic ranged attack logic
+                projectileScript.SetDamage(weaponData.baseDamage);   // Set the damage value
             }
             else
             {
-                // Harmonize attack logic
+                Debug.LogWarning("ProjectileScript component is missing on the projectile prefab, can't set damage value.");
+            }
+
+            if (projectileRigidbody != null)
+            {
+                Vector3 shootDirection = playerTransform.forward;  // Use player's forward direction
+                Vector3 playerVelocity = playerRigidbody.velocity;  // Get the player's current velocity
+
+                // Adjusting the projectile's velocity
+                projectileRigidbody.velocity = shootDirection * (weaponData.projectileSpeed + playerVelocity.magnitude);
+            }
+            else
+            {
+                Debug.LogWarning("Rigidbody component is missing on the projectile prefab, can't set velocity.");
+            }
+
+            if (animator != null)
+            {
+                animator.SetTrigger("PrimaryAttack");
+            }
+            else
+            {
+                Debug.LogWarning("Animator component is missing, can't trigger animation.");
             }
         }
         else
         {
-            // Melee attack logic
+            Debug.LogWarning("Projectile prefab or spawn point is missing, can't shoot projectile.");
         }
-    }
-
-
-
-    public void ToggleRangedMode(bool ranged)
-    {
-        isRanged = ranged;
     }
 }
 

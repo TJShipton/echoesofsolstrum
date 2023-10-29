@@ -6,7 +6,7 @@ public class WeaponManager : MonoBehaviour
     public static WeaponManager instance; // Singleton instance
     public InventoryManager inventoryManager;
 
-    //public List<Weapon> availableWeapons; // List of weapons the player has
+    public List<Weapon> availableWeapons; // List of weapons the player has
     public Weapon currentWeapon;
     public List<Weapon> weaponInventory;  // Existing inventory list
 
@@ -117,9 +117,9 @@ public class WeaponManager : MonoBehaviour
         newWeapon.transform.localRotation = Quaternion.identity;
         newWeapon.transform.localEulerAngles = newWeapon.localOrientation;
 
-        newWeapon.ApplyTierModifiers();  // Assuming this method exists in your Weapon class
+        newWeapon.ApplyTierModifiers();  //Apply tier modifiers from Weapon class
 
-        //holder.gameObject.SetActive(true);  // Ensure holder is active
+        holder.gameObject.SetActive(true);  // Ensure holder is active
         newWeapon.gameObject.SetActive(true);  // Activate newWeapon
 
 
@@ -133,8 +133,7 @@ public class WeaponManager : MonoBehaviour
             Weapon newCurrentWeapon = inventoryManager.GetCurrentWeapon();
             weaponInventory = inventoryManager.GetAllWeapons();
             // Log the newCurrentWeapon and currentWeapon before they are updated
-            Debug.Log("New Current Weapon: " + (newCurrentWeapon ? newCurrentWeapon.name : "null"));
-            Debug.Log("Current Weapon before update: " + (currentWeapon ? currentWeapon.name : "null"));
+            
             // Deactivate the previous weapon and activate the new weapon
             if (currentWeapon != null && newCurrentWeapon != currentWeapon)
             {
@@ -146,7 +145,7 @@ public class WeaponManager : MonoBehaviour
             }
 
             currentWeapon = newCurrentWeapon;  // Update the current weapon reference
-            Debug.Log("Current Weapon after update: " + (currentWeapon ? currentWeapon.name : "null"));
+           
         }
         else
         {
