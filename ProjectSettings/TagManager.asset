@@ -14,6 +14,14 @@ TagManager:
   - 3D Printer
   - EnemyCanvas
   - TotalSol
+  - InventoryCanvas
+  - Solfather
+  - UnlockText
+  - WeaponUnlockText
+  - SolfatherCanvas
+  - PlayerUpgradePanel
+  - PlayerHealthBar
+  - PlayerHealthText
   layers:
   - Default
   - TransparentFX
@@ -25,10 +33,10 @@ TagManager:
   - Companion
   - Enemy
   - 3D Printer
-  - 
-  - 
-  - 
-  - 
+  - Weapon
+  - Projectile
+  - InventoryCanvas
+  - Solfather
   - 
   - 
   - 

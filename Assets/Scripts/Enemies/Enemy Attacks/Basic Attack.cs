@@ -6,7 +6,7 @@ public class BasicAttack : MonoBehaviour
     private Enemy enemy;
     private Transform playerTransform;
     private IDamageable playerDamageable;
-    public Canvas hudCanvas; // Canvas variable
+    public Canvas enemyCanvas; // Canvas variable
 
     void Start()
     {
@@ -38,7 +38,7 @@ public class BasicAttack : MonoBehaviour
     {
         if (playerDamageable != null)
         {
-            playerDamageable.TakeDamage(enemy.Data.attackDamage, hudCanvas); // Passing uiCanvas
+            playerDamageable.TakeDamage(enemy.Data.attackDamage, enemyCanvas); // Passing uiCanvas
             // Trigger any attack animations or sounds here
         }
     }

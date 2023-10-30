@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80727d36d54a8c4a8e0a08a6e9860a1, type: 3}
   m_Name: DrumstickBlueprint
   m_EditorClassIdentifier: 
-  weaponName: 
+  weaponName: Drumstick
   weaponPrefab: {fileID: 5323694295545765144, guid: 68a1a3f6398bdc24eb52d8108fc96556,
     type: 3}
   damage: 0

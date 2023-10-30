@@ -348,9 +348,15 @@ GameObject:
   m_Component:
   - component: {fileID: 2189165697742768765}
   - component: {fileID: -1392162297567224322}
-  m_Layer: 0
+  - component: {fileID: 8247918298476585699}
+  - component: {fileID: 3107006812860001932}
+  - component: {fileID: 5937213912705018637}
+  - component: {fileID: 1728523911677605483}
+  - component: {fileID: 1591374454508282158}
+  - component: {fileID: 8723143762548656364}
+  m_Layer: 6
   m_Name: Man_04
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -397,8 +403,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525218576529477831}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: b8a7488d12adc39498433d60811eab1a, type: 3}
+  m_Controller: {fileID: 9100000, guid: f813241c77b383c48a617b10a99d5da4, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -409,6 +415,262 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!54 &8247918298476585699
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525218576529477831}
+  serializedVersion: 4
+  m_Mass: 5
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!136 &3107006812860001932
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525218576529477831}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.26395896
+  m_Height: 1.7758491
+  m_Direction: 1
+  m_Center: {x: 0.0103773475, y: 0.90395534, z: 1.22153815e-11}
+--- !u!114 &5937213912705018637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525218576529477831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 767a09b3e19849d47af5ed5a8ca7657d,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1728523911677605483}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 011927a9-3da4-4c06-8107-aeadeef7b93a
+    m_ActionName: Player/Move[/DualSenseGamepadHID/leftStick,/XInputControllerWindows/leftStick,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1728523911677605483}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b15ef706-4697-422f-8eff-a8c2136684f8
+    m_ActionName: Player/Jump[/DualSenseGamepadHID/buttonSouth,/XInputControllerWindows/buttonSouth,/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1728523911677605483}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnAtck1
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 492b6924-742b-4d1b-8465-8a611f50831c
+    m_ActionName: Player/Atck1[/DualSenseGamepadHID/buttonWest,/XInputControllerWindows/buttonWest,/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1728523911677605483}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnAtck2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3e814bb5-432c-46c0-8608-4ab96a0ef7cf
+    m_ActionName: Player/Atck2[/DualSenseGamepadHID/buttonNorth,/XInputControllerWindows/buttonNorth,/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 205bcb48-488c-4187-85ba-7b043764dbab
+    m_ActionName: Player/SwapWeapon[/DualSenseGamepadHID/rightShoulder,/XInputControllerWindows/rightShoulder,/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 427bca04-648e-4c87-b60d-d27b5b183b60
+    m_ActionName: Player/Cast[/DualSenseGamepadHID/leftShoulder,/XInputControllerWindows/leftShoulder,/Keyboard/leftCtrl]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5cfdaa1c-230b-4227-9243-eee91fffee3c
+    m_ActionName: UI/Navigate[/DualSenseGamepadHID/dpad,/XInputControllerWindows/dpad,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Solfather, Assembly-CSharp
+        m_MethodName: OnSubmit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 27602cdf-39e7-4f17-8b2c-166e954baad5
+    m_ActionName: UI/Submit[/Keyboard/enter,/DualSenseGamepadHID/buttonSouth,/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3d727235-0380-4a76-8188-977ca99043f9
+    m_ActionName: UI/Cancel[/Keyboard/escape,/DualSenseGamepadHID/buttonEast,/XInputControllerWindows/buttonEast]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cb296d23-59a0-4959-82cf-a8aff826763a
+    m_ActionName: UI/Point[/Mouse/position,/DualSenseGamepadHID/rightStick,/XInputControllerWindows/rightStick]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0e4603aa-00bd-45cd-bec2-1de3a8f1f798
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b6dc1550-09d5-446c-b298-ea784b929905
+    m_ActionName: UI/Scrollwheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a61df3c7-87e5-4d9f-98b5-33821e3b5da6
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &1728523911677605483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525218576529477831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee849f8f37bb04a40ac0dd75c2da7e30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyCanvas: {fileID: 0}
+  characterModel: {fileID: 2189165697742768765}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  speed: 7
+  jumpForce: 10
+  doubleJumpVelocity: 10
+  attackRange: 0.5
+  maxHealth: 100
+  currentHealth: 0
+  playerHealthBar: {fileID: 0}
+  playerHealthText: {fileID: 0}
+  groundCheckDistance: 0.1
+--- !u!114 &1591374454508282158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525218576529477831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f10700028fbd5c4aafe0077531c9571, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryManager: {fileID: 8723143762548656364}
+  availableWeapons: []
+  currentWeapon: {fileID: 0}
+  weaponInventory: []
+  weaponHolder: {fileID: 432728230919519509}
+  unlockedWeapons: []
+  threeDPrinter: {fileID: 0}
+  foundWeaponBlueprints: []
+--- !u!114 &8723143762548656364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525218576529477831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e7fce76356c4674f911856edaf33ca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxWeaponSlots: 1
+  weaponButtonCreator: {fileID: 1976013592008896480, guid: ac7637803b48546448a43f08d8b176f4,
+    type: 3}
+  weaponInventoryPanel: {fileID: 0}
+  weaponHolder: {fileID: 432728230919519509}
 --- !u!1 &1541317550249371662
 GameObject:
   m_ObjectHideFlags: 0
@@ -926,7 +1188,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2628255936818381289}
-  m_Layer: 0
+  - component: {fileID: 5790423506810617140}
+  - component: {fileID: 1237801027703750744}
+  m_Layer: 6
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -949,6 +1213,43 @@ Transform:
   - {fileID: 575454597810696484}
   m_Father: {fileID: 2189165697742768765}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &5790423506810617140
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2407731872938397037}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1237801027703750744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2407731872938397037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RigLayers:
+  - m_Rig: {fileID: 0}
+    m_Active: 1
+  m_Effectors: []
 --- !u!1 &2506882608127553861
 GameObject:
   m_ObjectHideFlags: 0
@@ -3223,6 +3524,7 @@ Transform:
   - {fileID: 6665611992427168607}
   - {fileID: 4373980726850002879}
   - {fileID: 4558662856402656876}
+  - {fileID: 432728230919519509}
   m_Father: {fileID: 5605782866138649027}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7965166064634057555
@@ -3570,3 +3872,77 @@ Transform:
   - {fileID: 5498526888642612953}
   m_Father: {fileID: 8600511970049519449}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &911970865518089316
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5084344385780989346}
+    m_Modifications:
+    - target: {fileID: 767481806844569969, guid: e0a4cc01b3f3986479981004db0ddf50,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.11401003
+      objectReference: {fileID: 0}
+    - target: {fileID: 767481806844569969, guid: e0a4cc01b3f3986479981004db0ddf50,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.055973683
+      objectReference: {fileID: 0}
+    - target: {fileID: 767481806844569969, guid: e0a4cc01b3f3986479981004db0ddf50,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.000003002584
+      objectReference: {fileID: 0}
+    - target: {fileID: 767481806844569969, guid: e0a4cc01b3f3986479981004db0ddf50,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8292663
+      objectReference: {fileID: 0}
+    - target: {fileID: 767481806844569969, guid: e0a4cc01b3f3986479981004db0ddf50,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.55885375
+      objectReference: {fileID: 0}
+    - target: {fileID: 767481806844569969, guid: e0a4cc01b3f3986479981004db0ddf50,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.000000031664957
+      objectReference: {fileID: 0}
+    - target: {fileID: 767481806844569969, guid: e0a4cc01b3f3986479981004db0ddf50,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0000003306194
+      objectReference: {fileID: 0}
+    - target: {fileID: 767481806844569969, guid: e0a4cc01b3f3986479981004db0ddf50,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 67.953
+      objectReference: {fileID: 0}
+    - target: {fileID: 767481806844569969, guid: e0a4cc01b3f3986479981004db0ddf50,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 767481806844569969, guid: e0a4cc01b3f3986479981004db0ddf50,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2802094054302480186, guid: e0a4cc01b3f3986479981004db0ddf50,
+        type: 3}
+      propertyPath: m_Name
+      value: WeaponHolder
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e0a4cc01b3f3986479981004db0ddf50, type: 3}
+--- !u!4 &432728230919519509 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 767481806844569969, guid: e0a4cc01b3f3986479981004db0ddf50,
+    type: 3}
+  m_PrefabInstance: {fileID: 911970865518089316}
+  m_PrefabAsset: {fileID: 0}

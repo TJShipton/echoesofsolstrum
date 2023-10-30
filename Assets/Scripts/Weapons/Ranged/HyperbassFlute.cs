@@ -3,34 +3,70 @@ using UnityEngine;
 public class HyperbassFlute : Weapon
 {
     public Transform projectileSpawnPoint;
-    private Animator animator;
-    private void Awake()  // Changed to Awake from Start
+    public Transform playerTransform;  // Reference to the player's transform
+    public Canvas EnemyCanvas;
+
+    
+    public Animator animator;
+    private Rigidbody playerRigidbody;  // Reference to the player's rigidbody
+    
+
+    private void Awake()
     {
-        animator = GetComponentInParent<Animator>();  // Changed to GetComponentInParent
+        animator = GetComponentInParent<Animator>();
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        
+        if (playerTransform != null)
+        {
+            playerRigidbody = playerTransform.GetComponent<Rigidbody>();
+        }
+        else
+        {
+            Debug.LogError("Player object not found in the scene.");
+
+        }
+
+        // Access the GameManager to get the EnemyCanvas
+        if (EnemyCanvas == null)
+        {
+            EnemyCanvas = GameManager.EnemyCanvas;
+        }
+
     }
+
     public override void PrimaryAttack()
     {
-        //Debug.Log("PrimaryAttack called on HyperbassFlute");
-
         if (weaponData.projectilePrefab != null && projectileSpawnPoint != null)
         {
-            // Instantiate a new projectile at the spawn point
             GameObject projectile = Instantiate(weaponData.projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
-
-            // set other properties of the projectile here, like its damage value
-            // Assuming your projectile has a script with a SetDamage method
-            // projectile.GetComponent<ProjectileScript>().SetDamage(weaponData.baseDamage);
-
-            // Apply force to the projectile to shoot it
             Rigidbody projectileRigidbody = projectile.GetComponent<Rigidbody>();
+            ProjectileScript projectileScript = projectile.GetComponent<ProjectileScript>();  // Get the ProjectileScript component
+
+            if (projectileScript != null)
+            {
+                projectileScript.SetDamage(weaponData.baseDamage);   // Set the damage value
+            }
+            else
+            {
+                Debug.LogWarning("ProjectileScript component is missing on the projectile prefab, can't set damage value.");
+            }
+
             if (projectileRigidbody != null)
             {
-                Vector3 shootDirection = projectileSpawnPoint.forward;
-                projectileRigidbody.velocity = shootDirection * weaponData.projectileSpeed;
+                Vector3 shootDirection = playerTransform.forward;  // Use player's forward direction
+                Vector3 playerVelocity = playerRigidbody.velocity;  // Get the player's current velocity
+
+                // Adjusting the projectile's velocity
+                projectileRigidbody.velocity = shootDirection * (weaponData.projectileSpeed + playerVelocity.magnitude);
             }
+            else
+            {
+                Debug.LogWarning("Rigidbody component is missing on the projectile prefab, can't set velocity.");
+            }
+
             if (animator != null)
             {
-                animator.SetTrigger("PrimaryAttack");
+                animator.SetTrigger("HyperbassAttack");
             }
             else
             {
@@ -42,5 +78,5 @@ public class HyperbassFlute : Weapon
             Debug.LogWarning("Projectile prefab or spawn point is missing, can't shoot projectile.");
         }
     }
-    
+
 }

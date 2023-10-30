@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint: {fileID: 11400000, guid: c2b789b44ab62a84c9a4826271e1d2b2, type: 2}
+  unlockText: {fileID: 0}
+  displayDuration: 2
 --- !u!65 &6905928258128877890
 BoxCollider:
   m_ObjectHideFlags: 0

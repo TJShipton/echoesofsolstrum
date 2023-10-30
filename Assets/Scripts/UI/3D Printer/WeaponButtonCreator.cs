@@ -12,6 +12,8 @@ public class WeaponButtonCreator : MonoBehaviour
 
     public void Initialize()
     {
+        weaponThumbnails.Clear(); // Clear the dictionary
+
         Sprite ConductiveGloveThumbnail = Resources.Load<Sprite>("WeaponThumbnails/ConductiveGlove");
         weaponThumbnails.Add("ConductiveGlove", ConductiveGloveThumbnail);
 

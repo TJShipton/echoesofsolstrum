@@ -180,9 +180,9 @@ public class InventoryManager : MonoBehaviour
 
                     if (slotToRemove.UIButton != null)
                     {
-                        Debug.Log("Button: " + slotToRemove.UIButton.name);
+                        //Debug.Log("Button: " + slotToRemove.UIButton.name);
                         slotToRemove.UIButton.name = "Empty Slot";
-                        Debug.Log("New Name: " + slotToRemove.UIButton.name);
+                        //Debug.Log("New Name: " + slotToRemove.UIButton.name);
                     }
                     else
                     {

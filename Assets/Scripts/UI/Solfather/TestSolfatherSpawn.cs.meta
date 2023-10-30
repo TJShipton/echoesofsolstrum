@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 47850bee905f0704a941c3ff6873508c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - solfatherPrefab: {fileID: 4771620668116638368, guid: 3ddf35672c4924b4a9c886cfa05bf254,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

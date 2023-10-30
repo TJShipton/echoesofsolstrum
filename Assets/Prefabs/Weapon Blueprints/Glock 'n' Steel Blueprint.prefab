@@ -68,6 +68,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blueprint: {fileID: 11400000, guid: ec8769c824ce3c24183932f266f62094, type: 2}
+  unlockText: {fileID: 0}
+  displayDuration: 2
 --- !u!1 &9210203639713041211
 GameObject:
   m_ObjectHideFlags: 0

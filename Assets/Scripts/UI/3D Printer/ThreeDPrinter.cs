@@ -42,7 +42,9 @@ public class ThreeDPrinter : MonoBehaviour
             weaponManager = FindObjectOfType<WeaponManager>();
         }
 
-        weaponButtonCreator.Initialize();  // Ensure WeaponButtonCreator is initialized
+        //Initialise weapon button creator 
+
+        weaponButtonCreator.Initialize();
 
 
     }

@@ -12,7 +12,8 @@ public class Enemy : MonoBehaviour, IDamageable
     private GameObject healthBarPrefab;  // Drag your HealthBar prefab here from Unity Editor
     private GameObject healthBarInstance;
     private Slider healthBarSlider;
-
+    [SerializeField]
+    private Canvas enemyCanvas;
     public Animator Animator { get; private set; }
     public EnemyData Data => enemyData;  // Allows other scripts to access the enemyData
 
@@ -52,19 +53,36 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damageAmount, Canvas EnemyCanvas)
     {
-        //Debug.Log("TakeDamage called. Damage Amount: " + damageAmount); // Debug 1
-        //Debug.Log("Provided Canvas: " + (EnemyCanvas == null ? "Null" : "Exists")); // Debug 2
-
+      
         currentHealth -= damageAmount; // Deduct the damage received
 
         if (healthBarInstance == null)
         {
-            healthBarInstance = Instantiate(healthBarPrefab, EnemyCanvas.transform);
+            // Check if the healthBarPrefab is not null
+            if (healthBarPrefab != null)
+            {
+                // Instantiate the healthBarPrefab as a new GameObject and set its parent
+                if (EnemyCanvas != null)
+                {
+                    healthBarInstance = Instantiate(healthBarPrefab, enemyCanvas.transform, false);
+                }
+                else
+                {
+                    Debug.LogWarning("EnemyCanvas is null, health bar will not be parented to it.");
+                    healthBarInstance = Instantiate(healthBarPrefab);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("HealthBarPrefab is null, cannot create health bar.");
+                return; // Return early if the prefab is not available.
+            }
+
             healthBarSlider = healthBarInstance.GetComponent<Slider>();
             healthBarSlider.maxValue = enemyData.health;
             healthBarSlider.value = currentHealth;
 
-            //Debug.Log("Health Bar Instance Created."); // Debug 3
+            
         }
         else
         {
@@ -77,6 +95,9 @@ public class Enemy : MonoBehaviour, IDamageable
             Die();
         }
     }
+
+
+
 
 
 

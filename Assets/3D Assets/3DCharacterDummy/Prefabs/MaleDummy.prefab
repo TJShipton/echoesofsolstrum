@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2107943836833259117}
   - component: {fileID: 8372930642664548119}
   - component: {fileID: 6270149349524701159}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TotalCost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1869,7 +1869,7 @@ GameObject:
   - component: {fileID: 3291070866400961440}
   - component: {fileID: 3473403469352945111}
   - component: {fileID: 4348260919435537932}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TotalCost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2003,7 +2003,7 @@ GameObject:
   - component: {fileID: 2262513644647803555}
   - component: {fileID: 5535153349182845942}
   - component: {fileID: 3176133680401605138}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BeefyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2139,7 +2139,7 @@ GameObject:
   - component: {fileID: 7062175801860424724}
   - component: {fileID: 5175161271507779466}
   - component: {fileID: 3919070292555110358}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: WeaponSlotButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2297,7 +2297,7 @@ GameObject:
   - component: {fileID: 2852908163899675616}
   - component: {fileID: 1394894148243768261}
   - component: {fileID: 5106283473127338155}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: SolfatherAvatar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2372,7 +2372,7 @@ GameObject:
   - component: {fileID: 1438017528297028301}
   - component: {fileID: 3427753089401752793}
   - component: {fileID: 2495378163627454524}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: DJIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2447,7 +2447,7 @@ GameObject:
   - component: {fileID: 7070320710356243626}
   - component: {fileID: 8174332411886867010}
   - component: {fileID: 8280169936463016476}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: AmountSpent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2583,7 +2583,7 @@ GameObject:
   - component: {fileID: 2683825235337808138}
   - component: {fileID: 4628299089997393720}
   - component: {fileID: 8540319273038957218}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: 'BeefyButton '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2743,7 +2743,7 @@ GameObject:
   - component: {fileID: 6342544080322115191}
   - component: {fileID: 91272870342790192}
   - component: {fileID: 6335617030129077787}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Viewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2853,6 +2853,108 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!1 &2006866729837226975
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7360767391171197499}
+  - component: {fileID: 3175155525577202926}
+  - component: {fileID: 7730217868354905856}
+  - component: {fileID: 8092369016948604661}
+  m_Layer: 5
+  m_Name: SolfatherPromptCanvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7360767391171197499
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006866729837226975}
+  m_LocalRotation: {x: -0, y: 0.9960713, z: -0, w: 0.088554956}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0621}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3007101262701966334}
+  m_Father: {fileID: 8654250720420943610}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.0917, y: 2.2659}
+  m_SizeDelta: {x: 30, y: 5}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &3175155525577202926
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006866729837226975}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 1
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &7730217868354905856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006866729837226975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
+--- !u!114 &8092369016948604661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006866729837226975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &2066547732968237633
 GameObject:
   m_ObjectHideFlags: 0
@@ -2864,7 +2966,7 @@ GameObject:
   - component: {fileID: 1137542977525922226}
   - component: {fileID: 6242617365165798428}
   - component: {fileID: 8251285673003590353}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: AmountSpent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2998,7 +3100,7 @@ GameObject:
   - component: {fileID: 835439528619733778}
   - component: {fileID: 4056600236548850776}
   - component: {fileID: 6057072019371739416}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: WeaponSlotDescriptionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3132,7 +3234,7 @@ GameObject:
   - component: {fileID: 8462002234463880790}
   - component: {fileID: 4195483726473936690}
   - component: {fileID: 8366083574133759692}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: WeaponSlotText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3267,7 +3369,7 @@ GameObject:
   - component: {fileID: 8946068448674476698}
   - component: {fileID: 4306880580083507505}
   - component: {fileID: 5982279898675539335}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Scrollbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3381,140 +3483,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &3662580464314090916
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8640752201160881973}
-  - component: {fileID: 3770729298359744090}
-  - component: {fileID: 3700870653791837377}
-  m_Layer: 5
-  m_Name: SolfatherPromptText
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &8640752201160881973
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3662580464314090916}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8737177856423486266}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.039, y: 0.16195}
-  m_SizeDelta: {x: 2.4329, y: 0.3239}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &3770729298359744090
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3662580464314090916}
-  m_CullTransparentMesh: 1
---- !u!114 &3700870653791837377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3662580464314090916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: 'Press '
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 0.2
-  m_fontSizeBase: 0.2
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 1
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &3863935506023175495
 GameObject:
   m_ObjectHideFlags: 0
@@ -3526,7 +3494,7 @@ GameObject:
   - component: {fileID: 1882667319986423285}
   - component: {fileID: 2914009757461541323}
   - component: {fileID: 8009030729077048255}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: SolCostIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3590,6 +3558,140 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &3967298398609858265
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3007101262701966334}
+  - component: {fileID: 4958638744868649727}
+  - component: {fileID: 7953121610971026049}
+  m_Layer: 5
+  m_Name: SolfatherPromptText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3007101262701966334
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3967298398609858265}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7360767391171197499}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 5.1, y: -2.7}
+  m_SizeDelta: {x: 24, y: 7}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &4958638744868649727
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3967298398609858265}
+  m_CullTransparentMesh: 1
+--- !u!114 &7953121610971026049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3967298398609858265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Press
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 5
+  m_fontSizeBase: 5
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &4198206267441903195
 GameObject:
   m_ObjectHideFlags: 0
@@ -3601,7 +3703,7 @@ GameObject:
   - component: {fileID: 513070861220967417}
   - component: {fileID: 8754512831824979411}
   - component: {fileID: 8336349424707354134}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: SolCostIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3676,7 +3778,7 @@ GameObject:
   - component: {fileID: 6634827436920299910}
   - component: {fileID: 891348717911055299}
   - component: {fileID: 8603891738636307656}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PermanentUpgradesText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3812,7 +3914,7 @@ GameObject:
   - component: {fileID: 5011760182863568481}
   - component: {fileID: 4208943779105549908}
   - component: {fileID: 2181324232560672746}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: SolfatherCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3953,7 +4055,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2276565859230336310}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Sliding Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3991,7 +4093,7 @@ GameObject:
   - component: {fileID: 5720339259961951403}
   - component: {fileID: 3440928969234868200}
   - component: {fileID: 8570775630352938223}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BeefyIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4066,7 +4168,7 @@ GameObject:
   - component: {fileID: 2680362097023445831}
   - component: {fileID: 4282648116613625722}
   - component: {fileID: 4123857780931161214}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: SolCrystalPNG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4141,7 +4243,7 @@ GameObject:
   - component: {fileID: 8424376604869719135}
   - component: {fileID: 4184011170493948314}
   - component: {fileID: 6806986556888821160}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TotalCost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4275,7 +4377,7 @@ GameObject:
   - component: {fileID: 1111677590748901653}
   - component: {fileID: 7948542213376346882}
   - component: {fileID: 4805425833937313039}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: AmountSpent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4409,7 +4511,7 @@ GameObject:
   - component: {fileID: 3355314619166349897}
   - component: {fileID: 2186471326421828318}
   - component: {fileID: 8036837184848841980}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: SolCostIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4484,7 +4586,7 @@ GameObject:
   - component: {fileID: 6211134070994042503}
   - component: {fileID: 5661626634482457013}
   - component: {fileID: 3084107633303632021}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: DJDescriptionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4618,7 +4720,7 @@ GameObject:
   - component: {fileID: 3541670215746083395}
   - component: {fileID: 5170164919207447164}
   - component: {fileID: 7708598043347246154}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: DJText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4754,7 +4856,7 @@ GameObject:
   - component: {fileID: 1462790926017267593}
   - component: {fileID: 7954593626239276331}
   - component: {fileID: 8299990632383806626}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlayerUpgradePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4782,7 +4884,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -5.2562256, y: -6.474884}
+  m_AnchoredPosition: {x: -5.2562256, y: -6.4748535}
   m_SizeDelta: {x: -273.7126, y: -12.9498}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3054049935172885191
@@ -4845,7 +4947,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7367977950933130746}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -4860,7 +4962,7 @@ GameObject:
   - component: {fileID: 178048570658226452}
   - component: {fileID: 3862391540696285351}
   - component: {fileID: 3522467055140972342}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BeefyDescriptionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4983,108 +5085,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &7759201464527521907
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8737177856423486266}
-  - component: {fileID: 2159275454681563976}
-  - component: {fileID: 880571171766982238}
-  - component: {fileID: 1405856157313368578}
-  m_Layer: 5
-  m_Name: SolfatherPromptCanvas
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &8737177856423486266
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7759201464527521907}
-  m_LocalRotation: {x: -0, y: 0.9960713, z: -0, w: 0.088554956}
-  m_LocalPosition: {x: 0, y: 0, z: 0.28270316}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8640752201160881973}
-  m_Father: {fileID: 8654250720420943610}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.06082678, y: 1.14}
-  m_SizeDelta: {x: 6.159, y: 1.0151}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!223 &2159275454681563976
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7759201464527521907}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
---- !u!114 &880571171766982238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7759201464527521907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
---- !u!114 &1405856157313368578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7759201464527521907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!1 &8421979945605975569
 GameObject:
   m_ObjectHideFlags: 0
@@ -5096,7 +5096,7 @@ GameObject:
   - component: {fileID: 4391711720383543063}
   - component: {fileID: 7702122804442303209}
   - component: {fileID: 2310667299861442928}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TotalSol
   m_TagString: TotalSol
   m_Icon: {fileID: 0}
@@ -5230,7 +5230,7 @@ GameObject:
   - component: {fileID: 2309477424930483339}
   - component: {fileID: 6803171239757135053}
   - component: {fileID: 7233026171754103112}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: WeaponSlotIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5535,7 +5535,7 @@ GameObject:
   - component: {fileID: 4694095971906678105}
   m_Layer: 5
   m_Name: MaleDummy
-  m_TagString: Untagged
+  m_TagString: Solfather
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5556,7 +5556,7 @@ Transform:
   - {fileID: 7750118537045583794}
   - {fileID: 8654250720420943608}
   - {fileID: 8654250720420943614}
-  - {fileID: 8737177856423486266}
+  - {fileID: 7360767391171197499}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8654250720411597152
@@ -5616,9 +5616,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  interactionDistance: 3
+  interactionDistance: 1
   playerUpgradePanel: {fileID: 7367977950933130746}
-  promptText: {fileID: 3700870653791837377}
+  promptText: {fileID: 7953121610971026049}
   clickableLayer:
     serializedVersion: 2
     m_Bits: 32
@@ -5772,7 +5772,7 @@ GameObject:
   - component: {fileID: 1240526424534636112}
   - component: {fileID: 6866735169463670774}
   - component: {fileID: 7416896998053100510}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5848,7 +5848,7 @@ GameObject:
   - component: {fileID: 3934776417407748840}
   - component: {fileID: 4698009085482285412}
   - component: {fileID: 3232584063443474029}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5874,7 +5874,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -5.9088135, y: 7.174834}
+  m_AnchoredPosition: {x: -5.9088135, y: 7.174818}
   m_SizeDelta: {x: -0.0522, y: 14.3497}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3934776417407748840
@@ -5954,7 +5954,7 @@ GameObject:
   - component: {fileID: 209242833251774502}
   - component: {fileID: 171477097798949078}
   - component: {fileID: 3800104452394282476}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: DoubleJumpButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6114,6 +6114,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CircleProgressSlider
       objectReference: {fileID: 0}
+    - target: {fileID: 234350062588121140, guid: 72d53f3034204c148a9091ce8a556a72,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1645721358843740741, guid: 72d53f3034204c148a9091ce8a556a72,
         type: 3}
       propertyPath: m_Value
@@ -6134,9 +6139,19 @@ PrefabInstance:
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2057328357678686097, guid: 72d53f3034204c148a9091ce8a556a72,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4621268111820226249, guid: 72d53f3034204c148a9091ce8a556a72,
         type: 3}
       propertyPath: m_FillAmount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4924230205796039353, guid: 72d53f3034204c148a9091ce8a556a72,
+        type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5478962882839361874, guid: 72d53f3034204c148a9091ce8a556a72,
@@ -6247,6 +6262,11 @@ PrefabInstance:
     - target: {fileID: 5788956757201828997, guid: 72d53f3034204c148a9091ce8a556a72,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8159374557400324950, guid: 72d53f3034204c148a9091ce8a556a72,
+        type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -6289,6 +6309,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CircleProgressSlider
       objectReference: {fileID: 0}
+    - target: {fileID: 234350062588121140, guid: 72d53f3034204c148a9091ce8a556a72,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1645721358843740741, guid: 72d53f3034204c148a9091ce8a556a72,
         type: 3}
       propertyPath: m_Value
@@ -6309,9 +6334,19 @@ PrefabInstance:
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2057328357678686097, guid: 72d53f3034204c148a9091ce8a556a72,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4621268111820226249, guid: 72d53f3034204c148a9091ce8a556a72,
         type: 3}
       propertyPath: m_FillAmount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4924230205796039353, guid: 72d53f3034204c148a9091ce8a556a72,
+        type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5478962882839361874, guid: 72d53f3034204c148a9091ce8a556a72,
@@ -6422,6 +6457,11 @@ PrefabInstance:
     - target: {fileID: 5788956757201828997, guid: 72d53f3034204c148a9091ce8a556a72,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8159374557400324950, guid: 72d53f3034204c148a9091ce8a556a72,
+        type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -6464,6 +6504,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CircleProgressSlider
       objectReference: {fileID: 0}
+    - target: {fileID: 234350062588121140, guid: 72d53f3034204c148a9091ce8a556a72,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1645721358843740741, guid: 72d53f3034204c148a9091ce8a556a72,
         type: 3}
       propertyPath: m_Value
@@ -6484,9 +6529,19 @@ PrefabInstance:
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2057328357678686097, guid: 72d53f3034204c148a9091ce8a556a72,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4621268111820226249, guid: 72d53f3034204c148a9091ce8a556a72,
         type: 3}
       propertyPath: m_FillAmount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4924230205796039353, guid: 72d53f3034204c148a9091ce8a556a72,
+        type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5478962882839361874, guid: 72d53f3034204c148a9091ce8a556a72,
@@ -6597,6 +6652,11 @@ PrefabInstance:
     - target: {fileID: 5788956757201828997, guid: 72d53f3034204c148a9091ce8a556a72,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8159374557400324950, guid: 72d53f3034204c148a9091ce8a556a72,
+        type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
