@@ -48,13 +48,34 @@ public class PlayerController : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("PlayerController Start Called");
+
         rb = GetComponent<Rigidbody>();
         animator = transform.GetComponent<Animator>();
         weaponManager = GetComponent<WeaponManager>();
         currencyManager = CurrencyManager.instance;
 
+        GameObject healthBarObj = GameObject.Find("PlayerHealthbar");
+        if (healthBarObj != null)
+        {
+            playerHealthBar = healthBarObj.GetComponent<Slider>();
+        }
+        else
+        {
+            Debug.LogError("Health bar object not found.");
+        }
+
+        GameObject healthTextObj = GameObject.Find("PlayerHealthText");
+        if (healthTextObj != null)
+        {
+            playerHealthText = healthTextObj.GetComponent<TextMeshProUGUI>();
+        }
+        else
+        {
+            Debug.LogError("Health text object not found.");
+        }
+
         currentHealth = maxHealth;
-        //playerHealthText.text = currentHealth.ToString();
         UpdateHealthUI();  // Ensure the UI is correct when the game starts
 
         // Apply permanent upgrades
@@ -220,12 +241,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-
-
-
-
-
-
     public void TakeDamage(int damageAmount, Canvas HUDCanvas)
     {
         currentHealth -= damageAmount;
@@ -245,10 +260,20 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void UpdateHealthUI()
     {
+        if (playerHealthBar == null || playerHealthText == null)
+        {
+            Debug.LogError("Health UI components are null!");
+            return;
+        }
+        Debug.Log("UpdateHealthUI Called");
         playerHealthBar.maxValue = maxHealth;
         playerHealthBar.value = currentHealth;
         playerHealthText.text = currentHealth.ToString();
+        Debug.Log("Player Health Bar: " + playerHealthBar);
+        Debug.Log("Player Health Text: " + playerHealthText);
+
     }
+
     private void Die()
     {
         Debug.Log("Player has died");

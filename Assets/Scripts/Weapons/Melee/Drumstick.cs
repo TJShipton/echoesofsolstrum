@@ -11,7 +11,7 @@ public class Drumstick : Weapon
     public float spinAttackRadius = 2f;  // Radius for spin attack
     public LayerMask enemyLayers;
 
-    private Animator playerAnimator;
+    public Animator animator;
 
     void Start()
     {
@@ -44,6 +44,8 @@ public class Drumstick : Weapon
                 comboCounter = 0;
                 break;
         }
+            animator.SetTrigger("DrumstickAttack");
+
     }
 
     private void DetectEnemiesInRadius()

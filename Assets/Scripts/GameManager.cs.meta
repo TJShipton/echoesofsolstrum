@@ -3,8 +3,13 @@ guid: 0e34f7d7a20f59a4cbf2821d44912894
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
-  executionOrder: 0
+  defaultReferences:
+  - weaponUnlockText: {instanceID: 0}
+  - healthBar: {fileID: 8819776554672899457, guid: 7617d405cc9fe234486d1ab85b8ca72f,
+      type: 3}
+  - healthText: {fileID: 3128338479283383272, guid: a09ecc84608518f44acec546c53b7408,
+      type: 3}
+  executionOrder: 210
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

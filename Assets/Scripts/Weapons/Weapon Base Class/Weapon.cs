@@ -65,8 +65,7 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void PrimaryAttack()
     {
-        // Code for initiating the animation can go here later
-
+        
 
     }
 

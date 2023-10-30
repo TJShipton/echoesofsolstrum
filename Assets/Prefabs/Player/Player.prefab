@@ -959,8 +959,10 @@ MonoBehaviour:
   attackRange: 0.5
   maxHealth: 100
   currentHealth: 0
-  playerHealthBar: {fileID: 0}
-  playerHealthText: {fileID: 0}
+  playerHealthBar: {fileID: 8819776554672899457, guid: 7617d405cc9fe234486d1ab85b8ca72f,
+    type: 3}
+  playerHealthText: {fileID: 3128338479283383272, guid: a09ecc84608518f44acec546c53b7408,
+    type: 3}
   groundCheckDistance: 0.1
 --- !u!114 &4649938628463044363
 MonoBehaviour:

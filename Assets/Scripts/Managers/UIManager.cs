@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class UIManager : MonoBehaviour
 
     // Unity event that is triggered when Sol changes
     public UnityEvent OnSolChanged;
+
+    //Player health reference
+    public Slider playerHealthBar;
+    public TextMeshProUGUI playerHealthText;
 
     void Awake()
     {
@@ -67,7 +72,7 @@ public class UIManager : MonoBehaviour
             if (menuObject != null)
             {
                 solTextMenu = menuObject.GetComponent<TextMeshProUGUI>();
-                Debug.Log("TotalSol reference updated");
+                //Debug.Log("TotalSol reference updated");
             }
         }
     }
@@ -87,4 +92,11 @@ public class UIManager : MonoBehaviour
             solTextMenu.text = " " + CurrencyManager.instance.solCurrency;
         }
     }
+    public void UpdateHealthUI(int currentHealth, int maxHealth)
+    {
+        playerHealthBar.maxValue = maxHealth;
+        playerHealthBar.value = currentHealth;
+        playerHealthText.text = currentHealth.ToString();
+    }
+
 }

@@ -4,13 +4,18 @@ public class HyperbassFlute : Weapon
 {
     public Transform projectileSpawnPoint;
     public Transform playerTransform;  // Reference to the player's transform
-    private Animator animator;
+    public Canvas EnemyCanvas;
+
+    
+    public Animator animator;
     private Rigidbody playerRigidbody;  // Reference to the player's rigidbody
+    
 
     private void Awake()
     {
         animator = GetComponentInParent<Animator>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        
         if (playerTransform != null)
         {
             playerRigidbody = playerTransform.GetComponent<Rigidbody>();
@@ -18,7 +23,15 @@ public class HyperbassFlute : Weapon
         else
         {
             Debug.LogError("Player object not found in the scene.");
+
         }
+
+        // Access the GameManager to get the EnemyCanvas
+        if (EnemyCanvas == null)
+        {
+            EnemyCanvas = GameManager.EnemyCanvas;
+        }
+
     }
 
     public override void PrimaryAttack()
@@ -53,7 +66,7 @@ public class HyperbassFlute : Weapon
 
             if (animator != null)
             {
-                animator.SetTrigger("PrimaryAttack");
+                animator.SetTrigger("HyperbassAttack");
             }
             else
             {
