@@ -161,20 +161,44 @@ public class ThreeDPrinter : MonoBehaviour
     }
 
     private void ShowWeaponOptions()
-
     {
         // Early return if GameManager instance is not available
-        if (GameManager.instance == null)
+        if (!IsGameManagerAvailable())
         {
             return;
         }
 
         // Clear previous buttons
+        ClearPreviousButtons();
+
+        // Initialize or reuse lastRandomWeapons and lastRandomTiers
+        InitializeOrReuseRandomWeaponsAndTiers();
+
+       
+
+        // Create and set up buttons for weapon options
+        CreateWeaponButtons();
+    }
+
+    private bool IsGameManagerAvailable()
+    {
+        if (GameManager.instance == null)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    private void ClearPreviousButtons()
+    {
         foreach (Transform child in weaponSelectPanel.transform)
         {
             Destroy(child.gameObject);
         }
+    }
 
+    private void InitializeOrReuseRandomWeaponsAndTiers()
+    {
         // Initialize lastRandomTiers if it's null
         if (lastRandomTiers == null)
         {
@@ -185,53 +209,57 @@ public class ThreeDPrinter : MonoBehaviour
         if (lastRandomWeapons == null)
         {
             lastRandomWeapons = WeaponManager.instance.GetRandomUnlockedWeapons(3);
-
-            lastRandomTiers.Clear();  // Clear the lastRandomTiers list
+            lastRandomTiers.Clear();
 
             // Loop through each randomly selected weapon to assign and store a random tier
             foreach (GameObject weapon in lastRandomWeapons)
             {
                 WeaponTier randomTier = weaponRaritySelector.GetRandomTier();
-                lastRandomTiers.Add(randomTier);  // Store the random tier
+                lastRandomTiers.Add(randomTier);
             }
-        }
-
-        firstButton = null; // To keep track of the first button
-
-        // Loop through each randomly selected weapon
-        for (int i = 0; i < lastRandomWeapons.Count; i++)
-        {
-            GameObject weapon = lastRandomWeapons[i];
-            WeaponTier randomTier = lastRandomTiers[i];  // Use the stored tier
-
-            // Call CreateWeaponButton method from WeaponButtonCreator script
-            Button newButton = weaponButtonCreator.CreateWeaponButton(weapon, weaponSelectPanel.transform, randomTier);
-
-
-            // Assign the button's click listener
-            newButton.onClick.AddListener(() => OnWeaponButtonClicked(weapon.name));  // Call new method OnWeaponButtonClicked
-
-            // Set the first button as the selected object in the EventSystem
-            if (firstButton == null)
-            {
-                firstButton = newButton;
-                eventSystem.SetSelectedGameObject(firstButton.gameObject);
-            }
-
-            // Assign OnSelect and OnDeselect events to update button appearance
-            EventTrigger eventTrigger = newButton.gameObject.AddComponent<EventTrigger>();
-            EventTrigger.Entry onSelectEntry = new EventTrigger.Entry();
-            onSelectEntry.eventID = EventTriggerType.Select;
-            onSelectEntry.callback.AddListener((eventData) => { UpdateButtonAppearance(newButton, true); });
-            eventTrigger.triggers.Add(onSelectEntry);
-
-            EventTrigger.Entry onDeselectEntry = new EventTrigger.Entry();
-            onDeselectEntry.eventID = EventTriggerType.Deselect;
-            onDeselectEntry.callback.AddListener((eventData) => { UpdateButtonAppearance(newButton, false); });
-            eventTrigger.triggers.Add(onDeselectEntry);
         }
     }
 
+   
+
+    private void CreateWeaponButtons()
+    {
+        firstButton = null;  // Reset first button
+
+        for (int i = 0; i < lastRandomWeapons.Count; i++)
+        {
+            GameObject weapon = lastRandomWeapons[i];
+            WeaponTier randomTier = lastRandomTiers[i];
+            Button newButton = weaponButtonCreator.CreateWeaponButton(weapon, weaponSelectPanel.transform, randomTier);
+
+            // Set up the button's properties and events
+            SetupButton(newButton, weapon.name);
+        }
+    }
+
+    private void SetupButton(Button button, string weaponName)
+    {
+        button.onClick.AddListener(() => OnWeaponButtonClicked(weaponName));
+
+        // Set the first button as the selected object in the EventSystem
+        if (firstButton == null)
+        {
+            firstButton = button;
+            eventSystem.SetSelectedGameObject(firstButton.gameObject);
+        }
+
+        // Assign OnSelect and OnDeselect events to update button appearance
+        EventTrigger eventTrigger = button.gameObject.AddComponent<EventTrigger>();
+        EventTrigger.Entry onSelectEntry = new EventTrigger.Entry();
+        onSelectEntry.eventID = EventTriggerType.Select;
+        onSelectEntry.callback.AddListener((eventData) => { UpdateButtonAppearance(button, true); });
+        eventTrigger.triggers.Add(onSelectEntry);
+
+        EventTrigger.Entry onDeselectEntry = new EventTrigger.Entry();
+        onDeselectEntry.eventID = EventTriggerType.Deselect;
+        onDeselectEntry.callback.AddListener((eventData) => { UpdateButtonAppearance(button, false); });
+        eventTrigger.triggers.Add(onDeselectEntry);
+    }
 
     private void UpdateButtonAppearance(Button button, bool isSelected)
 

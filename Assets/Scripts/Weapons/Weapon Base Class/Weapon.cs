@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum WeaponTier
@@ -15,6 +17,35 @@ public abstract class Weapon : MonoBehaviour
     public Vector3 localOrientation;
     public Vector3 localPosition;
     protected Animator weaponAnimator;
+
+    public List<IWeaponModifier> equippedModifiers;
+
+    List<IWeaponModifier> possibleModifiers = new List<IWeaponModifier>
+    {
+         new BurnModifier(),
+         new FreezeModifier(),
+          // Add other modifiers RARE TIER here
+    };
+
+
+    //List<IWeaponModifier> possibleEpicModifiers = new List<IWeaponModifier>
+    //{
+    //     new FreezeModifier(),
+    //};  
+    
+    private void Awake()
+    {
+        // Initialize the equippedModifiers list
+        equippedModifiers = new List<IWeaponModifier>();
+    }
+
+    void Start()
+    {
+       
+
+       
+    }
+
 
     public void InitWeaponAnimator(Animator animator)
     {
@@ -51,14 +82,63 @@ public abstract class Weapon : MonoBehaviour
         // ... other stat modifications ...
     }
 
-    public virtual void ApplySpecialEffect()
+    public void EquipRandomModifiers()
     {
-        if (weaponData.hasSpecialEffect)
+        if (equippedModifiers == null)
         {
-            // Apply the special effect based on weaponData.specialEffect
-            // This is a placeholder, implement the specifics of each effect separately.
+            equippedModifiers = new List<IWeaponModifier>();
         }
+
+        int numberOfModifiers = 0;
+
+        switch (weaponData.weaponTier)
+        {
+            case WeaponTier.Common:
+                numberOfModifiers = 0;
+                break;
+            case WeaponTier.Rare:
+                numberOfModifiers = 1;
+                break;
+            case WeaponTier.Epic:
+                numberOfModifiers = 2;
+                break;
+            case WeaponTier.Legendary:
+                numberOfModifiers = 3;
+                break;
+        }
+
+        Debug.Log($"Weapon Tier: {weaponData.weaponTier}, Intended Number of Modifiers: {numberOfModifiers}");
+
+        List<IWeaponModifier> remainingModifiers = new List<IWeaponModifier>(possibleModifiers);
+
+        for (int i = 0; i < numberOfModifiers; i++)
+        {
+            if (remainingModifiers.Count == 0)
+            {
+                Debug.LogWarning("No more modifiers to add.");
+                break;
+            }
+
+            int randomIndex = UnityEngine.Random.Range(0, remainingModifiers.Count);
+            IWeaponModifier selectedModifier = remainingModifiers[randomIndex];
+
+            // Check if a modifier of this type is already equipped
+            if (!equippedModifiers.Any(em => em.GetType() == selectedModifier.GetType()))
+            {
+                equippedModifiers.Add(selectedModifier);
+            }
+            else
+            {
+                Debug.LogWarning($"Modifier of type {selectedModifier.GetType().Name} is already equipped.");
+            }
+
+            remainingModifiers.RemoveAt(randomIndex);
+        }
+
+        Debug.Log($"Actual Number of Modifiers: {equippedModifiers.Count}, Modifiers: {string.Join(", ", equippedModifiers.Select(m => m.GetType().Name))}");
     }
+
+
 
 
 
@@ -66,17 +146,10 @@ public abstract class Weapon : MonoBehaviour
     public virtual void PrimaryAttack()
     {
         
-
     }
 
 
-    //default attack logic
-
-
-    //public abstract void Upgrade();
-
-    //upgrade logic
-
+   
 
 }
 

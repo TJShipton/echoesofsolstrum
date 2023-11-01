@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -6,5 +7,8 @@ public class WeaponButtonUI : MonoBehaviour
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI rarityText;
     public TextMeshProUGUI damageText;
+    public TextMeshProUGUI weaponDescriptionText;
+    public List<TextMeshProUGUI> modifierTexts;
+
     // ... other fields ...
 }

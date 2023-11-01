@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class WeaponSlotUpgrade : IPlayerUpgrade
 {
-    public string UpgradeName => "Extra Wepon Slot";
+    public string UpgradeName => "Extra Weapon Slot";
 
     public string UpgradeDescription => "Increases weapon carry capacity by 1, duh!";
     public int UpgradeCost => 1000;

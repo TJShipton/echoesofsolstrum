@@ -6,7 +6,7 @@ public class BasicAttack : MonoBehaviour
     private Enemy enemy;
     private Transform playerTransform;
     private IDamageable playerDamageable;
-    public Canvas enemyCanvas; // Canvas variable
+    private Canvas enemyCanvas; // Canvas variable
 
     void Start()
     {

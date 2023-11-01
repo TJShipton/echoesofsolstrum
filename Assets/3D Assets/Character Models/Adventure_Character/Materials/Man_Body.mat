@@ -122,6 +122,7 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
+    - _BlendOp: 0
     - _BrushLowerCut: 0
     - _BrushSize: 0.8
     - _BumpScale: 1
@@ -181,6 +182,7 @@ Material:
     - _RimLightAlign: 0
     - _RimLightSmoothness: 0
     - _RimPower: 0
+    - _SampleGI: 0
     - _Shininess: 0
     - _SizeFalloff: 0
     - _Smoothness: 1
