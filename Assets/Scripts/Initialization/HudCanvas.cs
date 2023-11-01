@@ -11,7 +11,7 @@ public class HudCanvas : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("HudCanvas Awake Called");
+        
 
         // Singleton pattern
         if (instance == null)

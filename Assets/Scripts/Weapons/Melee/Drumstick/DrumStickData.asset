@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e33649cea591d24ca8e94221aa6669c, type: 3}
+  m_Name: DrumStickData
+  m_EditorClassIdentifier: 
+  weaponName: Drumstick
+  weaponTier: 2
+  weaponDescription: Big stick with a drum on it -- get it!??
+  baseDamage: 15
+  originalBaseDamage: 10
+  range: 2
+  speed: 10
+  projectilePrefab: {fileID: 0}
+  projectileSpeed: 0
+  commonDamageMultiplier: 1
+  rareDamageMultiplier: 1.2
+  epicDamageMultiplier: 1.5
+  legendaryDamageMultiplier: 2
+  iconSprite: {fileID: 21300000, guid: 9dadc2e8aa9e9c446820d6c81f2523b0, type: 3}

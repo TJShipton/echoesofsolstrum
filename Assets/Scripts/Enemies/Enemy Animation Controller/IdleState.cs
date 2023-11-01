@@ -16,7 +16,7 @@ public class IdleState : EnemyState
 
         if (timeInIdle > 0f) // switch to walking after x seconds
         {
-            enemy.SetState(new WalkingState(enemy, enemy.GetComponent<EnemyAnimationController>()));
+            enemy.SetState(new PatrolState(enemy, enemy.GetComponent<EnemyAnimationController>()));
         }
     }
 

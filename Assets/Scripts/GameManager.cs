@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI weaponUnlockText; //weapon unlock text 
+
+    //public List<WeaponModifier> allPossibleModifiers;
+
 
 
     void Awake()

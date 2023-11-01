@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("PlayerController Start Called");
+     
 
         rb = GetComponent<Rigidbody>();
         animator = transform.GetComponent<Animator>();
@@ -232,6 +232,10 @@ public class PlayerController : MonoBehaviour, IDamageable
                 }
             }
 
+            // Initialize the weapon's animator before triggering the attack
+            Animator animator = GetComponent<Animator>(); // Assuming the animator is on the same GameObject as this script
+            currentWeapon.InitWeaponAnimator(animator);
+
             // Now trigger the attack
             currentWeapon.PrimaryAttack();
         }
@@ -241,12 +245,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
+
     public void TakeDamage(int damageAmount, Canvas HUDCanvas)
     {
         currentHealth -= damageAmount;
 
-        Debug.Log("Player health: " + currentHealth);  // Log to check the current health
-
+     
         if (currentHealth > 0)
         {
             UpdateHealthUI();
@@ -265,12 +269,11 @@ public class PlayerController : MonoBehaviour, IDamageable
             Debug.LogError("Health UI components are null!");
             return;
         }
-        Debug.Log("UpdateHealthUI Called");
+     
         playerHealthBar.maxValue = maxHealth;
         playerHealthBar.value = currentHealth;
         playerHealthText.text = currentHealth.ToString();
-        Debug.Log("Player Health Bar: " + playerHealthBar);
-        Debug.Log("Player Health Text: " + playerHealthText);
+      
 
     }
 

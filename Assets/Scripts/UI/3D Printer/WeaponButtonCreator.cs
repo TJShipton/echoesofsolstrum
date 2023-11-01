@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,23 +37,42 @@ public class WeaponButtonCreator : MonoBehaviour
 
     public Button CreateWeaponButton(GameObject weaponPrefab, Transform parent, WeaponTier randomTier)
     {
-
         // Instantiate the button and parent it to the specified transform (e.g., UI panel)
         Button newButton = Instantiate(weaponButtonPrefab, parent);
 
         // Access and update the WeaponButtonUI component with the weapon data
         Weapon weaponComponent = weaponPrefab.GetComponent<Weapon>();
-
         WeaponButtonUI weaponButtonUI = newButton.GetComponentInChildren<WeaponButtonUI>();
 
         if (weaponButtonUI != null && weaponComponent != null)
         {
+            // Apply tier and its modifiers
             weaponComponent.weaponData.weaponTier = randomTier;
             weaponComponent.ApplyTierModifiers();
-            weaponButtonUI.nameText.text = weaponComponent.weaponData.weaponName;
-            weaponButtonUI.damageText.text = $"Damage: {weaponComponent.weaponData.baseDamage}";
-            weaponButtonUI.rarityText.text = weaponComponent.GetTierName();
 
+            // Equip random modifiers
+            weaponComponent.EquipRandomModifiers();
+
+            // Update UI with the new data
+            weaponButtonUI.nameText.text = weaponComponent.weaponData.weaponName;
+            weaponButtonUI.damageText.text = $"{weaponComponent.weaponData.baseDamage}";
+            weaponButtonUI.rarityText.text = weaponComponent.GetTierName();
+            weaponButtonUI.weaponDescriptionText.text = weaponComponent.weaponData.weaponDescription;
+
+
+            // Update the modifier text based on the newly equipped modifiers
+            for (int i = 0; i < weaponComponent.equippedModifiers.Count; i++)
+            {
+                if (i < weaponButtonUI.modifierTexts.Count)
+                {
+                    weaponButtonUI.modifierTexts[i].text = weaponComponent.equippedModifiers[i].GetName();
+                }
+            }
+            //Clear text if modifier not applied
+            for (int i = weaponComponent.equippedModifiers.Count; i < weaponButtonUI.modifierTexts.Count; i++)
+            {
+                weaponButtonUI.modifierTexts[i].text = "";
+            }
 
         }
 
@@ -63,14 +83,10 @@ public class WeaponButtonCreator : MonoBehaviour
         // Ensure the weaponPrefab name matches the key used in the weaponThumbnails dictionary
         string weaponNameKey = weaponPrefab.name.Replace("(Clone)", "").Trim();
 
-
-
-
         if (weaponThumbnails.ContainsKey(weaponNameKey))
         {
             buttonImage.sprite = weaponThumbnails[weaponNameKey];
         }
-
 
         // Determine the outline color based on tier
         string rarityColorHex;

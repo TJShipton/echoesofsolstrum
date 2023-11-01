@@ -17,6 +17,6 @@ MonoBehaviour:
   attackRange: 2
   attackDamage: 10
   attackDelay: 1
-  health: 250
+  health: 100
   patrolDistance: 5
   patrolPauseDuration: 2

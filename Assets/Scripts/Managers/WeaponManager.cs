@@ -108,22 +108,37 @@ public class WeaponManager : MonoBehaviour
 
     public Weapon InstantiateNewWeapon(GameObject weaponPrefab, Transform holder)
     {
-
+        // Instantiate the new weapon
         Weapon newWeapon = Instantiate(weaponPrefab.GetComponent<Weapon>(), holder);
+      
+        // Continue with your existing code...
         newWeapon.gameObject.SetActive(false);
         newWeapon.transform.SetParent(holder);
 
+        // Continue with your existing code...
         newWeapon.transform.localPosition = newWeapon.localPosition;
         newWeapon.transform.localRotation = Quaternion.identity;
         newWeapon.transform.localEulerAngles = newWeapon.localOrientation;
 
-        newWeapon.ApplyTierModifiers();  //Apply tier modifiers from Weapon class
+        // Apply tier modifiers and check
+        newWeapon.ApplyTierModifiers();
+              
+        // Ensure holder and newWeapon are active
+        holder.gameObject.SetActive(true);
+        newWeapon.gameObject.SetActive(true);
 
-        holder.gameObject.SetActive(true);  // Ensure holder is active
-        newWeapon.gameObject.SetActive(true);  // Activate newWeapon
-
-
+        ApplyRandomModifiersToWeapon(newWeapon);
+       
         return newWeapon;
+    }
+
+
+    private void ApplyRandomModifiersToWeapon(Weapon weapon)
+    {
+       if (weapon.weaponData.weaponTier == WeaponTier.Rare)
+        {
+            weapon.EquipRandomModifiers();
+        }
     }
 
     public void UpdateWeapons()

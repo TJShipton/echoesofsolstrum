@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,12 +14,14 @@ public class Enemy : MonoBehaviour, IDamageable
     private GameObject healthBarPrefab;  // Drag your HealthBar prefab here from Unity Editor
     private GameObject healthBarInstance;
     private Slider healthBarSlider;
-    [SerializeField]
-    private Canvas enemyCanvas;
+   
+    public static Canvas enemyCanvas;
     public Animator Animator { get; private set; }
     public EnemyData Data => enemyData;  // Allows other scripts to access the enemyData
 
     public float LastAttackTime { get; set; }  // Tracks the last attack time
+
+    private List<Effect> activeEffects = new List<Effect>();
 
     private void Start()
     {
@@ -26,6 +30,13 @@ public class Enemy : MonoBehaviour, IDamageable
 
         // Initialize current health from enemyData
         currentHealth = enemyData.health;
+
+        //Initialize enemy canvas
+        if (enemyCanvas == null)
+        {
+            enemyCanvas = GameObject.Find("EnemyCanvas").GetComponent<Canvas>();
+        }
+
     }
 
     private void Update()
@@ -40,6 +51,20 @@ public class Enemy : MonoBehaviour, IDamageable
             healthBarPos.y += 2;  // Adjust as needed
             healthBarInstance.transform.position = healthBarPos;
         }
+
+        for (int i = activeEffects.Count - 1; i >= 0; i--)
+        {
+            Effect effect = activeEffects[i];
+            effect.UpdateEffect(this);
+
+            // Check if the effect has ended.
+            if (effect.IsEffectEnded)
+            {
+                effect.EndEffect(this);
+                activeEffects.RemoveAt(i);
+            }
+        }
+
     }
 
     public void SetState(EnemyState newState)
@@ -51,18 +76,40 @@ public class Enemy : MonoBehaviour, IDamageable
         currentState.EnterState();
     }
 
-    public void TakeDamage(int damageAmount, Canvas EnemyCanvas)
+    // Method to add a modifier effect
+    public void AddEffect(Effect effect)
     {
-      
-        currentHealth -= damageAmount; // Deduct the damage received
+        activeEffects.Add(effect);
+        effect.StartEffect(this);
+    }
 
+    // Method to remove a modifier effect
+    public void RemoveEffect(Effect effect)
+    {
+        effect.EndEffect(this);
+        activeEffects.Remove(effect);
+    }
+
+
+    public void TakeDamage(int damageAmount, Canvas enemyCanvas)
+    {
+        // Deduct the damage received
+        currentHealth -= damageAmount;
+
+        // Instantiate healthBarPrefab as a child of EnemyCanvas
         if (healthBarInstance == null)
         {
+            // Initialize the EnemyCanvas if it's null
+            if (enemyCanvas == null)
+            {
+                enemyCanvas = GameObject.Find("EnemyCanvas").GetComponent<Canvas>();
+            }
+
             // Check if the healthBarPrefab is not null
             if (healthBarPrefab != null)
             {
                 // Instantiate the healthBarPrefab as a new GameObject and set its parent
-                if (EnemyCanvas != null)
+                if (enemyCanvas != null)
                 {
                     healthBarInstance = Instantiate(healthBarPrefab, enemyCanvas.transform, false);
                 }
@@ -81,13 +128,10 @@ public class Enemy : MonoBehaviour, IDamageable
             healthBarSlider = healthBarInstance.GetComponent<Slider>();
             healthBarSlider.maxValue = enemyData.health;
             healthBarSlider.value = currentHealth;
-
-            
         }
         else
         {
             healthBarSlider.value = currentHealth;
-            //Debug.Log("Health Bar Updated. Current Value: " + healthBarSlider.value); // Debug 4
         }
 
         if (currentHealth <= 0)
@@ -96,12 +140,8 @@ public class Enemy : MonoBehaviour, IDamageable
         }
     }
 
-
-
-
-
-
     private void Die()
+
     {
         // Perform death logic here
         // For example: Animator.SetTrigger("Die");
