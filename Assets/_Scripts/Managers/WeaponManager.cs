@@ -111,11 +111,13 @@ public class WeaponManager : MonoBehaviour
         // Instantiate the new weapon
         Weapon newWeapon = Instantiate(weaponPrefab.GetComponent<Weapon>(), holder);
       
-        // Continue with your existing code...
-        newWeapon.gameObject.SetActive(false);
+        
+        
         newWeapon.transform.SetParent(holder);
 
-        // Continue with your existing code...
+        //Set weapon inactive (to be reactivated during attack)
+        newWeapon.gameObject.SetActive(false);
+
         newWeapon.transform.localPosition = newWeapon.localPosition;
         newWeapon.transform.localRotation = Quaternion.identity;
         newWeapon.transform.localEulerAngles = newWeapon.localOrientation;
@@ -125,7 +127,7 @@ public class WeaponManager : MonoBehaviour
               
         // Ensure holder and newWeapon are active
         holder.gameObject.SetActive(true);
-        newWeapon.gameObject.SetActive(true);
+
 
         ApplyRandomModifiersToWeapon(newWeapon);
        

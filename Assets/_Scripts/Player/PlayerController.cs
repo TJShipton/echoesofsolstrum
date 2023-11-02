@@ -194,6 +194,13 @@ public class PlayerController : MonoBehaviour, IDamageable
         InventoryManager.instance.SelectSlot(0);
         // Trigger the attack on the weapon in slot 0
         TriggerAttack();
+
+        // Activate the weapon during the attack
+        if (weaponManager.currentWeapon != null)
+        {
+            weaponManager.currentWeapon.gameObject.SetActive(true);
+        }
+
     }
 
     private void Atck2()
@@ -238,6 +245,10 @@ public class PlayerController : MonoBehaviour, IDamageable
 
             // Now trigger the attack
             currentWeapon.PrimaryAttack();
+
+            //// Deactivate the weapon after the attack
+            //currentWeapon.DeactivateWeapon();
+
         }
         else
         {
@@ -245,6 +256,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
+    
 
     public void TakeDamage(int damageAmount, Canvas HUDCanvas)
     {

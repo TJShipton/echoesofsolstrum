@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e33649cea591d24ca8e94221aa6669c, type: 3}
-  m_Name: HyperbassFluteData
+  m_Name: DrumStickData
   m_EditorClassIdentifier: 
-  weaponName: Hyperbass Flute
-  weaponTier: 1
-  weaponDescription: 'A flute that somehow plays the lowest audible notes '
-  baseDamage: 10
+  weaponName: Drumstick
+  weaponTier: 2
+  weaponDescription: Big stick with a drum on it -- get it!??
+  baseDamage: 15
   originalBaseDamage: 10
-  range: 0
-  speed: 5
-  projectilePrefab: {fileID: 2580153807565551473, guid: 270b61543c3b6e64e8b338978406d96d,
-    type: 3}
-  projectileSpeed: 20
+  range: 2
+  speed: 10
+  attackCooldown: 1.5
+  projectilePrefab: {fileID: 0}
+  projectileSpeed: 0
   commonDamageMultiplier: 1
   rareDamageMultiplier: 1.2
   epicDamageMultiplier: 1.5
   legendaryDamageMultiplier: 2
-  iconSprite: {fileID: 21300000, guid: 914659175afad1b4ea5031f5ac015259, type: 3}
+  iconSprite: {fileID: 21300000, guid: 9dadc2e8aa9e9c446820d6c81f2523b0, type: 3}

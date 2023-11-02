@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileScript : MonoBehaviour
@@ -7,12 +8,14 @@ public class ProjectileScript : MonoBehaviour
     public float homingSpeed = 5f;  // Speed at which the projectile homes in on the target
     public float detectionRadius = 10f;  // Radius within which to search for enemies
 
+    public List<IWeaponModifier> equippedModifiers;
+
     private Transform target;  // The enemy to home in on
 
     private void Start()
     {
-         if (enemyCanvas == null)
-        enemyCanvas = GameManager.EnemyCanvas;
+        if (enemyCanvas == null)
+            enemyCanvas = GameManager.EnemyCanvas;
 
         FindClosestEnemy();
     }
@@ -56,10 +59,16 @@ public class ProjectileScript : MonoBehaviour
         var hit = collision.gameObject.GetComponent<IDamageable>();
         if (hit != null)
         {
-            
             hit.TakeDamage(damage, GameManager.EnemyCanvas);
-          
+
+            if (hit is Enemy enemy)
+            {
+                foreach (var mod in equippedModifiers)
+                {
+                    mod.ApplyEffect(enemy); // Casting IDamageable to Enemy
+                }
+            }
         }
     }
-
 }
+
