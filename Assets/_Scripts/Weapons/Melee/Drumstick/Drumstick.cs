@@ -37,6 +37,8 @@ public class Drumstick : Weapon
         }
         weaponAnimator.SetTrigger("DrumstickAttack");
 
+        //Start cooldown to deactivate weapon
+        weaponData.StartCooldown();
     }
 
     private void DetectEnemiesInRadius()
@@ -94,6 +96,16 @@ public class Drumstick : Weapon
         {
             comboCounter = 0;
         }
+
+        //Start cooldown to deactivtae weapon
+        weaponData.UpdateCooldown(Time.deltaTime);
+
+        if (!weaponData.IsOnCooldown() && gameObject.activeSelf)
+        {
+            gameObject.SetActive(false); // Deactivate the weapon when not on cooldown
+        }
+
+
     }
 
    

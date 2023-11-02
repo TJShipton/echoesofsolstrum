@@ -275,6 +275,13 @@ public class ThreeDPrinter : MonoBehaviour
         bool wasWeaponPicked = InventoryManager.instance.PickWeapon(weaponName, weaponManager.weaponHolder);
         if (wasWeaponPicked)
         {
+
+            // Deactivate the weapon in the weapon holder
+            foreach (Transform child in weaponManager.weaponHolder)
+            {
+                child.gameObject.SetActive(false);
+            }
+
             // get the weapon prefab by name
             GameObject weaponPrefab = weaponManager.GetWeaponPrefabByName(weaponName);
             if (weaponPrefab != null)

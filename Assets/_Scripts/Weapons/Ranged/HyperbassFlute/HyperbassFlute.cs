@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HyperbassFlute : Weapon
@@ -6,16 +7,17 @@ public class HyperbassFlute : Weapon
     public Transform playerTransform;  // Reference to the player's transform
     public Canvas EnemyCanvas;
 
-    
+   
+
     public Animator animator;
     private Rigidbody playerRigidbody;  // Reference to the player's rigidbody
-    
+
 
     private void Awake()
     {
         animator = GetComponentInParent<Animator>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        
+
         if (playerTransform != null)
         {
             playerRigidbody = playerTransform.GetComponent<Rigidbody>();
@@ -42,6 +44,14 @@ public class HyperbassFlute : Weapon
             Rigidbody projectileRigidbody = projectile.GetComponent<Rigidbody>();
             ProjectileScript projectileScript = projectile.GetComponent<ProjectileScript>();  // Get the ProjectileScript component
 
+            // Pass the equippedModifiers to the projectile
+            if (projectileScript != null)
+            {
+                projectileScript.SetDamage(weaponData.baseDamage);
+                projectileScript.equippedModifiers = new List<IWeaponModifier>(equippedModifiers); // Transfer the modifiers
+            }
+
+
             if (projectileScript != null)
             {
                 projectileScript.SetDamage(weaponData.baseDamage);   // Set the damage value
@@ -59,23 +69,25 @@ public class HyperbassFlute : Weapon
                 // Adjusting the projectile's velocity
                 projectileRigidbody.velocity = shootDirection * (weaponData.projectileSpeed + playerVelocity.magnitude);
             }
-            else
-            {
-                Debug.LogWarning("Rigidbody component is missing on the projectile prefab, can't set velocity.");
-            }
+
 
             if (animator != null)
             {
                 animator.SetTrigger("HyperbassAttack");
             }
-            else
-            {
-                Debug.LogWarning("Animator component is missing, can't trigger animation.");
-            }
+
+            weaponData.StartCooldown();
         }
-        else
+
+    }
+
+    void Update()
+    {
+        weaponData.UpdateCooldown(Time.deltaTime);
+
+        if (!weaponData.IsOnCooldown() && gameObject.activeSelf)
         {
-            Debug.LogWarning("Projectile prefab or spawn point is missing, can't shoot projectile.");
+            gameObject.SetActive(false); // Deactivate the weapon when not on cooldown
         }
     }
 

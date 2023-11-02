@@ -11,6 +11,8 @@ public class WeaponData : ScriptableObject
     public int originalBaseDamage;
     public int range;
     public int speed;
+    public float attackCooldown = 0.5f;
+    private float currentCooldownTime =0f;
 
     public GameObject projectilePrefab;
 
@@ -28,6 +30,24 @@ public class WeaponData : ScriptableObject
 
     public Sprite iconSprite;
     // Other properties can be added
+
+    public bool IsOnCooldown()
+    {
+        return currentCooldownTime > 0;
+    }
+
+    public void StartCooldown()
+    {
+        currentCooldownTime = attackCooldown;
+    }
+
+    public void UpdateCooldown(float deltaTime)
+    {
+        if (currentCooldownTime > 0)
+        {
+            currentCooldownTime -= deltaTime;
+        }
+    }
 
 
     private void OnEnable()

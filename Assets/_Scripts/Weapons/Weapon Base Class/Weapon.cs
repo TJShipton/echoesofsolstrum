@@ -149,7 +149,11 @@ public abstract class Weapon : MonoBehaviour
     }
 
 
-   
+    public void DeactivateWeapon()
+    {
+        // Deactivate the weapon
+        gameObject.SetActive(false);
+    }
 
 }
 
