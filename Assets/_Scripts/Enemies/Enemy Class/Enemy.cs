@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour, IDamageable
     private GameObject healthBarPrefab;  // Drag your HealthBar prefab here from Unity Editor
     private GameObject healthBarInstance;
     private Slider healthBarSlider;
-   
+
     public static Canvas enemyCanvas;
     public Animator Animator { get; private set; }
     public EnemyData Data => enemyData;  // Allows other scripts to access the enemyData

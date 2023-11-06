@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1241147889570698109
+--- !u!1 &6967892187968296217
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5809578216295763375}
-  - component: {fileID: 3404906581203094352}
+  - component: {fileID: 8212638666659634780}
+  - component: {fileID: 3264980890126728063}
   m_Layer: 0
-  m_Name: WeaponRarityProbabilites
+  m_Name: TooltipSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5809578216295763375
+--- !u!4 &8212638666659634780
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1241147889570698109}
+  m_GameObject: {fileID: 6967892187968296217}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.22195789, y: 2.2850811, z: 0.40103555}
+  m_LocalPosition: {x: 514, y: 289, z: 0.00000011920929}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3404906581203094352
+--- !u!114 &3264980890126728063
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1241147889570698109}
+  m_GameObject: {fileID: 6967892187968296217}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de5be4d60669519498be14bf47538382, type: 3}
+  m_Script: {fileID: 11500000, guid: f607c9c1a7241754897e754912347c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rarities:
-  - tier: 0
-    probability: 100
-  - tier: 1
-    probability: 0
-  - tier: 2
-    probability: 0
-  - tier: 3
-    probability: 0
+  tooltipPanel: {fileID: 0}
+  tooltipText: {fileID: 0}

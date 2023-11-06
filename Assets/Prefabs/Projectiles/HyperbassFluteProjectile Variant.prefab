@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
-  enemyCanvas: {fileID: 8226358417130615424, guid: e9bc1eb930a829a4f965bf8c7833d3db,
+  enemyCanvas: {fileID: 5764559808028434689, guid: 7e836d47bfed1864ba45345e70e4fecd,
     type: 3}
   homingSpeed: 5
   detectionRadius: 10

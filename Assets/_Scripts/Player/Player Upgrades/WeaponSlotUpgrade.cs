@@ -16,7 +16,7 @@ public class WeaponSlotUpgrade : IPlayerUpgrade
         {
             InventoryManager.instance.maxWeaponSlots++;
             InventoryManager.instance.slots.Add(new InventorySlot(1));  // Add a new slot
-            Debug.Log("Extra weapon slot added. New maxWeaponSlots: " + InventoryManager.instance.maxWeaponSlots);
+            //Debug.Log("Extra weapon slot added. New maxWeaponSlots: " + InventoryManager.instance.maxWeaponSlots);
         }
     }
 

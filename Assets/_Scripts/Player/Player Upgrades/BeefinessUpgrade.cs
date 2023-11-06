@@ -18,7 +18,7 @@ public class BeefinessUpgrade : IPlayerUpgrade
         player.currentHealth += additionalHealth;
 
         // Update the health UI to reflect the new health values
-        player.UpdateHealthUI();
+        player.UpdateHealthbar();
 
         Debug.Log("Beefiness Upgrade applied! New max health: " + player.maxHealth);
     }

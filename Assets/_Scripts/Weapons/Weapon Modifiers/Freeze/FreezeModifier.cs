@@ -17,4 +17,15 @@ public class FreezeModifier : IWeaponModifier
     {
         return "Freeze";
     }
+
+    public string GetDescription()
+    {
+        return "";
+    }
+
+    public Sprite ModifierIcon
+    {
+        get { return Resources.Load<Sprite>("Path/To/BurnModifierIcon"); }
+    }
+
 }

@@ -67,7 +67,7 @@ public class CurrencyManager : MonoBehaviour
     public void AddSol(int amount)
     {
         solCurrency += amount;
-        UIManager.instance.UpdateSolDisplay();  // Update the UI
+        HudManager.instance.UpdateSolDisplay();  // Update the UI
     }
 
     // Function to spend Sol
@@ -76,7 +76,7 @@ public class CurrencyManager : MonoBehaviour
         if (solCurrency >= amount)
         {
             solCurrency -= amount;
-            UIManager.instance.OnSolChanged.Invoke();  // Inform the UIManager to update the Sol display
+            HudManager.instance.OnSolChanged.Invoke();  // Inform the UIManager to update the Sol display
             return true;
         }
         else

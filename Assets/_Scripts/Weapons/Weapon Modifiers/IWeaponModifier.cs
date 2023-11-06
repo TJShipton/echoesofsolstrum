@@ -4,6 +4,11 @@ using UnityEngine;
 
 public interface IWeaponModifier
 {
-    void ApplyEffect(Enemy enemy);
     string GetName();
+    string GetDescription();
+    
+    Sprite ModifierIcon { get; }
+
+    void ApplyEffect(Enemy enemy);
+    
 }
