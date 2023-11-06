@@ -42,18 +42,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SwapWeapon",
+                    "name": "Cast",
                     "type": "Button",
-                    "id": "205bcb48-488c-4187-85ba-7b043764dbab",
+                    "id": "427bca04-648e-4c87-b60d-d27b5b183b60",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Cast",
+                    "name": "Dodge",
                     "type": "Button",
-                    "id": "427bca04-648e-4c87-b60d-d27b5b183b60",
+                    "id": "683efdb1-686b-4191-b0ae-cfdf334cfd6c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -250,28 +250,6 @@
                 },
                 {
                     "name": "",
-                    "id": "998bcb38-a56f-4754-8077-d62f251a10eb",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "SwapWeapon",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f6c3dd3d-c8a0-49ee-86f1-0908121a6dc2",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "SwapWeapon",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "e5bceace-e498-48df-8f8d-e100b9d28a6a",
                     "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
@@ -289,6 +267,28 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Cast",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b21ec03f-6985-4cd3-bb79-87cf19d8c810",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "93b0ebf8-2862-4b3b-967e-e7452e42b161",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Dodge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

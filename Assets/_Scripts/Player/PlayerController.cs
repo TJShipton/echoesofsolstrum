@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -36,6 +37,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     private bool shouldDoubleJump = false;
     private bool isGrounded;
     public float groundCheckDistance = 0.1f;
+
+    private bool isDodging = false;
+    public float dodgeDuration = 1.0f; // The duration of the dodge in seconds
+
+
     private Rigidbody rb;
     private Animator animator;
     private WeaponManager weaponManager;
@@ -204,7 +210,26 @@ public class PlayerController : MonoBehaviour, IDamageable
             rb.AddForce(doubleJumpVector, ForceMode.VelocityChange);
         }
     }
+    
 
+    public void OnDodge(InputAction.CallbackContext context)
+    {
+        if (!UIManager.Instance.IsAnyMenuOpen && context.started && !isDodging)
+        {
+            StartCoroutine(Dodge());
+        }
+    }
+
+    private IEnumerator Dodge()
+    {
+        isDodging = true;
+        animator.SetTrigger("DodgeTrigger"); // Trigger dodge animation
+
+        // Wait for the duration of the dodge
+        yield return new WaitForSeconds(dodgeDuration);
+
+        isDodging = false; // Player is no longer dodging
+    }
 
     public void OnAtck1(InputAction.CallbackContext context)
     { // Only process input if no UI menu is open
@@ -298,6 +323,12 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damageAmount, Canvas HUDCanvas)
     {
+        if (isDodging)
+        {
+            // Player is dodging, don't take damage
+            return;
+        }
+
         currentHealth -= damageAmount;
 
      
