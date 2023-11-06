@@ -104,6 +104,11 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         // Jump
         isGrounded = IsGrounded();  // Update the isGrounded variable
+        animator.SetBool("IsGrounded", isGrounded);
+        if (isGrounded)
+        {
+            animator.SetBool("IsFalling", false);
+        }
 
         if (shouldJump)  // Check if jump input was received
         {
@@ -122,6 +127,12 @@ public class PlayerController : MonoBehaviour, IDamageable
             canDoubleJump = false;  // Disable further double jumps until grounded again
         }
 
+        // Check for falling
+
+        if(rb.velocity.y < -0.1f)  // Assumes that if the velocity is less than a small negative value, the character is falling
+        {
+            animator.SetBool("IsFalling", true);
+        }
 
     }
     private bool IsGrounded()
@@ -156,20 +167,21 @@ public class PlayerController : MonoBehaviour, IDamageable
         // Only process input if no UI menu is open
         if (!UIManager.Instance.IsAnyMenuOpen)
         {
-            if (context.started)
+            if (isGrounded)  // Only jump if grounded and input just started
             {
-                if (isGrounded)  // Only jump if grounded and input just started
-                {
-                    shouldJump = true;  // Set flag to true when jump input is received
-                }
-                else if (canDoubleJump)  // Allow double jump if not grounded but double jump is allowed
-                {
-                    shouldDoubleJump = true;  // Set flag to true when double jump input is received
-                    Debug.Log("Double jump input received.");  // Log when double jump input is received
-                }
+                shouldJump = true;  // Set flag to true when jump input is received
+                animator.SetTrigger("JumpTrigger");
+
+            }
+            else if (canDoubleJump)  // Allow double jump if not grounded but double jump is allowed
+            {
+                shouldDoubleJump = true;  // Set flag to true when double jump input is received
+                animator.SetTrigger("DoubleJumpTrigger");
+                Debug.Log("Double jump input received.");  // Log when double jump input is received
             }
         }
     }
+
 
     private void Jump()
     { // Only process input if no UI menu is open
