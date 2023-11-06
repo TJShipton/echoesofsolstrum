@@ -103,16 +103,13 @@ public class PlayerController : MonoBehaviour, IDamageable
         rb.AddForce(movement * speed, ForceMode.VelocityChange);
 
         // Jump
-        isGrounded = IsGrounded();  // Update the isGrounded variable
-        animator.SetBool("IsGrounded", isGrounded);
-        if (isGrounded)
-        {
-            animator.SetBool("IsFalling", false);
-        }
+        isGrounded = IsGrounded();
+        animator.SetBool("IsGrounded", isGrounded);  // Update the isGrounded animator
 
         if (shouldJump)  // Check if jump input was received
         {
             Jump();
+            animator.SetTrigger("JumpTrigger");
             shouldJump = false;  // Reset flag after jump is handled
             if (hasDoubleJumpUpgrade)
             {
@@ -128,11 +125,15 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
 
         // Check for falling
-
         if(rb.velocity.y < -0.1f)  // Assumes that if the velocity is less than a small negative value, the character is falling
         {
             animator.SetBool("IsFalling", true);
         }
+        if (isGrounded)
+        {
+            animator.SetBool("IsFalling", false);
+        }
+
 
     }
     private bool IsGrounded()
@@ -167,26 +168,26 @@ public class PlayerController : MonoBehaviour, IDamageable
         // Only process input if no UI menu is open
         if (!UIManager.Instance.IsAnyMenuOpen)
         {
-            if (isGrounded)  // Only jump if grounded and input just started
+            if (context.started)
             {
-                shouldJump = true;  // Set flag to true when jump input is received
-                animator.SetTrigger("JumpTrigger");
-
-            }
-            else if (canDoubleJump)  // Allow double jump if not grounded but double jump is allowed
-            {
-                shouldDoubleJump = true;  // Set flag to true when double jump input is received
-                animator.SetTrigger("DoubleJumpTrigger");
-                Debug.Log("Double jump input received.");  // Log when double jump input is received
+                if (isGrounded)  // Only jump if grounded and input just started
+                {
+                    shouldJump = true;  // Set flag to true when jump input is received
+                }
+                else if (canDoubleJump)  // Allow double jump if not grounded but double jump is allowed
+                {
+                    shouldDoubleJump = true;  // Set flag to true when double jump input is received
+                    Debug.Log("Double jump input received.");  // Log when double jump input is received
+                }
             }
         }
     }
-
 
     private void Jump()
     { // Only process input if no UI menu is open
         if (!UIManager.Instance.IsAnyMenuOpen)
         {
+            
             Vector3 jumpVector = new Vector3(0f, jumpForce, 0f);
             rb.AddForce(jumpVector, ForceMode.VelocityChange);
         }
@@ -197,6 +198,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         // Only process input if no UI menu is open
         if (!UIManager.Instance.IsAnyMenuOpen)
         {
+            animator.SetTrigger("DoubleJumpTrigger");
             Vector3 doubleJumpVector = new Vector3(0f, doubleJumpVelocity, 0f);
             rb.velocity = new Vector3(rb.velocity.x, 0f, 0f);  // Reset the vertical velocity before applying double jump force
             rb.AddForce(doubleJumpVector, ForceMode.VelocityChange);
