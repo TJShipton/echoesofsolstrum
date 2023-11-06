@@ -18,4 +18,23 @@ public class BurnModifier : IWeaponModifier
         return "Burn";
     }
 
+    public Sprite ModifierIcon
+    {
+        get
+        {
+            Sprite icon = Resources.Load<Sprite>("ModImages/BurnIcon");
+            if (icon == null)
+            {
+                Debug.LogError("BurnModifierIcon sprite not found at the path.");
+            }
+            return icon;
+        }
+    }
+
+    public string GetDescription()
+    {
+        return "This shiz will burn motherfuckers. Toasty!";
+    }
+
+
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 public class ProjectileScript : MonoBehaviour
 {
     public int damage;
-    public Canvas enemyCanvas;
+    public Canvas EnemyCanvas;
     public float homingSpeed = 5f;  // Speed at which the projectile homes in on the target
     public float detectionRadius = 10f;  // Radius within which to search for enemies
 
@@ -14,8 +14,7 @@ public class ProjectileScript : MonoBehaviour
 
     private void Start()
     {
-        if (enemyCanvas == null)
-            enemyCanvas = GameManager.EnemyCanvas;
+       
 
         FindClosestEnemy();
     }
@@ -56,19 +55,30 @@ public class ProjectileScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        var hit = collision.gameObject.GetComponent<IDamageable>();
-        if (hit != null)
-        {
-            hit.TakeDamage(damage, GameManager.EnemyCanvas);
+        // Try to get the IDamageable component from the collided object
+        IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
 
-            if (hit is Enemy enemy)
+        // If the component exists, apply damage
+        if (damageable != null)
+        {
+            // Apply the base damage of the projectile
+            damageable.TakeDamage(damage, EnemyCanvas);
+
+            // If the object is also an Enemy, apply the weapon's modifiers
+            if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
             {
                 foreach (var mod in equippedModifiers)
                 {
-                    mod.ApplyEffect(enemy); // Casting IDamageable to Enemy
+                    // Apply each modifier's effect to the enemy
+                    mod.ApplyEffect(enemy);
                 }
             }
+
+            // After applying damage and modifiers, destroy the projectile or disable it
+            Destroy(gameObject); // Use this if you want to destroy the projectile
+                                 // gameObject.SetActive(false); // Use this if you want to reuse the projectile later
         }
     }
+
 }
 

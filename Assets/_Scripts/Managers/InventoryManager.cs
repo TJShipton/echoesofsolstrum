@@ -11,6 +11,7 @@ public class InventoryManager : MonoBehaviour
     public InventorySlot currentSelectedSlot = null;  // Slot of the currently equipped weapon
     public WeaponButtonCreator weaponButtonCreator;
     public Transform weaponInventoryPanel;  // UI panel to hold weapon buttons
+    public Transform inGameMenu;
     public Transform weaponHolder;
 
     void Awake()
@@ -48,8 +49,8 @@ public class InventoryManager : MonoBehaviour
         // Check if the Escape key is pressed
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // Toggle the visibility of the weaponInventoryPanel
-            weaponInventoryPanel.gameObject.SetActive(!weaponInventoryPanel.gameObject.activeSelf);
+            // Toggle the visibility of the inGameMenu
+            inGameMenu.gameObject.SetActive(!inGameMenu.gameObject.activeSelf);
         }
     }
 

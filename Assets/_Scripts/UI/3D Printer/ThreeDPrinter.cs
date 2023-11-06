@@ -5,10 +5,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
-public class ThreeDPrinter : MonoBehaviour
+public class ThreeDPrinter : MonoBehaviour, IInteractable
 {
     public EventSystem eventSystem;
     public GameObject weaponSelectPanel;
+    public GameObject weaponPanel;
+
     public LayerMask clickableLayer;
     public WeaponManager weaponManager;
     public WeaponButtonCreator weaponButtonCreator;
@@ -127,36 +129,51 @@ public class ThreeDPrinter : MonoBehaviour
             promptText.text = "Press E";
         }
     }
+   public void OpenMenu()
+{
+    // Check if the player is near, if not, return early.
+    if (!isPlayerNear)
+    {
+        return;
+    }
+
+    // Only proceed to open the menu if it is not already active.
+    if (!isWeaponPanelActive)
+    {
+        weaponPanel.SetActive(true);
+        ShowWeaponOptions();
+        isWeaponPanelActive = true;
+
+        // Hide the prompt text
+        promptText.gameObject.SetActive(false);
+    }
+}
+
+    public void CloseMenu()
+    {
+        if (!isPlayerNear) return; // Early return if the player is not near
+
+        weaponPanel.SetActive(false);
+        isWeaponPanelActive = false;
+        if (eventSystem != null)
+        {
+            eventSystem.SetSelectedGameObject(null); // Reset the selected object in the EventSystem
+        }
+        promptText.gameObject.SetActive(true); // Make the prompt text reappear
+    }
+
     private void ToggleWeaponSelectPanel()
     {
         // Check if the player is near, if not, return early.
-        if (!isPlayerNear)
-        {
-            return;
-        }
+        if (!isPlayerNear) return;
 
         if (isWeaponPanelActive)
         {
-            weaponSelectPanel.SetActive(false);
-            isWeaponPanelActive = false;
-
-            // Reset the selected object in the EventSystem
-            if (eventSystem != null)
-            {
-                eventSystem.SetSelectedGameObject(null);
-            }
-
-            // Make the prompt text reappear
-            promptText.gameObject.SetActive(true);
+            UIManager.Instance.CloseCurrentMenu();
         }
         else
         {
-            weaponSelectPanel.SetActive(true);
-            ShowWeaponOptions();
-            isWeaponPanelActive = true;
-
-            // Hide the prompt text
-            promptText.gameObject.SetActive(false);
+            UIManager.Instance.HandleMenuOpen(this);
         }
     }
 
@@ -219,9 +236,7 @@ public class ThreeDPrinter : MonoBehaviour
             }
         }
     }
-
-   
-
+  
     private void CreateWeaponButtons()
     {
         firstButton = null;  // Reset first button
@@ -286,13 +301,12 @@ public class ThreeDPrinter : MonoBehaviour
             GameObject weaponPrefab = weaponManager.GetWeaponPrefabByName(weaponName);
             if (weaponPrefab != null)
             {
-
                 InventoryItem newWeaponInventoryItem = new WeaponInventoryItem(weaponName, weaponPrefab);
 
                 // Update UI and state in ThreeDPrinter
                 InventoryManager.instance.UpdateInventoryUI();
-                weaponSelectPanel.SetActive(false);
-                isWeaponPanelActive = false;
+                UIManager.Instance.CloseCurrentMenu();
+
             }
             else
             {

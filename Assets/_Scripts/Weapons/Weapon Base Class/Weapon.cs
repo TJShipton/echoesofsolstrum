@@ -23,7 +23,7 @@ public abstract class Weapon : MonoBehaviour
     List<IWeaponModifier> possibleModifiers = new List<IWeaponModifier>
     {
          new BurnModifier(),
-         new FreezeModifier(),
+         //new FreezeModifier(),
           // Add other modifiers RARE TIER here
     };
 
@@ -107,7 +107,7 @@ public abstract class Weapon : MonoBehaviour
                 break;
         }
 
-        Debug.Log($"Weapon Tier: {weaponData.weaponTier}, Intended Number of Modifiers: {numberOfModifiers}");
+        //Debug.Log($"Weapon Tier: {weaponData.weaponTier}, Intended Number of Modifiers: {numberOfModifiers}");
 
         List<IWeaponModifier> remainingModifiers = new List<IWeaponModifier>(possibleModifiers);
 
@@ -115,7 +115,7 @@ public abstract class Weapon : MonoBehaviour
         {
             if (remainingModifiers.Count == 0)
             {
-                Debug.LogWarning("No more modifiers to add.");
+                //Debug.LogWarning("No more modifiers to add.");
                 break;
             }
 
@@ -129,13 +129,13 @@ public abstract class Weapon : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning($"Modifier of type {selectedModifier.GetType().Name} is already equipped.");
+                //Debug.LogWarning($"Modifier of type {selectedModifier.GetType().Name} is already equipped.");
             }
 
             remainingModifiers.RemoveAt(randomIndex);
         }
 
-        Debug.Log($"Actual Number of Modifiers: {equippedModifiers.Count}, Modifiers: {string.Join(", ", equippedModifiers.Select(m => m.GetType().Name))}");
+        //Debug.Log($"Actual Number of Modifiers: {equippedModifiers.Count}, Modifiers: {string.Join(", ", equippedModifiers.Select(m => m.GetType().Name))}");
     }
 
 

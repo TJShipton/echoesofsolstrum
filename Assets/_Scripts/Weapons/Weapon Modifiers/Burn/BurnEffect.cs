@@ -30,7 +30,7 @@ public class BurnEffect : Effect
 
     private IEnumerator ApplyBurn(Enemy enemy)
     {
-        Debug.Log("Burn effect Applied");
+        //Debug.Log("Burn effect Applied");
         float startTime = Time.time;
 
         while (Time.time - startTime < burnDuration)

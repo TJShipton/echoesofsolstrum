@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Solfather : MonoBehaviour
+public class Solfather : MonoBehaviour, IInteractable
 {
 
     public GameObject player;
@@ -16,7 +16,7 @@ public class Solfather : MonoBehaviour
     public CanvasGroup playerUpgradeCanvasGroup;  // Reference to the CanvasGroup component
 
     private bool isPlayerNear = false;
-    private Camera mainCamera;
+   
     private bool isPlayerUpgradePanelActive = false;
     private Button firstButton = null;
 
@@ -94,49 +94,82 @@ public class Solfather : MonoBehaviour
         TogglePlayerUpgradePanel();
     }
 
+    // Toggle between opening and closing the player upgrade panel
     public void TogglePlayerUpgradePanel()
     {
         // Check if the player is near, if not, return early.
-        if (!isPlayerNear)
+        if (!isPlayerNear) return;
+
+        if (isPlayerUpgradePanelActive)
         {
-            return;
-        }
-
-        // Get the CanvasGroup component from the playerUpgradePanel
-        CanvasGroup playerUpgradeCanvasGroup = playerUpgradePanel.GetComponent<CanvasGroup>();
-
-        if (playerUpgradeCanvasGroup != null)
-        {
-            bool isPanelActive = playerUpgradeCanvasGroup.interactable;
-
-            // Toggle the CanvasGroup properties
-            playerUpgradeCanvasGroup.interactable = !isPanelActive;
-            playerUpgradeCanvasGroup.blocksRaycasts = !isPanelActive;
-            playerUpgradeCanvasGroup.alpha = !isPanelActive ? 1 : 0;
-
-            // If the panel is now active, set the first button as the selected object in the EventSystem
-            if (!isPanelActive)  // since isPanelActive holds the old state, !isPanelActive is the new state
-            {
-                // Find the first button in the playerUpgradePanel hierarchy if it's null
-                if (firstButton == null)
-                {
-                    firstButton = playerUpgradePanel.GetComponentInChildren<Button>();
-                }
-
-                // Ensure the firstButton is not null before trying to access it
-                if (firstButton != null)
-                {
-                    eventSystem.SetSelectedGameObject(firstButton.gameObject);
-                }
-                else
-                {
-                    Debug.LogWarning("No button found in playerUpgradePanel hierarchy.");  // Debug log for no button found
-                }
-            }
+            UIManager.Instance.CloseCurrentMenu();
         }
         else
         {
+            UIManager.Instance.HandleMenuOpen(this);
+        }
+    }
+
+    // Call this method to open the player upgrade panel
+    public void OpenMenu()
+    {
+        SetPlayerUpgradePanelActive(true);
+        SetPromptTextActive(false);
+    }
+
+    // Call this method to close the player upgrade panel
+    public void CloseMenu()
+    {
+        SetPlayerUpgradePanelActive(false);
+        SetPromptTextActive(true);
+    }
+
+    // Sets the player upgrade panel active or inactive
+    private void SetPlayerUpgradePanelActive(bool isActive)
+    {
+        if (playerUpgradeCanvasGroup == null)
+        {
             Debug.LogError("CanvasGroup not found on playerUpgradePanel!");
+            return;
+        }
+
+        playerUpgradeCanvasGroup.interactable = isActive;
+        playerUpgradeCanvasGroup.blocksRaycasts = isActive;
+        playerUpgradeCanvasGroup.alpha = isActive ? 1 : 0;
+        isPlayerUpgradePanelActive = isActive;
+
+        if (isActive)
+        {
+            SelectFirstButtonInPanel();
+        }
+    }
+
+    // Selects the first button in the upgrade panel
+    private void SelectFirstButtonInPanel()
+    {
+        // Find the first button if it's null
+        if (firstButton == null)
+        {
+            firstButton = playerUpgradePanel.GetComponentInChildren<Button>();
+        }
+
+        if (firstButton != null)
+        {
+            eventSystem.SetSelectedGameObject(firstButton.gameObject);
+        }
+        else
+        {
+            Debug.LogWarning("No button found in playerUpgradePanel hierarchy.");
+        }
+    }
+
+    // Sets the prompt text active or inactive
+    private void SetPromptTextActive(bool isActive)
+    {
+        promptText.gameObject.SetActive(isActive);
+        if (isActive)
+        {
+            UpdatePromptText();
         }
     }
 

@@ -53,6 +53,13 @@ public class WeaponButtonCreator : MonoBehaviour
             // Equip random modifiers
             weaponComponent.EquipRandomModifiers();
 
+            // Get descriptions for each modifier to use in tooltips
+            string[] modifierDescriptions = weaponComponent.equippedModifiers.Select(mod => mod.GetDescription()).ToArray();
+
+            // Set the modifier icons and their tooltips in the UI
+            weaponButtonUI.SetModifierIcons(weaponComponent.equippedModifiers.ToArray(), modifierDescriptions);
+
+
             // Update UI with the new data
             weaponButtonUI.nameText.text = weaponComponent.weaponData.weaponName;
             weaponButtonUI.damageText.text = $"{weaponComponent.weaponData.baseDamage}";
@@ -108,6 +115,16 @@ public class WeaponButtonCreator : MonoBehaviour
         {
             imageOutline.effectColor = ColorHelper.HexToColor(rarityColorHex);  // Set the outline color using hex
         }
+
+       
+
+        // Set the weapon thumbnail
+        if (weaponThumbnails.TryGetValue(weaponComponent.weaponName, out Sprite thumbnail))
+        {
+            weaponButtonUI.GetComponent<Image>().sprite = thumbnail;
+        }
+
+
 
         return newButton;
     }

@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
 
         currentHealth = maxHealth;
-        UpdateHealthUI();  // Ensure the UI is correct when the game starts
+        UpdateHealthbar();  // Ensure the healthbar is correct when the game starts
 
         // Apply permanent upgrades
         UpgradeManager.instance.ApplyPermanentUpgrades(this);
@@ -85,6 +85,12 @@ public class PlayerController : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
+        // Before any player input, check if the UI is open
+        if (UIManager.Instance.IsAnyMenuOpen)
+        {
+            // If a menu is open, we don't want to process any gameplay input
+            return;
+        }
 
 
     }
@@ -128,63 +134,84 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        movementInput = context.ReadValue<Vector2>();  // Read the input value from the context
-
-        // Update the animator
-        animator.SetFloat("IsRunning", Mathf.Abs(movementInput.x) > 0 ? 1f : 0f);
-
-        // Determine the look direction
-        if (Mathf.Abs(movementInput.x) > 0)
+        // Only process input if no UI menu is open
+        if (!UIManager.Instance.IsAnyMenuOpen)
         {
-            Vector3 lookDirection = movementInput.x > 0 ? Vector3.right : Vector3.left;
-            transform.forward = lookDirection;
+            movementInput = context.ReadValue<Vector2>();  // Read the input value from the context
+
+            // Update the animator
+            animator.SetFloat("IsRunning", Mathf.Abs(movementInput.x) > 0 ? 1f : 0f);
+
+            // Determine the look direction
+            if (Mathf.Abs(movementInput.x) > 0)
+            {
+                Vector3 lookDirection = movementInput.x > 0 ? Vector3.right : Vector3.left;
+                transform.forward = lookDirection;
+            }
         }
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.started)
+        // Only process input if no UI menu is open
+        if (!UIManager.Instance.IsAnyMenuOpen)
         {
-            if (isGrounded)  // Only jump if grounded and input just started
+            if (context.started)
             {
-                shouldJump = true;  // Set flag to true when jump input is received
-            }
-            else if (canDoubleJump)  // Allow double jump if not grounded but double jump is allowed
-            {
-                shouldDoubleJump = true;  // Set flag to true when double jump input is received
-                Debug.Log("Double jump input received.");  // Log when double jump input is received
+                if (isGrounded)  // Only jump if grounded and input just started
+                {
+                    shouldJump = true;  // Set flag to true when jump input is received
+                }
+                else if (canDoubleJump)  // Allow double jump if not grounded but double jump is allowed
+                {
+                    shouldDoubleJump = true;  // Set flag to true when double jump input is received
+                    Debug.Log("Double jump input received.");  // Log when double jump input is received
+                }
             }
         }
     }
 
-
     private void Jump()
-    {
-        Vector3 jumpVector = new Vector3(0f, jumpForce, 0f);
-        rb.AddForce(jumpVector, ForceMode.VelocityChange);
+    { // Only process input if no UI menu is open
+        if (!UIManager.Instance.IsAnyMenuOpen)
+        {
+            Vector3 jumpVector = new Vector3(0f, jumpForce, 0f);
+            rb.AddForce(jumpVector, ForceMode.VelocityChange);
+        }
     }
 
     private void DoubleJump()
     {
-        Vector3 doubleJumpVector = new Vector3(0f, doubleJumpVelocity, 0f);
-        rb.velocity = new Vector3(rb.velocity.x, 0f, 0f);  // Reset the vertical velocity before applying double jump force
-        rb.AddForce(doubleJumpVector, ForceMode.VelocityChange);
+        // Only process input if no UI menu is open
+        if (!UIManager.Instance.IsAnyMenuOpen)
+        {
+            Vector3 doubleJumpVector = new Vector3(0f, doubleJumpVelocity, 0f);
+            rb.velocity = new Vector3(rb.velocity.x, 0f, 0f);  // Reset the vertical velocity before applying double jump force
+            rb.AddForce(doubleJumpVector, ForceMode.VelocityChange);
+        }
     }
 
 
     public void OnAtck1(InputAction.CallbackContext context)
-    {
-        if (context.started)
+    { // Only process input if no UI menu is open
+        if (!UIManager.Instance.IsAnyMenuOpen)
         {
-            Atck1();
+            if (context.started)
+            {
+                Atck1();
+            }
         }
     }
 
     public void OnAtck2(InputAction.CallbackContext context)
     {
-        if (context.started)
+        // Only process input if no UI menu is open
+        if (!UIManager.Instance.IsAnyMenuOpen)
         {
-            Atck2();
+            if (context.started)
+            {
+                Atck2();
+            }
         }
     }
 
@@ -246,9 +273,6 @@ public class PlayerController : MonoBehaviour, IDamageable
             // Now trigger the attack
             currentWeapon.PrimaryAttack();
 
-            //// Deactivate the weapon after the attack
-            //currentWeapon.DeactivateWeapon();
-
         }
         else
         {
@@ -265,7 +289,7 @@ public class PlayerController : MonoBehaviour, IDamageable
      
         if (currentHealth > 0)
         {
-            UpdateHealthUI();
+            UpdateHealthbar();
         }
         if (currentHealth <= 0)  // Check if current health is 0 or below
         {
@@ -274,7 +298,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    public void UpdateHealthUI()
+    public void UpdateHealthbar()
     {
         if (playerHealthBar == null || playerHealthText == null)
         {
@@ -295,6 +319,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         // STILL TO DO --- trigger a death animation, end the game.
     }
 
+
+    //Sol pick up function
     private void OnTriggerEnter(Collider other)
     {
         SolObject solObject = other.gameObject.GetComponent<SolObject>();
@@ -305,7 +331,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
 
 
-
+    //Apply upgrade 
     public void ApplyUpgrade(IPlayerUpgrade upgrade)
     {
         upgrade.ApplyUpgrade(this);
