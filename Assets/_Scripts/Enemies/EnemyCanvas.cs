@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyCanvas : MonoBehaviour
@@ -8,14 +6,20 @@ public class EnemyCanvas : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
+
+        if (instance != null && instance != this)
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+
+            Destroy(gameObject);
         }
         else
         {
-            Destroy(gameObject);
+
+            instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
+
+
+
 }

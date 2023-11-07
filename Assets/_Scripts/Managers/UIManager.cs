@@ -8,6 +8,9 @@ public class UIManager : MonoBehaviour
     private IInteractable currentOpenMenu;
     public bool IsAnyMenuOpen { get; private set; }
 
+    public delegate void PlayerStateHandler(bool isMenuOpen);
+    public static event PlayerStateHandler OnMenuStatusChange;
+
 
 
     void Update()
@@ -18,7 +21,7 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        // Regular input and gameplay update code...
+        
     }
 
 
@@ -45,6 +48,9 @@ public class UIManager : MonoBehaviour
         interactable.OpenMenu();
         currentOpenMenu = interactable;
         IsAnyMenuOpen = true;
+
+        // Notify any listeners that the menu status has changed
+        OnMenuStatusChange?.Invoke(IsAnyMenuOpen);
     }
 
     public void CloseCurrentMenu()
@@ -54,6 +60,9 @@ public class UIManager : MonoBehaviour
             currentOpenMenu.CloseMenu();
             currentOpenMenu = null;
             IsAnyMenuOpen = false;
+
+            // Notify any listeners that the menu status has changed
+            OnMenuStatusChange?.Invoke(IsAnyMenuOpen);
         }
     }
 }

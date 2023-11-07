@@ -7,7 +7,7 @@ public class HyperbassFlute : Weapon
     public Transform playerTransform;  // Reference to the player's transform
     public Canvas EnemyCanvas;
 
-   
+
 
     public Animator animator;
     private Rigidbody playerRigidbody;  // Reference to the player's rigidbody
@@ -28,11 +28,7 @@ public class HyperbassFlute : Weapon
 
         }
 
-        // Access the GameManager to get the EnemyCanvas
-        if (EnemyCanvas == null)
-        {
-            EnemyCanvas = GameManager.EnemyCanvas;
-        }
+
 
     }
 

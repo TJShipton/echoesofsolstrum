@@ -1,6 +1,6 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
-using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -12,8 +12,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Vector2 movementInput;  // Store the movement input
 
 
-    [SerializeField]
-    public Canvas EnemyCanvas;  // Drag your main UI Canvas here
+
 
     public Transform characterModel;
     public LayerMask groundLayer;
@@ -37,6 +36,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     private bool shouldDoubleJump = false;
     private bool isGrounded;
     public float groundCheckDistance = 0.1f;
+    public float fallMultiplier = 2.5f; // This increases the fall speed
+    public float lowJumpMultiplier = 2f; // This can be used to control the fall speed on a low jump
 
     private bool isDodging = false;
     public float dodgeDuration = 1.0f; // The duration of the dodge in seconds
@@ -45,8 +46,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Rigidbody rb;
     private Animator animator;
     private WeaponManager weaponManager;
-
     private CurrencyManager currencyManager;
+
+    private bool isUIOpen = false;
 
 
 
@@ -54,7 +56,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
-     
+
 
         rb = GetComponent<Rigidbody>();
         animator = transform.GetComponent<Animator>();
@@ -87,6 +89,28 @@ public class PlayerController : MonoBehaviour, IDamageable
         // Apply permanent upgrades
         UpgradeManager.instance.ApplyPermanentUpgrades(this);
     }
+    private void OnEnable()
+    {
+        // Subscribe to the OnMenuStatusChange event
+        UIManager.OnMenuStatusChange += HandleUIStateChange;
+    }
+
+    private void OnDisable()
+    {
+        // Unsubscribe from the OnMenuStatusChange event
+        UIManager.OnMenuStatusChange -= HandleUIStateChange;
+    }
+
+    private void HandleUIStateChange(bool isMenuOpen)
+    {
+        isUIOpen = isMenuOpen; // Update the internal state.
+
+        if (isUIOpen)
+        {
+            StopAllActions();
+        }
+
+    }
 
     // Update is called once per frame
     void Update()
@@ -94,15 +118,33 @@ public class PlayerController : MonoBehaviour, IDamageable
         // Before any player input, check if the UI is open
         if (UIManager.Instance.IsAnyMenuOpen)
         {
-            // If a menu is open, we don't want to process any gameplay input
+            // If a menu is open, don't process any gameplay input
             return;
         }
 
 
     }
 
+    private void StopAllActions()
+    {
+        // Stop all movement by setting velocity to zero
+        rb.velocity = Vector3.zero;
+
+        movementInput = Vector2.zero;  // This ensures no new force will be applied as long as the UI is open
+
+        // Also stop any animations or actions that should cease when UI is open
+        animator.SetFloat("IsRunning", 0f);
+        animator.SetBool("IsGrounded", isGrounded);
+        animator.ResetTrigger("JumpTrigger");
+        animator.ResetTrigger("DoubleJumpTrigger");
+        animator.SetBool("IsFalling", false);
+
+
+    }
+
     private void FixedUpdate()
     {
+        if (isUIOpen) return;  // Don't apply physics updates if the UI is open
 
         // Update the horizontal movement
         Vector3 movement = new Vector3(movementInput.x, 0.0f);
@@ -131,15 +173,23 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
 
         // Check for falling
-        if(rb.velocity.y < -0.1f)  // Assumes that if the velocity is less than a small negative value, the character is falling
+        if (rb.velocity.y < -0.1f)
         {
+            // The player is falling
             animator.SetBool("IsFalling", true);
+
+            // Apply the fall multiplier
+            rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
         }
-        if (isGrounded)
+        else if (rb.velocity.y > 0 && !Input.GetButton("Jump")) // Replace "Jump" with your actual jump input name
         {
+            rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
+        }
+        else
+        {
+            // If not falling
             animator.SetBool("IsFalling", false);
         }
-
 
     }
     private bool IsGrounded()
@@ -153,71 +203,67 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void OnMove(InputAction.CallbackContext context)
     {
         // Only process input if no UI menu is open
-        if (!UIManager.Instance.IsAnyMenuOpen)
+        if (isUIOpen) return;
+
+        movementInput = context.ReadValue<Vector2>();  // Read the input value from the context
+
+        // Update the animator
+        animator.SetFloat("IsRunning", Mathf.Abs(movementInput.x) > 0 ? 1f : 0f);
+
+        // Determine the look direction
+        if (Mathf.Abs(movementInput.x) > 0)
         {
-            movementInput = context.ReadValue<Vector2>();  // Read the input value from the context
-
-            // Update the animator
-            animator.SetFloat("IsRunning", Mathf.Abs(movementInput.x) > 0 ? 1f : 0f);
-
-            // Determine the look direction
-            if (Mathf.Abs(movementInput.x) > 0)
-            {
-                Vector3 lookDirection = movementInput.x > 0 ? Vector3.right : Vector3.left;
-                transform.forward = lookDirection;
-            }
+            Vector3 lookDirection = movementInput.x > 0 ? Vector3.right : Vector3.left;
+            transform.forward = lookDirection;
         }
     }
+
 
     public void OnJump(InputAction.CallbackContext context)
     {
         // Only process input if no UI menu is open
-        if (!UIManager.Instance.IsAnyMenuOpen)
+
+        if (context.started)
         {
-            if (context.started)
+            if (isGrounded)  // Only jump if grounded and input just started
             {
-                if (isGrounded)  // Only jump if grounded and input just started
-                {
-                    shouldJump = true;  // Set flag to true when jump input is received
-                }
-                else if (canDoubleJump)  // Allow double jump if not grounded but double jump is allowed
-                {
-                    shouldDoubleJump = true;  // Set flag to true when double jump input is received
-                    Debug.Log("Double jump input received.");  // Log when double jump input is received
-                }
+                shouldJump = true;  // Set flag to true when jump input is received
+            }
+            else if (canDoubleJump)  // Allow double jump if not grounded but double jump is allowed
+            {
+                shouldDoubleJump = true;  // Set flag to true when double jump input is received
+                Debug.Log("Double jump input received.");  // Log when double jump input is received
             }
         }
+
     }
 
     private void Jump()
     { // Only process input if no UI menu is open
-        if (!UIManager.Instance.IsAnyMenuOpen)
-        {
-            
-            Vector3 jumpVector = new Vector3(0f, jumpForce, 0f);
-            rb.AddForce(jumpVector, ForceMode.VelocityChange);
-        }
+
+
+        Vector3 jumpVector = new Vector3(0f, jumpForce, 0f);
+        rb.AddForce(jumpVector, ForceMode.VelocityChange);
+
     }
 
     private void DoubleJump()
     {
         // Only process input if no UI menu is open
-        if (!UIManager.Instance.IsAnyMenuOpen)
-        {
-            animator.SetTrigger("DoubleJumpTrigger");
-            Vector3 doubleJumpVector = new Vector3(0f, doubleJumpVelocity, 0f);
-            rb.velocity = new Vector3(rb.velocity.x, 0f, 0f);  // Reset the vertical velocity before applying double jump force
-            rb.AddForce(doubleJumpVector, ForceMode.VelocityChange);
-        }
+
+        animator.SetTrigger("DoubleJumpTrigger");
+        Vector3 doubleJumpVector = new Vector3(0f, doubleJumpVelocity, 0f);
+        rb.velocity = new Vector3(rb.velocity.x, 0f, 0f);  // Reset the vertical velocity before applying double jump force
+        rb.AddForce(doubleJumpVector, ForceMode.VelocityChange);
+
     }
-    
+
 
     public void OnDodge(InputAction.CallbackContext context)
     {
-        if (!UIManager.Instance.IsAnyMenuOpen && context.started && !isDodging)
-        {
-            StartCoroutine(Dodge());
-        }
+
+        StartCoroutine(Dodge());
+
     }
 
     private IEnumerator Dodge()
@@ -232,26 +278,22 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
 
     public void OnAtck1(InputAction.CallbackContext context)
-    { // Only process input if no UI menu is open
-        if (!UIManager.Instance.IsAnyMenuOpen)
+    {
+        if (context.started)
         {
-            if (context.started)
-            {
-                Atck1();
-            }
+            Atck1();
         }
+
     }
 
     public void OnAtck2(InputAction.CallbackContext context)
     {
-        // Only process input if no UI menu is open
-        if (!UIManager.Instance.IsAnyMenuOpen)
+
+        if (context.started)
         {
-            if (context.started)
-            {
-                Atck2();
-            }
+            Atck2();
         }
+
     }
 
     private void Atck1()
@@ -319,7 +361,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    
+
 
     public void TakeDamage(int damageAmount, Canvas HUDCanvas)
     {
@@ -331,7 +373,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         currentHealth -= damageAmount;
 
-     
+
         if (currentHealth > 0)
         {
             UpdateHealthbar();
@@ -350,11 +392,11 @@ public class PlayerController : MonoBehaviour, IDamageable
             Debug.LogError("Health UI components are null!");
             return;
         }
-     
+
         playerHealthBar.maxValue = maxHealth;
         playerHealthBar.value = currentHealth;
         playerHealthText.text = currentHealth.ToString();
-      
+
 
     }
 
@@ -387,4 +429,5 @@ public class PlayerController : MonoBehaviour, IDamageable
         // Set hasDoubleJumpUpgrade to true when the upgrade is applied
         hasDoubleJumpUpgrade = true;
     }
+
 }

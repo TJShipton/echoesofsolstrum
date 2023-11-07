@@ -11,7 +11,7 @@ public class Drumstick : Weapon
     public float spinAttackRadius = 2f;  // Radius for spin attack
     public LayerMask enemyLayers;
 
-    
+
 
     public override void PrimaryAttack()
     {
@@ -67,12 +67,12 @@ public class Drumstick : Weapon
     {
         if (other.CompareTag("Enemy"))
         {
-            
+
             if (equippedModifiers == null)
             {
                 Debug.Log("equippedModifiers is null!");
             }
-           
+
             IDamageable enemyIDamageable = other.GetComponent<IDamageable>();
             Enemy enemy = other.GetComponent<Enemy>();  // Get the Enemy component
             if (enemyIDamageable != null)
@@ -108,7 +108,7 @@ public class Drumstick : Weapon
 
     }
 
-   
+
 
 
 }

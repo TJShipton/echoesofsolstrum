@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,7 +14,7 @@ public class Enemy : MonoBehaviour, IDamageable
     private GameObject healthBarInstance;
     private Slider healthBarSlider;
 
-    public static Canvas enemyCanvas;
+
     public Animator Animator { get; private set; }
     public EnemyData Data => enemyData;  // Allows other scripts to access the enemyData
 
@@ -30,12 +29,6 @@ public class Enemy : MonoBehaviour, IDamageable
 
         // Initialize current health from enemyData
         currentHealth = enemyData.health;
-
-        //Initialize enemy canvas
-        if (enemyCanvas == null)
-        {
-            enemyCanvas = GameObject.Find("EnemyCanvas").GetComponent<Canvas>();
-        }
 
     }
 
@@ -96,42 +89,28 @@ public class Enemy : MonoBehaviour, IDamageable
         // Deduct the damage received
         currentHealth -= damageAmount;
 
-        // Instantiate healthBarPrefab as a child of EnemyCanvas
-        if (healthBarInstance == null)
+        // Instantiate healthBarPrefab as a child of EnemyCanvas if not already done
+        if (healthBarInstance == null && healthBarPrefab != null)
         {
-            // Initialize the EnemyCanvas if it's null
-            if (enemyCanvas == null)
+            if (EnemyCanvas.instance != null)
             {
-                enemyCanvas = GameObject.Find("EnemyCanvas").GetComponent<Canvas>();
-            }
-
-            // Check if the healthBarPrefab is not null
-            if (healthBarPrefab != null)
-            {
-                // Instantiate the healthBarPrefab as a new GameObject and set its parent
-                if (enemyCanvas != null)
-                {
-                    healthBarInstance = Instantiate(healthBarPrefab, enemyCanvas.transform, false);
-                }
-                else
-                {
-                    Debug.LogWarning("EnemyCanvas is null, health bar will not be parented to it.");
-                    healthBarInstance = Instantiate(healthBarPrefab);
-                }
+                healthBarInstance = Instantiate(healthBarPrefab, EnemyCanvas.instance.transform, false);
+                healthBarSlider = healthBarInstance.GetComponent<Slider>();
+                healthBarSlider.maxValue = enemyData.health;
+                healthBarSlider.value = currentHealth;
             }
             else
             {
-                Debug.LogWarning("HealthBarPrefab is null, cannot create health bar.");
-                return; // Return early if the prefab is not available.
+                Debug.LogError("EnemyCanvas.instance is null, cannot instantiate health bar.");
             }
-
-            healthBarSlider = healthBarInstance.GetComponent<Slider>();
-            healthBarSlider.maxValue = enemyData.health;
+        }
+        else if (healthBarSlider != null)
+        {
             healthBarSlider.value = currentHealth;
         }
         else
         {
-            healthBarSlider.value = currentHealth;
+            Debug.LogWarning("HealthBarSlider is null, cannot update health.");
         }
 
         if (currentHealth <= 0)

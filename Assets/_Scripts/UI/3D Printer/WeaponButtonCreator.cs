@@ -53,11 +53,9 @@ public class WeaponButtonCreator : MonoBehaviour
             // Equip random modifiers
             weaponComponent.EquipRandomModifiers();
 
-            // Get descriptions for each modifier to use in tooltips
-            string[] modifierDescriptions = weaponComponent.equippedModifiers.Select(mod => mod.GetDescription()).ToArray();
-
-            // Set the modifier icons and their tooltips in the UI
-            weaponButtonUI.SetModifierIcons(weaponComponent.equippedModifiers.ToArray(), modifierDescriptions);
+            
+            // Set the modifier icons in the UI
+            weaponButtonUI.SetModifierIcons(weaponComponent.equippedModifiers.ToArray());
 
 
             // Update UI with the new data

@@ -1,6 +1,5 @@
-using UnityEngine;
 using TMPro;
-using System.Collections.Generic;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,7 +12,7 @@ public class GameManager : MonoBehaviour
     private float joystickTimer = 0f;  // Timer to track joystick input
     private float joystickThreshold = 0.5f;  // Time in seconds to wait before setting to "controller"
 
-    public static Canvas EnemyCanvas;
+    //public static Canvas EnemyCanvas;
 
     [SerializeField]
     private TextMeshProUGUI weaponUnlockText; //weapon unlock text 
@@ -37,7 +36,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        EnemyCanvas = FindObjectOfType<Canvas>();
+
 
     }
 

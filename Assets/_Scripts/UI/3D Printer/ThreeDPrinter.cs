@@ -129,25 +129,25 @@ public class ThreeDPrinter : MonoBehaviour, IInteractable
             promptText.text = "Press E";
         }
     }
-   public void OpenMenu()
-{
-    // Check if the player is near, if not, return early.
-    if (!isPlayerNear)
+    public void OpenMenu()
     {
-        return;
-    }
+        // Check if the player is near, if not, return early.
+        if (!isPlayerNear)
+        {
+            return;
+        }
 
-    // Only proceed to open the menu if it is not already active.
-    if (!isWeaponPanelActive)
-    {
-        weaponPanel.SetActive(true);
-        ShowWeaponOptions();
-        isWeaponPanelActive = true;
+        // Only proceed to open the menu if it is not already active.
+        if (!isWeaponPanelActive)
+        {
+            weaponPanel.SetActive(true);
+            ShowWeaponOptions();
+            isWeaponPanelActive = true;
 
-        // Hide the prompt text
-        promptText.gameObject.SetActive(false);
+            // Hide the prompt text
+            promptText.gameObject.SetActive(false);
+        }
     }
-}
 
     public void CloseMenu()
     {
@@ -191,7 +191,7 @@ public class ThreeDPrinter : MonoBehaviour, IInteractable
         // Initialize or reuse lastRandomWeapons and lastRandomTiers
         InitializeOrReuseRandomWeaponsAndTiers();
 
-       
+
 
         // Create and set up buttons for weapon options
         CreateWeaponButtons();
@@ -236,7 +236,7 @@ public class ThreeDPrinter : MonoBehaviour, IInteractable
             }
         }
     }
-  
+
     private void CreateWeaponButtons()
     {
         firstButton = null;  // Reset first button

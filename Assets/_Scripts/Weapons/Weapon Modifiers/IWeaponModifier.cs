@@ -5,7 +5,7 @@ using UnityEngine;
 public interface IWeaponModifier
 {
     string GetName();
-    string GetDescription();
+    //string GetDescription();
     
     Sprite ModifierIcon { get; }
 

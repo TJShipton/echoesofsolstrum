@@ -12,9 +12,9 @@ public class WeaponButtonUI : MonoBehaviour
     public List<TextMeshProUGUI> modifierTexts;
     public Image[] modifierImages;
 
-    public void SetModifierIcons(IWeaponModifier[] modifiers, string[] descriptions)
+    public void SetModifierIcons(IWeaponModifier[] modifiers)
     {
-        if (modifierImages == null || modifiers == null || descriptions == null)
+        if (modifierImages == null || modifiers == null)
         {
             Debug.LogError("One of the arrays is null.");
             return;
@@ -29,25 +29,15 @@ public class WeaponButtonUI : MonoBehaviour
             }
         }
 
-        // Now, loop through the modifiers and set the images and tooltips
+        // Now, loop through the modifiers and set the images
         for (int i = 0; i < modifiers.Length; i++)
         {
             if (i < modifierImages.Length && modifierImages[i] != null) // Check to avoid index out of range and null Image component
             {
-                TooltipTrigger tooltipTrigger = modifierImages[i].GetComponent<TooltipTrigger>();
-                if (tooltipTrigger == null)
-                {
-                    // Optionally, add a TooltipTrigger component if not already attached
-                    tooltipTrigger = modifierImages[i].gameObject.AddComponent<TooltipTrigger>();
-                }
-
                 if (modifiers[i].ModifierIcon != null) // Check if the ModifierIcon is not null
                 {
                     modifierImages[i].sprite = modifiers[i].ModifierIcon;
                     modifierImages[i].gameObject.SetActive(true); // Only activate the images we need
-
-                    // Set the tooltip text
-                    tooltipTrigger.SetTooltipText(descriptions[i]);
                 }
                 else
                 {
