@@ -269,12 +269,15 @@ public class PlayerController : MonoBehaviour, IDamageable
     private IEnumerator Dodge()
     {
         isDodging = true;
+        animator.SetBool("IsDodging", true);
         animator.SetTrigger("DodgeTrigger"); // Trigger dodge animation
 
         // Wait for the duration of the dodge
         yield return new WaitForSeconds(dodgeDuration);
 
         isDodging = false; // Player is no longer dodging
+        animator.SetBool("IsDodging", false);
+
     }
 
     public void OnAtck1(InputAction.CallbackContext context)
@@ -438,5 +441,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         // Set hasDoubleJumpUpgrade to true when the upgrade is applied
         hasDoubleJumpUpgrade = true;
     }
+
+
 
 }
