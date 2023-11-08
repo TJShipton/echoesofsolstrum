@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class WeaponSlotUpgrade : IPlayerUpgrade
 {
     public string UpgradeName => "Extra Weapon Slot";
@@ -14,9 +15,13 @@ public class WeaponSlotUpgrade : IPlayerUpgrade
     public void ApplyUpgrade(PlayerController player)
     {
         {
-            InventoryManager.instance.maxWeaponSlots++;
-            InventoryManager.instance.slots.Add(new InventorySlot(1));  // Add a new slot
-            //Debug.Log("Extra weapon slot added. New maxWeaponSlots: " + InventoryManager.instance.maxWeaponSlots);
+
+            InventorySlot secondSlot = InventoryManager.instance.slots[1];
+            secondSlot.IsLocked = false; // Unlock the second slot
+            Debug.Log("Second slot unlocked.");
+
+            // Call UpdateInventoryUI to refresh the UI and show the unlocked slot sprite
+            InventoryManager.instance.UpdateInventoryUI();
         }
     }
 

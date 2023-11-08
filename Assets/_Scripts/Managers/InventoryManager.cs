@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,12 +8,16 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager instance;
     public List<InventorySlot> slots = new List<InventorySlot>(); // List of all inventory slots
-    public int maxWeaponSlots = 0;  // Max number of equippable weapon slots
+    public int maxWeaponSlots = 2;  // Max number of equippable weapon slots
     public InventorySlot currentSelectedSlot = null;  // Slot of the currently equipped weapon
     public WeaponButtonCreator weaponButtonCreator;
     public Transform weaponInventoryPanel;  // UI panel to hold weapon buttons
     public Transform inGameMenu;
     public Transform weaponHolder;
+
+    public Sprite lockedSlotSprite;
+    public Sprite emptySlotSprite;
+
 
     void Awake()
     {
@@ -27,21 +32,32 @@ public class InventoryManager : MonoBehaviour
             Destroy(gameObject);
             Debug.LogWarning("Attempted to initialize a second InventoryManager instance.");
         }
+
+        // Find the weaponHolder by tag
+        weaponHolder = GameObject.FindGameObjectWithTag("WeaponHolder").transform;
+
+        if (weaponHolder == null)
+        {
+            Debug.LogError("WeaponHolder not found. Please make sure it is tagged correctly in the scene.");
+        }
     }
 
     private void Start()
     {
+        // Initialize with one unlocked slot and one locked slot
+        InventorySlot unlockedSlot = new InventorySlot(0);
+        InventorySlot lockedSlot = new InventorySlot(1) { IsLocked = true };
+        slots.Add(unlockedSlot);
+        slots.Add(lockedSlot);
 
-        InventoryManager.instance.slots.Add(new InventorySlot(0));  // Add one slot for the initial weapon
-        weaponButtonCreator.Initialize();  // Ensure WeaponButtonCreator is initialized
+        //Initialize weapon button creator
+        weaponButtonCreator.Initialize();
         if (slots.Count > 0)
         {
             currentSelectedSlot = slots[0];
             currentSelectedSlot.IsSelected = true;
-            //Debug.Log("Slot 0 initialized and selected.");
         }
-
-        //Debug.Log("Item in slot 0 after initialization: " + (slots[0].Item != null ? slots[0].Item.ToString() : "null"));
+        UpdateInventoryUI(); // Ensure the UI is updated to show one slot locked
     }
 
     void Update()
@@ -52,40 +68,6 @@ public class InventoryManager : MonoBehaviour
             // Toggle the visibility of the inGameMenu
             inGameMenu.gameObject.SetActive(!inGameMenu.gameObject.activeSelf);
         }
-    }
-
-    // Method to count current weapons
-    public int CountCurrentWeapons()
-    {
-        int count = 0;
-        foreach (InventorySlot slot in slots)
-        {
-            if (!slot.IsEmpty && slot.Item is WeaponInventoryItem)
-            {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    // Method to find an empty slot
-    private InventorySlot FindEmptySlot()
-    {
-        foreach (InventorySlot slot in slots)
-        {
-            if (slot.IsEmpty)
-            {
-                return slot;
-            }
-        }
-        return null;  // return null if no empty slot is found
-    }
-
-    // Method to update UI
-    private void UpdateButton(Button newButton, InventoryItem item, InventorySlot slot)
-    {
-        weaponButtonCreator.UpdateButtonName(newButton, item.ItemId);
-        slot.UIButton = newButton;
     }
 
     public void SelectSlot(int slotIndex)
@@ -117,55 +99,58 @@ public class InventoryManager : MonoBehaviour
         // Check if item is a weapon item
         if (item is WeaponInventoryItem weaponItem)
         {
-            InventorySlot availableSlot = FindEmptySlot();  // Look for an empty slot
+            // First, try to find an empty and unlocked slot
+            InventorySlot availableSlot = slots.FirstOrDefault(s => s.IsEmpty && !s.IsLocked);
 
-            // If no empty slot is found and there's only one slot (your scenario)
-            if (availableSlot == null && slots.Count == 1)
+            // If there is no empty slot, allow replacement in the first unlocked slot
+            // This considers the case where the player might pick up a weapon with full inventory
+            if (availableSlot == null)
             {
-                availableSlot = slots[0];  // Use the existing slot
-
-                // Remove the current weapon from the slot before adding the new one
-                if (availableSlot.Item != null)
-                {
-                    RemoveItem(availableSlot.Item);
-                }
-            }
-            // If no empty slot is found and there's room to expand the inventory, create a new slot
-            else if (availableSlot == null && CountCurrentWeapons() < maxWeaponSlots)
-            {
-                availableSlot = new InventorySlot(slots.Count);  // Create a new slot
-                slots.Add(availableSlot);  // Add the new slot to the slots list
+                availableSlot = slots.FirstOrDefault(s => !s.IsLocked);
             }
 
-            if (availableSlot != null)
+            // If there's still no available slot, it means all slots are locked/full
+            if (availableSlot == null)
             {
-                availableSlot.addItem(item);  // Add the item to the available slot
-
-                // Create a button for this weapon
-                Button newButton = weaponButtonCreator.CreateWeaponButton(
-                    weaponItem.weaponPrefab, weaponInventoryPanel, weaponItem.weaponPrefab.GetComponent<Weapon>().weaponData.weaponTier);
-
-                // Update button
-                UpdateButton(newButton, item, availableSlot);
-
-                // Update the inventory UI
-                UpdateInventoryUI();
-
-                // Select the slot
-                SelectSlot(availableSlot.SlotNumber);  // Use SlotNumber instead of slotIndex
+                Debug.LogWarning($"No available slot for item {item.ItemId} and inventory is full or locked.");
+                return; // Exit the method as no slot is available for the new item
             }
-            else
+
+            // If the slot already has an item, it will be replaced
+            if (!availableSlot.IsEmpty && availableSlot.UIButton != null)
             {
-                Debug.LogWarning($"No available slot for item {item.ItemId}, and inventory is full.");
+                // Properly destroy or deactivate the existing button
+                Destroy(availableSlot.UIButton.gameObject);  // This will remove the button from the UI
             }
+
+            // Add the item to the available slot
+            availableSlot.addItem(item);
+
+            // If there is an existing button, destroy it before creating a new one
+            if (availableSlot.UIButton != null)
+            {
+                Destroy(availableSlot.UIButton.gameObject);
+                availableSlot.UIButton = null; // Clear the reference
+            }
+
+            // Create a button for this weapon
+            availableSlot.UIButton = weaponButtonCreator.CreateWeaponButton(
+                weaponItem.weaponPrefab, weaponInventoryPanel, weaponItem.weaponPrefab.GetComponent<Weapon>().weaponData.weaponTier);
+
+            // Update the inventory UI to reflect the new state
+            UpdateInventoryUI();
+
+            // Select the slot
+            SelectSlot(availableSlot.SlotNumber); // Use SlotNumber instead of slotIndex
         }
 
-        // If a weapon item was added, update the weapons in WeaponManager
+        // If a weapon item was added update the weapons in WeaponManager
         if (item is WeaponInventoryItem)
         {
             WeaponManager.instance.UpdateWeapons();
         }
     }
+
 
 
 
@@ -301,27 +286,69 @@ public class InventoryManager : MonoBehaviour
 
     public void UpdateInventoryUI()
     {
-        // Example logic to update UI
         foreach (InventorySlot slot in slots)
         {
-            // Assume each slot has a reference to a UI element
             if (slot.UIButton != null)
             {
-                // Update the UI button to reflect the current item in the slot
-                if (slot.Item != null)
+                // If the slot is supposed to be empty or locked, update the default button's sprite
+                if (slot.IsEmpty || slot.IsLocked)
                 {
-                    // Assuming you have a method to update the button with the new item information
-                    UpdateButton(slot.UIButton, slot.Item, slot);
-
-                    slot.UIButton.gameObject.SetActive(true);  // Ensure the button is active
+                    UpdateSlotVisual(slot, slot.IsLocked ? WeaponButtonCreator.SlotState.Locked : WeaponButtonCreator.SlotState.Empty);
                 }
+                // If the slot has a weapon, ensure the correct weapon button is displayed
                 else
                 {
-                    slot.UIButton.gameObject.SetActive(false);  // Hide the button if the slot is empty
+                    // Ensure we update the button if it's not the correct one
+                    if (slot.UIButton.name != slot.Item.ItemId)
+                    {
+                        // Properly destroy or deactivate the existing button
+                        Destroy(slot.UIButton.gameObject);
+
+                        // Create the weapon button with all dynamic elements
+                        slot.UIButton = weaponButtonCreator.CreateWeaponButton(
+                            ((WeaponInventoryItem)slot.Item).weaponPrefab, weaponInventoryPanel,
+                            ((WeaponInventoryItem)slot.Item).weaponPrefab.GetComponent<Weapon>().weaponData.weaponTier);
+                    }
                 }
+            }
+            else
+            {
+                // If there is no UIButton, create the appropriate default button
+                UpdateSlotVisual(slot, slot.IsLocked ? WeaponButtonCreator.SlotState.Locked : WeaponButtonCreator.SlotState.Empty);
             }
         }
 
         LogInventoryState();
     }
+
+
+
+    // This method should be called when updating the visual of a slot.
+    // Inside InventoryManager.cs
+
+    private void UpdateSlotVisual(InventorySlot slot, WeaponButtonCreator.SlotState state)
+    {
+        if (slot.UIButton == null)
+        {
+            // Create a default button with the state (empty or locked)
+            slot.UIButton = weaponButtonCreator.CreateDefaultButton(weaponInventoryPanel, state);
+        }
+
+        // Update the button's sprite and alpha based on the state
+        Image buttonImage = slot.UIButton.GetComponent<Image>();
+        if (state == WeaponButtonCreator.SlotState.Empty)
+        {
+            buttonImage.sprite = emptySlotSprite;
+
+        }
+        else if (state == WeaponButtonCreator.SlotState.Locked)
+        {
+            buttonImage.sprite = lockedSlotSprite;
+
+        }
+
+        // Activate the button GameObject
+        slot.UIButton.gameObject.SetActive(true);
+    }
+
 }

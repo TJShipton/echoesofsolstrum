@@ -298,18 +298,27 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void Atck1()
     {
-        // Select the slot 0
-        InventoryManager.instance.SelectSlot(0);
-        // Trigger the attack on the weapon in slot 0
-        TriggerAttack();
-
-        // Activate the weapon during the attack
-        if (weaponManager.currentWeapon != null)
+        // Ensure the InventoryManager instance and slots list are ready before trying to select a slot
+        if (InventoryManager.instance != null && InventoryManager.instance.slots.Count > 0)
         {
-            weaponManager.currentWeapon.gameObject.SetActive(true);
-        }
+            // Select the slot 0
+            InventoryManager.instance.SelectSlot(0);
+            // Trigger the attack on the weapon in slot 0
+            TriggerAttack();
 
+            // Activate the weapon during the attack
+            Weapon currentWeapon = InventoryManager.instance.GetCurrentWeapon();
+            if (currentWeapon != null)
+            {
+                currentWeapon.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Attempted to attack, but InventoryManager is not ready or has no slots.");
+        }
     }
+
 
     private void Atck2()
     {
@@ -337,7 +346,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 // If the current weapon is not active, activate it
                 currentWeapon.gameObject.SetActive(true);
 
-                // Optionally, deactivate the other weapon(s)
+                // deactivate the other weapon(s)
                 foreach (Weapon weapon in InventoryManager.instance.GetAllWeapons())
                 {
                     if (weapon != currentWeapon)

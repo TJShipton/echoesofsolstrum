@@ -22,6 +22,8 @@ TagManager:
   - PlayerUpgradePanel
   - PlayerHealthBar
   - PlayerHealthText
+  - WeaponHolder
+  - LockedOverlay
   layers:
   - Default
   - TransparentFX

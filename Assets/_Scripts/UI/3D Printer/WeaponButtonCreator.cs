@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +7,12 @@ using UnityEngine.UI;
 public class WeaponButtonCreator : MonoBehaviour
 {
     public Button weaponButtonPrefab;
+
+    private Sprite emptySlotSprite;
+    private Sprite lockedSlotSprite;
+    public Button defaultButtonPrefab;
+
+
 
     public Dictionary<string, Sprite> weaponThumbnails = new Dictionary<string, Sprite>();
 
@@ -53,7 +58,7 @@ public class WeaponButtonCreator : MonoBehaviour
             // Equip random modifiers
             weaponComponent.EquipRandomModifiers();
 
-            
+
             // Set the modifier icons in the UI
             weaponButtonUI.SetModifierIcons(weaponComponent.equippedModifiers.ToArray());
 
@@ -114,7 +119,7 @@ public class WeaponButtonCreator : MonoBehaviour
             imageOutline.effectColor = ColorHelper.HexToColor(rarityColorHex);  // Set the outline color using hex
         }
 
-       
+
 
         // Set the weapon thumbnail
         if (weaponThumbnails.TryGetValue(weaponComponent.weaponName, out Sprite thumbnail))
@@ -148,5 +153,45 @@ public class WeaponButtonCreator : MonoBehaviour
         }
     }
 
+    public enum SlotState
+    {
+        Empty,
+        Locked
+    }
 
+    public Button CreateDefaultButton(Transform parent, SlotState state)
+    {
+        // Instantiate the button prefab
+        Button newButton = Instantiate(defaultButtonPrefab, parent);
+
+        // Get the Image component of the button
+        Image buttonImage = newButton.GetComponent<Image>();
+
+        // Check the state of the slot and set the sprite accordingly
+        switch (state)
+        {
+            case SlotState.Empty:
+                if (emptySlotSprite != null)
+                {
+                    buttonImage.sprite = emptySlotSprite;
+                    //buttonImage.color = new Color(1, 1, 1, 0.5f); // Slightly transparent to indicate emptiness
+                }
+                break;
+            case SlotState.Locked:
+                if (lockedSlotSprite != null)
+                {
+                    buttonImage.sprite = lockedSlotSprite;
+                    //buttonImage.color = new Color(1, 1, 1, 1); // Fully opaque for locked slots
+                }
+                break;
+        }
+
+        // Disable button's interactability for both empty and locked slots
+        newButton.interactable = false;
+
+        // Return the newly created button
+        return newButton;
+    }
 }
+
+

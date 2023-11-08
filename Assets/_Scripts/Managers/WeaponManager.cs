@@ -4,7 +4,7 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviour
 {
     public static WeaponManager instance; // Singleton instance
-    public InventoryManager inventoryManager;
+    private InventoryManager inventoryManager;
 
     public List<Weapon> availableWeapons; // List of weapons the player has
     public Weapon currentWeapon;
@@ -42,6 +42,10 @@ public class WeaponManager : MonoBehaviour
                 weaponNameToPrefabMap[weapon.name] = weapon;
             }
         }
+
+
+        inventoryManager = InventoryManager.instance;
+
     }
 
     public void UnlockWeaponFromBlueprint(WeaponBlueprint blueprint)
@@ -110,9 +114,9 @@ public class WeaponManager : MonoBehaviour
     {
         // Instantiate the new weapon
         Weapon newWeapon = Instantiate(weaponPrefab.GetComponent<Weapon>(), holder);
-      
-        
-        
+
+
+
         newWeapon.transform.SetParent(holder);
 
         //Set weapon inactive (to be reactivated during attack)
@@ -124,20 +128,20 @@ public class WeaponManager : MonoBehaviour
 
         // Apply tier modifiers and check
         newWeapon.ApplyTierModifiers();
-              
+
         // Ensure holder and newWeapon are active
         holder.gameObject.SetActive(true);
 
 
         ApplyRandomModifiersToWeapon(newWeapon);
-       
+
         return newWeapon;
     }
 
 
     private void ApplyRandomModifiersToWeapon(Weapon weapon)
     {
-       if (weapon.weaponData.weaponTier == WeaponTier.Rare)
+        if (weapon.weaponData.weaponTier == WeaponTier.Rare)
         {
             weapon.EquipRandomModifiers();
         }
@@ -150,7 +154,7 @@ public class WeaponManager : MonoBehaviour
             Weapon newCurrentWeapon = inventoryManager.GetCurrentWeapon();
             weaponInventory = inventoryManager.GetAllWeapons();
             // Log the newCurrentWeapon and currentWeapon before they are updated
-            
+
             // Deactivate the previous weapon and activate the new weapon
             if (currentWeapon != null && newCurrentWeapon != currentWeapon)
             {
@@ -162,7 +166,7 @@ public class WeaponManager : MonoBehaviour
             }
 
             currentWeapon = newCurrentWeapon;  // Update the current weapon reference
-           
+
         }
         else
         {

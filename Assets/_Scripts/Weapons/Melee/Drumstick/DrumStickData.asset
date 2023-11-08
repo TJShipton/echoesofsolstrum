@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: DrumStickData
   m_EditorClassIdentifier: 
   weaponName: Drumstick
-  weaponTier: 2
+  weaponTier: 1
   weaponDescription: Big stick with a drum on it -- get it!??
-  baseDamage: 15
+  baseDamage: 10
   originalBaseDamage: 10
   range: 2
   speed: 10
-  attackCooldown: 1.5
+  attackCooldown: 0.8
   projectilePrefab: {fileID: 0}
   projectileSpeed: 0
   commonDamageMultiplier: 1
