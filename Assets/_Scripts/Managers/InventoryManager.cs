@@ -12,6 +12,7 @@ public class InventoryManager : MonoBehaviour
     public InventorySlot currentSelectedSlot = null;  // Slot of the currently equipped weapon
     public WeaponButtonCreator weaponButtonCreator;
     public Transform weaponInventoryPanel;  // UI panel to hold weapon buttons
+    public Transform modchipPanel;
     public Transform inGameMenu;
     public Transform weaponHolder;
 
@@ -57,7 +58,7 @@ public class InventoryManager : MonoBehaviour
             currentSelectedSlot = slots[0];
             currentSelectedSlot.IsSelected = true;
         }
-        UpdateInventoryUI(); // Ensure the UI is updated to show one slot locked
+        UpdateWeaponInventoryUI(); // Ensure the UI is updated to show one slot locked
     }
 
     void Update()
@@ -86,72 +87,154 @@ public class InventoryManager : MonoBehaviour
             currentSelectedSlot.IsSelected = true;  // Select the new slot
             //Debug.Log("Current selected slot index: " + slots.IndexOf(currentSelectedSlot));  // Log the selected slot index
         }
-        else
-        {
-            Debug.LogWarning("SelectSlot: Index out of range: " + slotIndex);
-        }
+
+        UpdateWeaponAndModchipState();
     }
 
-
-
-    public void AddItem(InventoryItem item)
+    private void UpdateWeaponAndModchipState()
     {
-        // Check if item is a weapon item
-        if (item is WeaponInventoryItem weaponItem)
+        foreach (var slot in InventoryManager.instance.slots)
         {
-            // First, try to find an empty and unlocked slot
-            InventorySlot availableSlot = slots.FirstOrDefault(s => s.IsEmpty && !s.IsLocked);
-
-            // If there is no empty slot, allow replacement in the first unlocked slot
-            // This considers the case where the player might pick up a weapon with full inventory
-            if (availableSlot == null)
+            if (slot.Item is WeaponInventoryItem weaponItem)
             {
-                availableSlot = slots.FirstOrDefault(s => !s.IsLocked);
+                if (slot == InventoryManager.instance.currentSelectedSlot)
+                {
+                    weaponItem.Activate();
+                }
+                else
+                {
+                    weaponItem.Deactivate();
+                }
             }
-
-            // If there's still no available slot, it means all slots are locked/full
-            if (availableSlot == null)
+            else if (slot.Item is ModchipInventoryItem modchipItem)
             {
-                Debug.LogWarning($"No available slot for item {item.ItemId} and inventory is full or locked.");
-                return; // Exit the method as no slot is available for the new item
+                if (slot == InventoryManager.instance.currentSelectedSlot)
+                {
+                    modchipItem.Activate();
+                }
+                else
+                {
+                    modchipItem.Deactivate();
+                }
             }
-
-            // If the slot already has an item, it will be replaced
-            if (!availableSlot.IsEmpty && availableSlot.UIButton != null)
-            {
-                // Properly destroy or deactivate the existing button
-                Destroy(availableSlot.UIButton.gameObject);  // This will remove the button from the UI
-            }
-
-            // Add the item to the available slot
-            availableSlot.addItem(item);
-
-            // If there is an existing button, destroy it before creating a new one
-            if (availableSlot.UIButton != null)
-            {
-                Destroy(availableSlot.UIButton.gameObject);
-                availableSlot.UIButton = null; // Clear the reference
-            }
-
-            // Create a button for this weapon
-            availableSlot.UIButton = weaponButtonCreator.CreateWeaponButton(
-                weaponItem.weaponPrefab, weaponInventoryPanel, weaponItem.weaponPrefab.GetComponent<Weapon>().weaponData.weaponTier);
-
-            // Update the inventory UI to reflect the new state
-            UpdateInventoryUI();
-
-            // Select the slot
-            SelectSlot(availableSlot.SlotNumber); // Use SlotNumber instead of slotIndex
-        }
-
-        // If a weapon item was added update the weapons in WeaponManager
-        if (item is WeaponInventoryItem)
-        {
-            WeaponManager.instance.UpdateWeapons();
         }
     }
 
 
+    public InventoryItem GetCurrentItem()
+    {
+        return currentSelectedSlot?.Item;
+    }
+
+
+
+
+    public void AddWeapon(Weapon weapon)
+    {
+        // Create a new WeaponInventoryItem for the picked weapon
+        WeaponInventoryItem weaponItem = new WeaponInventoryItem(weapon.weaponName, weapon.gameObject);
+
+        // Check if item is a weapon item
+        // First, try to find an empty and unlocked slot
+        InventorySlot availableSlot = slots.FirstOrDefault(s => s.IsEmpty && !s.IsLocked);
+
+        // If there is no empty slot, allow replacement in the first unlocked slot
+        // This considers the case where the player might pick up a weapon with full inventory
+        if (availableSlot == null)
+        {
+            availableSlot = slots.FirstOrDefault(s => !s.IsLocked);
+        }
+
+        // If there's still no available slot, it means all slots are locked/full
+        if (availableSlot == null)
+        {
+            Debug.LogWarning("No available slot for weapon " + weaponItem.ItemId + " and inventory is full or locked.");
+            return; // Exit the method as no slot is available for the new item
+        }
+
+        // If the slot already has an item, it will be replaced
+        if (!availableSlot.IsEmpty && availableSlot.UIButton != null)
+        {
+            Destroy(availableSlot.UIButton.gameObject); // This will remove the button from the UI
+        }
+
+        // Add the item to the available slot
+        availableSlot.addItem(weaponItem);
+
+        // If there is an existing button, destroy it before creating a new one
+        if (availableSlot.UIButton != null)
+        {
+            Destroy(availableSlot.UIButton.gameObject);
+            availableSlot.UIButton = null; // Clear the reference
+        }
+
+        // Create a button for this weapon
+        availableSlot.UIButton = weaponButtonCreator.CreateWeaponButton(
+            weaponItem.weaponPrefab, weaponInventoryPanel, weaponItem.weaponPrefab.GetComponent<Weapon>().weaponData.weaponTier);
+
+        // Update the inventory UI to reflect the new state
+        UpdateWeaponInventoryUI();
+
+        // Select the slot
+        SelectSlot(availableSlot.SlotNumber); // Use SlotNumber instead of slotIndex
+
+        // If a weapon item was added, update the weapons in WeaponManager
+        WeaponManager.instance.UpdateWeapons();
+    }
+
+    public void AddModchip(ModchipInventoryItem modchipItem)
+    {
+        // Ensure that the slots list has been initialized and is not empty
+        if (slots == null || slots.Count == 0)
+        {
+            Debug.LogError("Slots list is not initialized or empty.");
+            return;
+        }
+
+        // Try to find an empty and unlocked slot
+        InventorySlot availableSlot = slots.FirstOrDefault(s => s.Item == null && !s.IsLocked);
+
+        // If there is no empty slot, allow replacement in the first unlocked slot
+        if (availableSlot == null)
+        {
+            availableSlot = slots.FirstOrDefault(s => !s.IsLocked && (s.Item == null || s.Item.ItemType == InventoryItemType.Modchip));
+        }
+
+        // If there's still no available slot, it means all slots are locked or full
+        if (availableSlot == null)
+        {
+            Debug.LogWarning("No available slot for modchip " + modchipItem.ItemId + " and inventory is full or locked.");
+            return; // Exit the method as no slot is available for the new item
+        }
+
+        // Add the item to the available slot
+        availableSlot.addItem(modchipItem);
+
+        // Instantiate an Image GameObject and set the sprite
+        Image modchipImage = InstantiateModchipImage(modchipItem.modchipData.modSprite, modchipPanel);
+
+        // Update the inventory UI to reflect the new state
+        UpdateModchipInventoryUI();
+    }
+
+    private Image InstantiateModchipImage(Sprite modchipSprite, Transform panel)
+    {
+        GameObject modchipImageGO = new GameObject("ModchipImage", typeof(Image));
+        modchipImageGO.transform.SetParent(panel, false);
+        Image modchipImage = modchipImageGO.GetComponent<Image>();
+        modchipImage.sprite = modchipSprite;
+        modchipImage.preserveAspect = true; // Maintain the sprite aspect ratio
+                                            // Adjust the RectTransform to fit the panel as needed
+        RectTransform rectTransform = modchipImageGO.GetComponent<RectTransform>();
+        rectTransform.sizeDelta = new Vector2(100, 100); // Example size, adjust as needed
+        return modchipImage;
+    }
+
+    private void UpdateModchipInventoryUI()
+    {
+        // This method would be responsible for updating the UI of the modchip inventory panel
+        // It would iterate over the slots and update the UI similarly to UpdateWeaponInventoryUI
+    }
 
 
     public void RemoveItem(InventoryItem itemToRemove)
@@ -185,7 +268,7 @@ public class InventoryManager : MonoBehaviour
                 }
             }
 
-            UpdateInventoryUI();
+            UpdateWeaponInventoryUI();
         }
 
         // If a weapon item was removed, update the weapons in WeaponManager
@@ -235,27 +318,12 @@ public class InventoryManager : MonoBehaviour
             return false;  // Return false if newWeapon instantiation failed
         }
 
-        AddWeaponToInventory(newWeapon);  // Add the new weapon to the inventory
+        AddWeapon(newWeapon);  // Add the new weapon to the inventory
 
-        UpdateInventoryUI();
+        UpdateWeaponInventoryUI();
 
         return true;  // Return true to indicate success
     }
-
-
-
-
-    private void AddWeaponToInventory(Weapon newWeapon)
-    {
-        // Create a new InventoryItem for the picked weapon
-        InventoryItem newWeaponItem = new WeaponInventoryItem(newWeapon.weaponName, newWeapon.gameObject);
-
-        // Add the new weapon to the inventory
-        AddItem(newWeaponItem);
-    }
-
-
-
 
 
     public Weapon GetCurrentWeapon()
@@ -284,7 +352,7 @@ public class InventoryManager : MonoBehaviour
 
 
 
-    public void UpdateInventoryUI()
+    public void UpdateWeaponInventoryUI()
     {
         foreach (InventorySlot slot in slots)
         {
@@ -320,11 +388,6 @@ public class InventoryManager : MonoBehaviour
 
         LogInventoryState();
     }
-
-
-
-    // This method should be called when updating the visual of a slot.
-    // Inside InventoryManager.cs
 
     private void UpdateSlotVisual(InventorySlot slot, WeaponButtonCreator.SlotState state)
     {

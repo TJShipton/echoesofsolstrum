@@ -32,7 +32,7 @@ public abstract class Weapon : MonoBehaviour
     //{
     //     new FreezeModifier(),
     //};  
-    
+
     private void Awake()
     {
         // Initialize the equippedModifiers list
@@ -41,9 +41,9 @@ public abstract class Weapon : MonoBehaviour
 
     void Start()
     {
-       
 
-       
+
+
     }
 
 
@@ -145,15 +145,15 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void PrimaryAttack()
     {
-        
+
     }
 
 
-    public void DeactivateWeapon()
-    {
-        // Deactivate the weapon
-        gameObject.SetActive(false);
-    }
+    //public void DeactivateWeapon()
+    //{
+    //    // Deactivate the weapon
+    //    gameObject.SetActive(false);
+    //}
 
 }
 

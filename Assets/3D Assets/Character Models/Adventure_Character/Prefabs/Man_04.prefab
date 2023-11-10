@@ -354,6 +354,7 @@ GameObject:
   - component: {fileID: 1728523911677605483}
   - component: {fileID: 1591374454508282158}
   - component: {fileID: 8723143762548656364}
+  - component: {fileID: 4498841036475526150}
   m_Layer: 6
   m_Name: Man_04
   m_TagString: Player
@@ -369,7 +370,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525218576529477831}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: 0.8579749, z: -0, w: 0.5136918}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -393,7 +394,7 @@ Transform:
   - {fileID: 6051760709438494880}
   - {fileID: 2628255936818381289}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 118.18, z: 0}
 --- !u!95 &-1392162297567224322
 Animator:
   serializedVersion: 5
@@ -557,10 +558,6 @@ MonoBehaviour:
     m_ActionName: Player/Atck2[/DualSenseGamepadHID/buttonNorth,/XInputControllerWindows/buttonNorth,/Mouse/rightButton]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 205bcb48-488c-4187-85ba-7b043764dbab
-    m_ActionName: Player/SwapWeapon[/DualSenseGamepadHID/rightShoulder,/XInputControllerWindows/rightShoulder,/Keyboard/leftShift]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 427bca04-648e-4c87-b60d-d27b5b183b60
     m_ActionName: Player/Cast[/DualSenseGamepadHID/leftShoulder,/XInputControllerWindows/leftShoulder,/Keyboard/leftCtrl]
   - m_PersistentCalls:
@@ -603,6 +600,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: a61df3c7-87e5-4d9f-98b5-33821e3b5da6
     m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 683efdb1-686b-4191-b0ae-cfdf334cfd6c
+    m_ActionName: Player/Dodge[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 85876d5a-7906-406f-b73e-8ddedf05006c
+    m_ActionName: Player/Cast2[/Keyboard/c]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -620,8 +625,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee849f8f37bb04a40ac0dd75c2da7e30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyCanvas: {fileID: 0}
   characterModel: {fileID: 2189165697742768765}
+  modchipHolder: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -634,6 +639,9 @@ MonoBehaviour:
   playerHealthBar: {fileID: 0}
   playerHealthText: {fileID: 0}
   groundCheckDistance: 0.1
+  fallMultiplier: 2.5
+  lowJumpMultiplier: 2
+  dodgeDuration: 1
 --- !u!114 &1591374454508282158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,7 +654,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f10700028fbd5c4aafe0077531c9571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryManager: {fileID: 8723143762548656364}
   availableWeapons: []
   currentWeapon: {fileID: 0}
   weaponInventory: []
@@ -670,7 +677,27 @@ MonoBehaviour:
   weaponButtonCreator: {fileID: 1976013592008896480, guid: ac7637803b48546448a43f08d8b176f4,
     type: 3}
   weaponInventoryPanel: {fileID: 0}
+  modchipPanel: {fileID: 0}
+  inGameMenu: {fileID: 0}
   weaponHolder: {fileID: 432728230919519509}
+  lockedSlotSprite: {fileID: 0}
+  emptySlotSprite: {fileID: 0}
+--- !u!114 &4498841036475526150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525218576529477831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RigLayers:
+  - m_Rig: {fileID: 0}
+    m_Active: 1
+  m_Effectors: []
 --- !u!1 &1541317550249371662
 GameObject:
   m_ObjectHideFlags: 0

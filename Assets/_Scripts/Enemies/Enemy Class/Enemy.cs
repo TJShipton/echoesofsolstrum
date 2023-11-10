@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour, IDamageable
@@ -81,6 +82,17 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         effect.EndEffect(this);
         activeEffects.Remove(effect);
+    }
+
+
+    public void Unfreeze()
+    {
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        if (agent != null)
+        {
+            agent.isStopped = false;
+            // Reset any freeze-related animations or effects here
+        }
     }
 
 

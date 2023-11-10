@@ -7,14 +7,13 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
-    private float movementX;
-    private float movementY;
     private Vector2 movementInput;  // Store the movement input
 
-
-
+    private PlayerControls playerControls;
+    public static PlayerController instance;
 
     public Transform characterModel;
+    public GameObject modchipHolder;
     public LayerMask groundLayer;
 
     public float speed = 50f;
@@ -47,8 +46,25 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Animator animator;
     private WeaponManager weaponManager;
     private CurrencyManager currencyManager;
+    private UIManager UIManager;
 
     private bool isUIOpen = false;
+
+
+    private void Awake()
+    {
+        playerControls = new PlayerControls();
+
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+
+    }
 
 
 
@@ -56,8 +72,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
-
-
         rb = GetComponent<Rigidbody>();
         animator = transform.GetComponent<Animator>();
         weaponManager = GetComponent<WeaponManager>();
@@ -93,12 +107,14 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         // Subscribe to the OnMenuStatusChange event
         UIManager.OnMenuStatusChange += HandleUIStateChange;
+
     }
 
     private void OnDisable()
     {
         // Unsubscribe from the OnMenuStatusChange event
         UIManager.OnMenuStatusChange -= HandleUIStateChange;
+
     }
 
     private void HandleUIStateChange(bool isMenuOpen)
@@ -289,16 +305,6 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     }
 
-    public void OnAtck2(InputAction.CallbackContext context)
-    {
-
-        if (context.started)
-        {
-            Atck2();
-        }
-
-    }
-
     private void Atck1()
     {
         // Ensure the InventoryManager instance and slots list are ready before trying to select a slot
@@ -322,22 +328,40 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
+    public void OnAtck2(InputAction.CallbackContext context)
+    {
+
+        if (context.started)
+        {
+            Atck2();
+        }
+
+    }
 
     private void Atck2()
     {
-        // Check if there's a weapon in slot 1
-        if (InventoryManager.instance.slots.Count > 1)
+        // Ensure the InventoryManager instance and slots list are ready before trying to select a slot
+        if (InventoryManager.instance != null && InventoryManager.instance.slots.Count > 1)
         {
-            // Select the slot 1
+            // Select the slot 0
             InventoryManager.instance.SelectSlot(1);
-            // Trigger the attack on the weapon in slot 1
+            // Trigger the attack on the weapon in slot 0
             TriggerAttack();
+
+            // Activate the weapon during the attack
+            Weapon currentWeapon = InventoryManager.instance.GetCurrentWeapon();
+            if (currentWeapon != null)
+            {
+                currentWeapon.gameObject.SetActive(true);
+            }
         }
         else
         {
-            Debug.Log("No slot 1 available.");
+            Debug.LogWarning("Attempted to attack, but InventoryManager is not ready or has no slots.");
         }
     }
+
+
 
     public void TriggerAttack()
     {
@@ -372,6 +396,73 @@ public class PlayerController : MonoBehaviour, IDamageable
             //Debug.LogWarning("No weapon is selected!");
         }
     }
+
+
+
+    public void OnCast1(InputAction.CallbackContext context)
+    {
+        Debug.Log("Cast1 action triggered");
+
+        if (context.started)
+        {
+            Cast1();
+        }
+
+    }
+
+    private void Cast1()
+    {
+        // Check if there's a modchip in slot 0
+        InventoryItem currentItem = InventoryManager.instance.GetCurrentItem();
+        if (currentItem != null && currentItem.ItemType == InventoryItemType.Modchip)
+        {
+            ModchipInventoryItem modchipItem = currentItem as ModchipInventoryItem;
+            if (modchipItem != null && modchipItem.modchipData != null)
+            {
+                // Access the existing Modchip component on the player or another GameObject in your scene
+                Modchip modchipInstance = GetComponentInChildren<Modchip>(); // Assuming it's a child of the Player GameObject
+                if (modchipInstance != null)
+                {
+                    // Call ModAttack on the existing instance
+                    modchipInstance.ModAttack();
+                }
+                else
+                {
+                    Debug.LogError("Modchip component not found on the player.");
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No modchip in slot 0 or slot 0 is empty.");
+        }
+    }
+
+
+
+
+
+
+
+
+
+    public void OnCast2(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Cast2();
+        }
+    }
+
+    private void Cast2()
+    {
+
+    }
+
+
+
+
+
 
 
 
@@ -418,18 +509,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         // STILL TO DO --- trigger a death animation, end the game.
     }
 
-
-    //Sol pick up function
-    private void OnTriggerEnter(Collider other)
-    {
-        SolObject solObject = other.gameObject.GetComponent<SolObject>();
-        if (solObject != null)
-        {
-            solObject.PickUpSol();
-        }
-    }
-
-
     //Apply upgrade 
     public void ApplyUpgrade(IPlayerUpgrade upgrade)
     {
@@ -442,6 +521,22 @@ public class PlayerController : MonoBehaviour, IDamageable
         hasDoubleJumpUpgrade = true;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        SolPickup(other.gameObject);
 
 
+    }
+
+    public void SolPickup(GameObject SolObject)
+    {
+
+        SolObject solObject = SolObject.gameObject.GetComponent<SolObject>();
+        if (solObject != null)
+        {
+            solObject.PickUpSol();
+        }
+
+
+    }
 }

@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: HyperbassFluteData
   m_EditorClassIdentifier: 
   weaponName: Hyperbass Flute
-  weaponTier: 2
+  weaponTier: 1
   weaponDescription: 'A flute that somehow plays the lowest audible notes '
-  baseDamage: 15
+  baseDamage: 10
   originalBaseDamage: 10
   range: 0
   speed: 5
   attackCooldown: 0.3
-  projectilePrefab: {fileID: 2580153807565551473, guid: 270b61543c3b6e64e8b338978406d96d,
+  projectilePrefab: {fileID: 2580153807565551473, guid: 72adbb88703443e48a4295ebe9620efe,
     type: 3}
   projectileSpeed: 20
   commonDamageMultiplier: 1

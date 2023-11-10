@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Weapons/Weapon Data")]
@@ -12,7 +11,7 @@ public class WeaponData : ScriptableObject
     public int range;
     public int speed;
     public float attackCooldown = 0.5f;
-    private float currentCooldownTime =0f;
+    private float currentCooldownTime = 0f;
 
     public GameObject projectilePrefab;
 
@@ -26,7 +25,7 @@ public class WeaponData : ScriptableObject
     public float legendaryDamageMultiplier = 2.0f;
 
 
-  
+
 
     public Sprite iconSprite;
     // Other properties can be added
@@ -56,6 +55,6 @@ public class WeaponData : ScriptableObject
         baseDamage = originalBaseDamage;
     }
 
-   
+
 
 }

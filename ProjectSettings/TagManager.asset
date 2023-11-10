@@ -24,6 +24,7 @@ TagManager:
   - PlayerHealthText
   - WeaponHolder
   - LockedOverlay
+  - ModchipHolder
   layers:
   - Default
   - TransparentFX

@@ -18,25 +18,22 @@ public class WeaponPickup : MonoBehaviour
         InventoryManager inventoryManager = InventoryManager.instance;
         if (inventoryManager != null)
         {
-            // Call InstantiateNewWeapon method from InventoryManager
+            // Call InstantiateNewWeapon method from WeaponManager
             Weapon newWeapon = WeaponManager.instance.InstantiateNewWeapon(weaponPrefab.gameObject, inventoryManager.weaponHolder);
             if (newWeapon != null) // Check if new weapon was successfully instantiated
             {
-                // Create a new InventoryItem for the picked weapon
-                InventoryItem newWeaponItem = new WeaponInventoryItem(newWeapon.weaponName, newWeapon.gameObject);
-
-
-
-
+                // Create a new WeaponInventoryItem for the picked weapon
+                WeaponInventoryItem newWeaponItem = new WeaponInventoryItem(newWeapon.weaponName, newWeapon.gameObject);
 
                 // Add the new weapon item to the inventory
-                inventoryManager.AddItem(newWeaponItem);
+                inventoryManager.AddWeapon(newWeapon); // Correctly pass a WeaponInventoryItem here
             }
 
             // Destroy the weapon pickup object
             Destroy(gameObject);
         }
     }
+
 
 
 

@@ -304,9 +304,9 @@ public class ThreeDPrinter : MonoBehaviour, IInteractable
                 InventoryItem newWeaponInventoryItem = new WeaponInventoryItem(weaponName, weaponPrefab);
 
                 // Update UI and state in ThreeDPrinter
-                InventoryManager.instance.UpdateInventoryUI();
+                InventoryManager.instance.UpdateWeaponInventoryUI();
                 UIManager.Instance.CloseCurrentMenu();
-
+                Debug.Log("Weapon Equipped");
             }
             else
             {

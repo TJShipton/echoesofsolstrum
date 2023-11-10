@@ -21,7 +21,7 @@ public class WeaponSlotUpgrade : IPlayerUpgrade
             Debug.Log("Second slot unlocked.");
 
             // Call UpdateInventoryUI to refresh the UI and show the unlocked slot sprite
-            InventoryManager.instance.UpdateInventoryUI();
+            InventoryManager.instance.UpdateWeaponInventoryUI();
         }
     }
 

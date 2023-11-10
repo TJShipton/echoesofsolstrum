@@ -46,6 +46,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Dodge"",
+                    ""type"": ""Button"",
+                    ""id"": ""683efdb1-686b-4191-b0ae-cfdf334cfd6c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Atck1"",
                     ""type"": ""Button"",
                     ""id"": ""492b6924-742b-4d1b-8465-8a611f50831c"",
@@ -64,7 +73,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Cast"",
+                    ""name"": ""Cast1"",
                     ""type"": ""Button"",
                     ""id"": ""427bca04-648e-4c87-b60d-d27b5b183b60"",
                     ""expectedControlType"": ""Button"",
@@ -73,9 +82,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Dodge"",
+                    ""name"": ""Cast2"",
                     ""type"": ""Button"",
-                    ""id"": ""683efdb1-686b-4191-b0ae-cfdf334cfd6c"",
+                    ""id"": ""85876d5a-7906-406f-b73e-8ddedf05006c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -277,7 +286,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Cast"",
+                    ""action"": ""Cast1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -288,7 +297,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Cast"",
+                    ""action"": ""Cast1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -311,6 +320,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Dodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""edbee2dc-11e9-4728-96f7-1cf189503f73"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Cast2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5a0ec5e-5536-47e4-8a1c-9e519b1fee03"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Cast2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -565,10 +596,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
         m_Player_Atck1 = m_Player.FindAction("Atck1", throwIfNotFound: true);
         m_Player_Atck2 = m_Player.FindAction("Atck2", throwIfNotFound: true);
-        m_Player_Cast = m_Player.FindAction("Cast", throwIfNotFound: true);
-        m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
+        m_Player_Cast1 = m_Player.FindAction("Cast1", throwIfNotFound: true);
+        m_Player_Cast2 = m_Player.FindAction("Cast2", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -641,20 +673,22 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_Dodge;
     private readonly InputAction m_Player_Atck1;
     private readonly InputAction m_Player_Atck2;
-    private readonly InputAction m_Player_Cast;
-    private readonly InputAction m_Player_Dodge;
+    private readonly InputAction m_Player_Cast1;
+    private readonly InputAction m_Player_Cast2;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
         public PlayerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
         public InputAction @Atck1 => m_Wrapper.m_Player_Atck1;
         public InputAction @Atck2 => m_Wrapper.m_Player_Atck2;
-        public InputAction @Cast => m_Wrapper.m_Player_Cast;
-        public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
+        public InputAction @Cast1 => m_Wrapper.m_Player_Cast1;
+        public InputAction @Cast2 => m_Wrapper.m_Player_Cast2;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -670,18 +704,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Dodge.started += instance.OnDodge;
+            @Dodge.performed += instance.OnDodge;
+            @Dodge.canceled += instance.OnDodge;
             @Atck1.started += instance.OnAtck1;
             @Atck1.performed += instance.OnAtck1;
             @Atck1.canceled += instance.OnAtck1;
             @Atck2.started += instance.OnAtck2;
             @Atck2.performed += instance.OnAtck2;
             @Atck2.canceled += instance.OnAtck2;
-            @Cast.started += instance.OnCast;
-            @Cast.performed += instance.OnCast;
-            @Cast.canceled += instance.OnCast;
-            @Dodge.started += instance.OnDodge;
-            @Dodge.performed += instance.OnDodge;
-            @Dodge.canceled += instance.OnDodge;
+            @Cast1.started += instance.OnCast1;
+            @Cast1.performed += instance.OnCast1;
+            @Cast1.canceled += instance.OnCast1;
+            @Cast2.started += instance.OnCast2;
+            @Cast2.performed += instance.OnCast2;
+            @Cast2.canceled += instance.OnCast2;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -692,18 +729,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Dodge.started -= instance.OnDodge;
+            @Dodge.performed -= instance.OnDodge;
+            @Dodge.canceled -= instance.OnDodge;
             @Atck1.started -= instance.OnAtck1;
             @Atck1.performed -= instance.OnAtck1;
             @Atck1.canceled -= instance.OnAtck1;
             @Atck2.started -= instance.OnAtck2;
             @Atck2.performed -= instance.OnAtck2;
             @Atck2.canceled -= instance.OnAtck2;
-            @Cast.started -= instance.OnCast;
-            @Cast.performed -= instance.OnCast;
-            @Cast.canceled -= instance.OnCast;
-            @Dodge.started -= instance.OnDodge;
-            @Dodge.performed -= instance.OnDodge;
-            @Dodge.canceled -= instance.OnDodge;
+            @Cast1.started -= instance.OnCast1;
+            @Cast1.performed -= instance.OnCast1;
+            @Cast1.canceled -= instance.OnCast1;
+            @Cast2.started -= instance.OnCast2;
+            @Cast2.performed -= instance.OnCast2;
+            @Cast2.canceled -= instance.OnCast2;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -837,10 +877,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnDodge(InputAction.CallbackContext context);
         void OnAtck1(InputAction.CallbackContext context);
         void OnAtck2(InputAction.CallbackContext context);
-        void OnCast(InputAction.CallbackContext context);
-        void OnDodge(InputAction.CallbackContext context);
+        void OnCast1(InputAction.CallbackContext context);
+        void OnCast2(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
