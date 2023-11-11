@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.935, y: 0.88, z: -0.54}
-  m_LocalScale: {x: 0.97466, y: 1, z: 1}
+  m_LocalScale: {x: 0.97466, y: 1, z: 0.8706522}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3916249387524710296}
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd440bd68b185d4ba8bdf4b209a7eb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  solValue: 1
+  solValue: 1000
 --- !u!136 &1504899779315602869
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -66,10 +66,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.09265274
+  m_Radius: 0.13471016
   m_Height: 0.28021693
   m_Direction: 1
-  m_Center: {x: -0.33062288, y: -0.05913806, z: 0}
+  m_Center: {x: -0.33062288, y: -0.05913806, z: -0.047081552}
 --- !u!1001 &3916249387525096728
 PrefabInstance:
   m_ObjectHideFlags: 0

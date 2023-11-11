@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.09580143, y: 0.6221879, z: 0.20683143, w: -0.74894935}
   m_LocalPosition: {x: -0.21430652, y: 0.87361586, z: -0.5842227}
-  m_LocalScale: {x: 0.5468, y: 0.5473, z: 1}
+  m_LocalScale: {x: 11.030736, y: 11.040822, z: 20.173256}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -138,7 +138,6 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: d70ecc16bba4d9b4d85fe2ddd18a75cf, type: 2}
   localOrientation: {x: 0, y: 0, z: 0}
   localPosition: {x: 0, y: 0, z: 0}
-  EnemyCanvas: {fileID: 0}
   comboResetTime: 2
   spinAttackRadius: 2
   enemyLayers:
