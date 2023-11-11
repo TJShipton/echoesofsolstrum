@@ -195,7 +195,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a498bc41d269a3541b2ba6e8b0295ea4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -2.71159
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a498bc41d269a3541b2ba6e8b0295ea4,
         type: 3}
@@ -205,7 +205,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a498bc41d269a3541b2ba6e8b0295ea4,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.0917027
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a498bc41d269a3541b2ba6e8b0295ea4,
         type: 3}
@@ -642,6 +642,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a498bc41d269a3541b2ba6e8b0295ea4,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 7728676102705635042}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a498bc41d269a3541b2ba6e8b0295ea4,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 7188235540593963004}
   m_SourcePrefab: {fileID: 100100000, guid: a498bc41d269a3541b2ba6e8b0295ea4, type: 3}
 --- !u!4 &1767864234809855010 stripped
@@ -933,6 +937,20 @@ MonoBehaviour:
   unlockedWeapons: []
   threeDPrinter: {fileID: 0}
   foundWeaponBlueprints: []
+--- !u!114 &7728676102705635042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5417026980947321159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d66b2b27b00544d4bbfd3ec5db9d8474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorChangeSpeed: 1
+  emissiveIntensity: 2000
 --- !u!137 &7188235540593963004
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -953,7 +971,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 4589d9193ede82c4ead07a14b51e8fec, type: 2}
+  - {fileID: 2100000, guid: ea6f5c30ceeaa0b4ebdb47173072c867, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -975,13 +994,13 @@ SkinnedMeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   serializedVersion: 2
-  m_Quality: 0
+  m_Quality: 4
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: -5597002278806442958, guid: a498bc41d269a3541b2ba6e8b0295ea4, type: 3}
   m_Bones: []
   m_BlendShapeWeights: []
-  m_RootBone: {fileID: 0}
+  m_RootBone: {fileID: 4640666920958442493}
   m_AABB:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
