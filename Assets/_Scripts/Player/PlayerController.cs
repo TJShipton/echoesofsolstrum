@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -409,32 +410,35 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
 
     }
-
     private void Cast1()
     {
-        // Check if there's a modchip in slot 0
-        InventoryItem currentItem = InventoryManager.instance.GetCurrentItem();
-        if (currentItem != null && currentItem.ItemType == InventoryItemType.Modchip)
+        // Search for the first selected modchip slot
+        InventorySlot modchipSlot = InventoryManager.instance.slots
+            .FirstOrDefault(slot => slot.Type == InventorySlot.SlotType.Modchip &&
+                                    slot.IsSelected &&
+                                    slot.Item != null &&
+                                    slot.Item.ItemType == InventoryItemType.Modchip);
+
+        foreach (var slot in InventoryManager.instance.slots.Where(s => s.Type == InventorySlot.SlotType.Modchip))
         {
-            ModchipInventoryItem modchipItem = currentItem as ModchipInventoryItem;
-            if (modchipItem != null && modchipItem.modchipData != null)
+            Debug.Log($"Slot {slot.SlotNumber}: Selected={slot.IsSelected}, Item={slot.Item?.ItemId}, ItemType={slot.Item?.ItemType}");
+        }
+
+        if (modchipSlot != null && modchipSlot.Item is ModchipInventoryItem modchipItem && modchipItem.modchipData != null)
+        {
+            Modchip modchipInstance = GetComponentInChildren<Modchip>(); // Assuming it's a child of the Player GameObject
+            if (modchipInstance != null)
             {
-                // Access the existing Modchip component on the player or another GameObject in your scene
-                Modchip modchipInstance = GetComponentInChildren<Modchip>(); // Assuming it's a child of the Player GameObject
-                if (modchipInstance != null)
-                {
-                    // Call ModAttack on the existing instance
-                    modchipInstance.ModAttack();
-                }
-                else
-                {
-                    Debug.LogError("Modchip component not found on the player.");
-                }
+                modchipInstance.ModAttack();
+            }
+            else
+            {
+                Debug.LogError("Modchip component not found on the player.");
             }
         }
         else
         {
-            Debug.LogWarning("No modchip in slot 0 or slot 0 is empty.");
+            Debug.LogWarning("No selected modchip or the selected modchip slot is empty.");
         }
     }
 
