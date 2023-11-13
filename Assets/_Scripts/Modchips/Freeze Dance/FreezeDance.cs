@@ -40,6 +40,9 @@ public class FreezeDance : Modchip
             Rigidbody rb = projectile.GetComponent<Rigidbody>();
             if (rb != null)
             {
+                // Capture the player's current velocity
+                Vector3 playerVelocity = playerRigidbody.velocity;
+
                 // Fixed angle for the grenade arc, e.g., 45 degrees
                 float launchAngle = 45f;
                 // Convert launch angle to radians
@@ -49,7 +52,9 @@ public class FreezeDance : Modchip
                 Vector3 forceDirection = Quaternion.AngleAxis(-launchAngle, FPSpawnpoint.transform.right) * FPSpawnpoint.transform.forward;
                 Vector3 totalForce = forceDirection.normalized * throwForce;
 
-                rb.AddForce(totalForce, ForceMode.VelocityChange);
+                // Add the player's current horizontal velocity to the projectile
+                Vector3 initialProjectileVelocity = totalForce + new Vector3(playerVelocity.x, 0, playerVelocity.z);
+                rb.velocity = initialProjectileVelocity;
 
                 FreezeProjectile freezeProjectile = projectile.GetComponent<FreezeProjectile>();
                 if (freezeProjectile != null)
@@ -59,6 +64,7 @@ public class FreezeDance : Modchip
             }
         }
     }
+
 
 
 }

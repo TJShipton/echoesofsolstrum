@@ -3,15 +3,15 @@ using UnityEngine;
 public class ModchipPickup : MonoBehaviour
 {
     public ModchipData modchipData; // Assign this in the inspector with your ModchipData ScriptableObject
-
+    private bool isPickedUp = false;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) // Make sure the player GameObject has the "Player" tag
+        if (!isPickedUp && other.CompareTag("Player"))
         {
-            PickUp(other.gameObject); // Call the PickUp function
+            isPickedUp = true;
+            PickUp(other.gameObject);
         }
     }
-
     private void PickUp(GameObject player)
     {
         InventoryManager inventoryManager = InventoryManager.instance;
@@ -20,21 +20,10 @@ public class ModchipPickup : MonoBehaviour
             // Create a ModchipInventoryItem from the ModchipData
             ModchipInventoryItem modchipItem = new ModchipInventoryItem(modchipData.modchipName, gameObject, modchipData);
 
-            // Call AddModchip method from InventoryManager
+            // Add the modchip to the general modchip inventory, not directly equip it
             inventoryManager.AddModchip(modchipItem);
-            Debug.Log("Modchip Equipped");
+            Debug.Log("Modchip added to inventory");
 
-
-            PlayerController playerController = player.GetComponent<PlayerController>();
-            if (playerController != null && playerController.modchipHolder != null)
-            {
-                // Use playerController.modchipHolder directly
-                Instantiate(modchipData.modchipPrefab, playerController.modchipHolder.transform.position, playerController.modchipHolder.transform.rotation, playerController.modchipHolder.transform);
-            }
-            else
-            {
-                Debug.LogError("PlayerController or modchipHolder not found on the player.");
-            }
 
             // Deactivate or destroy the pickup object
             gameObject.SetActive(false); // or Destroy(gameObject);

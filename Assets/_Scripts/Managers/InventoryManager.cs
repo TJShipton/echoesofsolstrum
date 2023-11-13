@@ -12,12 +12,20 @@ public class InventoryManager : MonoBehaviour
     public InventorySlot currentSelectedSlot = null;  // Slot of the currently equipped weapon
     public WeaponButtonCreator weaponButtonCreator;
     public Transform weaponInventoryPanel;  // UI panel to hold weapon buttons
-    public Transform modchipPanel;
+    public Transform modchipEquipPanel;
+    public Transform modchipInventoryPanel;
     public Transform inGameMenu;
     public Transform weaponHolder;
 
     public Sprite lockedSlotSprite;
     public Sprite emptySlotSprite;
+
+    public Button modchipSlotButton1; // Reference to the first modchip slot button
+    public Button modchipSlotButton2; // Reference to the second modchip slot button
+    public List<ModchipInventoryItem> modchipInventory = new List<ModchipInventoryItem>();
+    private int selectedModchipSlotIndex = -1; // Initialize to -1 to indicate no slot is selected
+
+
 
 
     void Awake()
@@ -56,6 +64,14 @@ public class InventoryManager : MonoBehaviour
         InventorySlot modchipSlot2 = new InventorySlot(3, InventorySlot.SlotType.Modchip);
         slots.Add(modchipSlot1);
         slots.Add(modchipSlot2);
+
+        if (modchipSlotButton1 != null)
+            modchipSlotButton1.onClick.AddListener(() => SelectEquipSlot(2)); // Assuming slot 2 is for modchipSlotButton1
+
+        if (modchipSlotButton2 != null)
+            modchipSlotButton2.onClick.AddListener(() => SelectEquipSlot(3)); // Assuming slot 3 is for modchipSlotButton2
+
+
 
         // Initialize weapon button creator
         weaponButtonCreator.Initialize();
@@ -191,57 +207,131 @@ public class InventoryManager : MonoBehaviour
 
     public void AddModchip(ModchipInventoryItem modchipItem)
     {
-        // Ensure that the slots list has been initialized and is not empty
-        if (slots == null || slots.Count == 0)
-        {
-            Debug.LogError("Slots list is not initialized or empty.");
-            return;
-        }
+        //Debug.Log("Adding modchip: " + modchipItem.ItemId);
 
-        // Try to find an empty and unlocked modchip slot
-        InventorySlot availableSlot = slots.FirstOrDefault(s => s.Type == InventorySlot.SlotType.Modchip && s.IsEmpty && !s.IsLocked);
-
-        // If there is no empty modchip slot, allow replacement in the first unlocked modchip slot
-        if (availableSlot == null)
-        {
-            availableSlot = slots.FirstOrDefault(s => s.Type == InventorySlot.SlotType.Modchip && !s.IsLocked);
-        }
-
-        // If there's still no available modchip slot, it means all modchip slots are locked or full
-        if (availableSlot == null)
-        {
-            Debug.LogWarning("No available slot for modchip " + modchipItem.ItemId + " and inventory is full or locked.");
-            return; // Exit the method as no slot is available for the new modchip item
-        }
-
-        // Add the modchip item to the available slot
-        availableSlot.addItem(modchipItem);
-
-        // Instantiate an Image GameObject and set the sprite
-        Image modchipImage = InstantiateModchipImage(modchipItem.modchipData.modSprite, modchipPanel);
+        modchipInventory.Add(modchipItem);
 
         // Update the inventory UI to reflect the new state
         UpdateModchipInventoryUI();
+
+        if (modchipItem == null || string.IsNullOrEmpty(modchipItem.ItemId))
+        {
+            //Debug.LogWarning("Attempted to add a null or empty modchip item to inventory.");
+            return;
+        }
+
+
     }
 
-
-    private Image InstantiateModchipImage(Sprite modchipSprite, Transform panel)
+    public void SelectEquipSlot(int slotIndex)
     {
-        GameObject modchipImageGO = new GameObject("ModchipImage", typeof(Image));
-        modchipImageGO.transform.SetParent(panel, false);
-        Image modchipImage = modchipImageGO.GetComponent<Image>();
-        modchipImage.sprite = modchipSprite;
-        modchipImage.preserveAspect = true; // Maintain the sprite aspect ratio
-                                            // Adjust the RectTransform to fit the panel as needed
-        RectTransform rectTransform = modchipImageGO.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(100, 100); // Example size, adjust as needed
-        return modchipImage;
+        // Set the selectedModchipSlotIndex to the slot that was clicked
+        selectedModchipSlotIndex = slotIndex;
+        OpenModchipInventory();
     }
+
+
+
+    public void OpenModchipInventory()
+    {
+        modchipInventoryPanel.gameObject.SetActive(true);
+    }
+
+
+
 
     private void UpdateModchipInventoryUI()
     {
-        // This method would be responsible for updating the UI of the modchip inventory panel
-        // It would iterate over the slots and update the UI similarly to UpdateWeaponInventoryUI
+        //Debug.Log($"Updating Modchip Inventory UI. Panel assigned: {modchipInventoryPanel != null}");
+
+        // Clear existing modchip UI elements in the modchip inventory panel
+        foreach (Transform child in modchipInventoryPanel)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Iterate over the modchip inventory and update UI
+        foreach (var modchipItem in modchipInventory)
+        {
+            //Debug.Log("Creating UI for modchip: " + modchipItem.ItemId);
+            if (modchipItem.modchipData == null || modchipItem.modchipData.modSprite == null)
+            {
+                //Debug.LogError("Modchip data or sprite is null for: " + modchipItem.ItemId);
+                continue; // Skip this iteration
+            }
+
+            // Create a Button GameObject with the modchip's name
+            GameObject modchipButtonGO = new GameObject(modchipItem.ItemId, typeof(Button), typeof(Image));
+            modchipButtonGO.transform.SetParent(modchipInventoryPanel, false);
+
+            // Set the modchip sprite directly to the Button's Image component
+            Image modchipImage = modchipButtonGO.GetComponent<Image>();
+            modchipImage.sprite = modchipItem.modchipData.modSprite;
+            modchipImage.preserveAspect = true;
+
+            modchipButtonGO.GetComponent<Button>().onClick.AddListener(() => EquipModchipToSelectedSlot(modchipItem));
+
+
+
+            Debug.Log("Updated UI for modchip: " + modchipItem.ItemId);
+        }
+    }
+
+
+
+
+
+    private void EquipModchipToSelectedSlot(ModchipInventoryItem modchipItem)
+    {
+        Debug.Log("EquipModchipToSelectedSlot called with: " + modchipItem.ItemId);
+        Debug.Log("Selected Modchip Slot Index: " + selectedModchipSlotIndex);
+
+        if (selectedModchipSlotIndex < 0 || selectedModchipSlotIndex >= slots.Count)
+        {
+            Debug.LogError("Invalid slot index: " + selectedModchipSlotIndex);
+            return;
+        }
+
+        var slot = slots[selectedModchipSlotIndex];
+        Debug.Log("Slot before adding item: " + (slot.Item != null ? slot.Item.ItemId : "Empty"));
+        slot.addItem(modchipItem); // Equip the modchip to the slot
+        Debug.Log("Modchip added to slot: " + slot.Item.ItemId);
+
+        modchipInventory.Remove(modchipItem); // Remove from the general inventory
+        Debug.Log("Modchip removed from general inventory: " + modchipItem.ItemId);
+
+        UpdateModchipInventoryUI(); // Update the modchip inventory UI
+
+        // Update the UI of the equip slot
+        UpdateEquipSlotUI(selectedModchipSlotIndex, modchipItem);
+
+        modchipInventoryPanel.gameObject.SetActive(false);
+
+        selectedModchipSlotIndex = -1; // Reset the selected slot index
+    }
+
+
+    private void UpdateEquipSlotUI(int slotIndex, ModchipInventoryItem modchipItem)
+    {
+        // Find the UI element corresponding to the slotIndex
+        // This is an example. Modify it based on how your UI is structured.
+        Button slotButton = GetSlotButton(slotIndex);
+        if (slotButton != null)
+        {
+            Image slotImage = slotButton.GetComponent<Image>();
+            if (slotImage != null)
+            {
+                // Set the sprite to modchip's sprite or some other indicator
+                slotImage.sprite = modchipItem.modchipData.modSprite;
+            }
+        }
+    }
+
+    private Button GetSlotButton(int slotIndex)
+    {
+        // This is a placeholder. You need to implement it based on your UI structure.
+        // For example, you might have an array or list of buttons corresponding to slots.
+        return slotIndex == 2 ? modchipSlotButton1 : modchipSlotButton2;
     }
 
 
@@ -374,7 +464,7 @@ public class InventoryManager : MonoBehaviour
                 // If the slot is supposed to be empty or locked
                 if (slot.IsEmpty || slot.IsLocked)
                 {
-                    UpdateSlotVisual(slot, slot.IsLocked ? WeaponButtonCreator.SlotState.Locked : WeaponButtonCreator.SlotState.Empty);
+                    UpdateWeaponSlotVisual(slot, slot.IsLocked ? WeaponButtonCreator.SlotState.Locked : WeaponButtonCreator.SlotState.Empty);
                 }
                 else if (slot.Item is WeaponInventoryItem weaponItem) // Safe casting to avoid InvalidCastException
                 {
@@ -394,7 +484,7 @@ public class InventoryManager : MonoBehaviour
             else
             {
                 // If there is no UIButton, create the appropriate default button
-                UpdateSlotVisual(slot, slot.IsLocked ? WeaponButtonCreator.SlotState.Locked : WeaponButtonCreator.SlotState.Empty);
+                UpdateWeaponSlotVisual(slot, slot.IsLocked ? WeaponButtonCreator.SlotState.Locked : WeaponButtonCreator.SlotState.Empty);
             }
         }
 
@@ -402,7 +492,7 @@ public class InventoryManager : MonoBehaviour
     }
 
 
-    private void UpdateSlotVisual(InventorySlot slot, WeaponButtonCreator.SlotState state)
+    private void UpdateWeaponSlotVisual(InventorySlot slot, WeaponButtonCreator.SlotState state)
     {
         if (slot.UIButton == null)
         {

@@ -11,7 +11,7 @@ MonoImporter:
   - weaponRaritySelector: {fileID: 849498827072983382, guid: 61cf3c748d1c60c4199903b2fa25f150,
       type: 3}
   - mainCamera: {instanceID: 0}
-  executionOrder: 400
+  executionOrder: 0
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

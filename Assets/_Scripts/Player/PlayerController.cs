@@ -127,24 +127,27 @@ public class PlayerController : MonoBehaviour, IDamageable
             StopAllActions();
         }
 
+
     }
+
+
 
     // Update is called once per frame
     void Update()
     {
-        // Before any player input, check if the UI is open
         if (UIManager.Instance.IsAnyMenuOpen)
         {
-            // If a menu is open, don't process any gameplay input
+
             return;
         }
+
 
 
     }
 
     private void StopAllActions()
     {
-        // Stop all movement by setting velocity to zero
+        //// Stop all movement by setting velocity to zero
         rb.velocity = Vector3.zero;
 
         movementInput = Vector2.zero;  // This ensures no new force will be applied as long as the UI is open
@@ -161,7 +164,11 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void FixedUpdate()
     {
-        if (isUIOpen) return;  // Don't apply physics updates if the UI is open
+        if (isUIOpen)
+        {
+
+            return;
+        }
 
         // Update the horizontal movement
         Vector3 movement = new Vector3(movementInput.x, 0.0f);
@@ -204,7 +211,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         else
         {
-            // If not falling
+            //If not falling
             animator.SetBool("IsFalling", false);
         }
 
@@ -219,8 +226,6 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        // Only process input if no UI menu is open
-        if (isUIOpen) return;
 
         movementInput = context.ReadValue<Vector2>();  // Read the input value from the context
 
@@ -259,8 +264,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     { // Only process input if no UI menu is open
 
 
-        Vector3 jumpVector = new Vector3(0f, jumpForce, 0f);
-        rb.AddForce(jumpVector, ForceMode.VelocityChange);
+        Vector3 jumpVector = new Vector3(rb.velocity.x, jumpForce, 0f); // Preserve the x velocity
+        rb.velocity = jumpVector;
 
     }
 
