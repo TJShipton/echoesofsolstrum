@@ -56,11 +56,8 @@ public class FreezeDance : Modchip
                 Vector3 initialProjectileVelocity = totalForce + new Vector3(playerVelocity.x, 0, playerVelocity.z);
                 rb.velocity = initialProjectileVelocity;
 
-                FreezeProjectile freezeProjectile = projectile.GetComponent<FreezeProjectile>();
-                if (freezeProjectile != null)
-                {
-                    freezeProjectile.Setup(freezeDuration);
-                }
+
+
             }
         }
     }

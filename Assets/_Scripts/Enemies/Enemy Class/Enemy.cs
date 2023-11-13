@@ -91,7 +91,13 @@ public class Enemy : MonoBehaviour, IDamageable
         if (agent != null)
         {
             agent.isStopped = false;
-            // Reset any freeze-related animations or effects here
+
+            // Reset animation to idle or default state
+            if (Animator != null)
+            {
+            
+                Animator.SetBool("IsWalking", true);
+            }
         }
     }
 

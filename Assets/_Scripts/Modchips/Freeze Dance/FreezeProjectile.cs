@@ -3,38 +3,36 @@ using UnityEngine.AI;
 
 public class FreezeProjectile : MonoBehaviour
 {
-
     public float freezeDuration; // Duration of the freeze effect
-
-    public void Setup(float duration)
-    {
-        freezeDuration = duration;
-    }
 
     void OnCollisionEnter(Collision collision)
     {
-        // Check if we've hit an enemy
         Enemy enemy = collision.gameObject.GetComponent<Enemy>();
         if (enemy != null)
         {
             ApplyFreeze(enemy);
         }
-
-        // Destroy the projectile upon collision
         Destroy(gameObject);
     }
 
     private void ApplyFreeze(Enemy enemy)
     {
         NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
-        if (agent != null)
+        Animator enemyAnimator = enemy.GetComponent<Animator>();
+
+        if (agent != null && enemyAnimator != null)
         {
             agent.isStopped = true; // Stop the enemy from moving
+            enemyAnimator.SetBool("isTwerking", true); // Assuming 'isTwerking' is the animation trigger
 
-            //SET ANIM TRIGGER HERE
-
-            // Schedule the unfreeze action
-            enemy.Invoke("Unfreeze", freezeDuration);
+            enemy.Invoke("Unfreeze", freezeDuration); // Schedule the unfreeze action
+        }
+        else
+        {
+            if (enemyAnimator == null)
+            {
+                Debug.LogError("Animator not found on enemy");
+            }
         }
     }
 }

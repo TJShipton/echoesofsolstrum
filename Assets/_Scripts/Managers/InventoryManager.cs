@@ -19,12 +19,16 @@ public class InventoryManager : MonoBehaviour
 
     public Sprite lockedSlotSprite;
     public Sprite emptySlotSprite;
-
+    public Sprite emptyModchipSlotSprite;
     public Button modchipSlotButton1; // Reference to the first modchip slot button
     public Button modchipSlotButton2; // Reference to the second modchip slot button
     public List<ModchipInventoryItem> modchipInventory = new List<ModchipInventoryItem>();
     private int selectedModchipSlotIndex = -1; // Initialize to -1 to indicate no slot is selected
 
+    //// Dictionary to keep track of modchip UI elements
+    //private Dictionary<string, Button> modchipUIElements = new Dictionary<string, Button>();
+
+    public List<Button> modchipSlotButtons;
 
 
 
@@ -66,10 +70,10 @@ public class InventoryManager : MonoBehaviour
         slots.Add(modchipSlot2);
 
         if (modchipSlotButton1 != null)
-            modchipSlotButton1.onClick.AddListener(() => SelectEquipSlot(2)); // Assuming slot 2 is for modchipSlotButton1
+            modchipSlotButton1.onClick.AddListener(() => SelectEquipSlot(2)); //  slot 2 is for modchipSlotButton1
 
         if (modchipSlotButton2 != null)
-            modchipSlotButton2.onClick.AddListener(() => SelectEquipSlot(3)); // Assuming slot 3 is for modchipSlotButton2
+            modchipSlotButton2.onClick.AddListener(() => SelectEquipSlot(3)); //  slot 3 is for modchipSlotButton2
 
 
 
@@ -133,7 +137,7 @@ public class InventoryManager : MonoBehaviour
             {
                 if (slot == InventoryManager.instance.currentSelectedSlot)
                 {
-                    modchipItem.Activate();
+                    modchipItem.ActivateModchip();
                 }
                 else
                 {
@@ -242,40 +246,35 @@ public class InventoryManager : MonoBehaviour
 
     private void UpdateModchipInventoryUI()
     {
-        //Debug.Log($"Updating Modchip Inventory UI. Panel assigned: {modchipInventoryPanel != null}");
-
-        // Clear existing modchip UI elements in the modchip inventory panel
-        foreach (Transform child in modchipInventoryPanel)
+        for (int i = 0; i < modchipSlotButtons.Count; i++)
         {
-            Destroy(child.gameObject);
-        }
-
-        // Iterate over the modchip inventory and update UI
-        foreach (var modchipItem in modchipInventory)
-        {
-            //Debug.Log("Creating UI for modchip: " + modchipItem.ItemId);
-            if (modchipItem.modchipData == null || modchipItem.modchipData.modSprite == null)
+            if (i < modchipInventory.Count)
             {
-                //Debug.LogError("Modchip data or sprite is null for: " + modchipItem.ItemId);
-                continue; // Skip this iteration
+                ModchipInventoryItem modchipItem = modchipInventory[i];
+                if (modchipItem.modchipData == null || modchipItem.modchipData.modSprite == null)
+                {
+                    Debug.LogError("Modchip data or sprite is null for: " + modchipItem.ItemId);
+                    continue;
+                }
+
+                Button slotButton = modchipSlotButtons[i];
+                Image slotImage = slotButton.GetComponent<Image>();
+                slotImage.sprite = modchipItem.modchipData.modSprite;
+                slotButton.onClick.RemoveAllListeners();
+                slotButton.onClick.AddListener(() => EquipModchipToSelectedSlot(modchipItem));
             }
-
-            // Create a Button GameObject with the modchip's name
-            GameObject modchipButtonGO = new GameObject(modchipItem.ItemId, typeof(Button), typeof(Image));
-            modchipButtonGO.transform.SetParent(modchipInventoryPanel, false);
-
-            // Set the modchip sprite directly to the Button's Image component
-            Image modchipImage = modchipButtonGO.GetComponent<Image>();
-            modchipImage.sprite = modchipItem.modchipData.modSprite;
-            modchipImage.preserveAspect = true;
-
-            modchipButtonGO.GetComponent<Button>().onClick.AddListener(() => EquipModchipToSelectedSlot(modchipItem));
-
-
-
-            Debug.Log("Updated UI for modchip: " + modchipItem.ItemId);
+            else
+            {
+                // For empty slots, reset to default empty sprite
+                Button slotButton = modchipSlotButtons[i];
+                Image slotImage = slotButton.GetComponent<Image>();
+                slotImage.sprite = emptyModchipSlotSprite; // Assuming you have a default sprite for empty slots
+                slotButton.onClick.RemoveAllListeners();
+            }
         }
     }
+
+
 
 
 
@@ -293,11 +292,15 @@ public class InventoryManager : MonoBehaviour
         }
 
         var slot = slots[selectedModchipSlotIndex];
+
         Debug.Log("Slot before adding item: " + (slot.Item != null ? slot.Item.ItemId : "Empty"));
+
         slot.addItem(modchipItem); // Equip the modchip to the slot
+        modchipItem.ActivateModchip();
+
         Debug.Log("Modchip added to slot: " + slot.Item.ItemId);
 
-        modchipInventory.Remove(modchipItem); // Remove from the general inventory
+
         Debug.Log("Modchip removed from general inventory: " + modchipItem.ItemId);
 
         UpdateModchipInventoryUI(); // Update the modchip inventory UI
