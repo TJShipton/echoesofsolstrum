@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private bool isDodging = false;
     public float dodgeDuration = 1.0f; // The duration of the dodge in seconds
+    public int torsoLayerIndex = 1;
 
 
     private Rigidbody rb;
@@ -137,12 +138,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (UIManager.Instance.IsAnyMenuOpen)
         {
-
             return;
         }
-
-
-
     }
 
     private void StopAllActions()
@@ -158,8 +155,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         animator.ResetTrigger("JumpTrigger");
         animator.ResetTrigger("DoubleJumpTrigger");
         animator.SetBool("IsFalling", false);
-
-
     }
 
     private void FixedUpdate()
@@ -393,7 +388,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             Animator animator = GetComponent<Animator>(); // Assuming the animator is on the same GameObject as this script
             currentWeapon.InitWeaponAnimator(animator);
 
-            // Now trigger the attack
+            EnableTorsoLayer();
             currentWeapon.PrimaryAttack();
 
         }
@@ -447,14 +442,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-
-
-
-
-
-
-
-
     public void OnCast2(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -467,13 +454,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
 
     }
-
-
-
-
-
-
-
 
     public void TakeDamage(int damageAmount, Canvas HUDCanvas)
     {
@@ -547,5 +527,17 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
 
 
+    }
+
+    public void EnableTorsoLayer()
+    {
+        animator.SetLayerWeight(torsoLayerIndex, 1);
+    }
+
+    public void DisableTorsoLayer()
+    {
+        Debug.Log("DisableTorsoLayer called."); // This should print to the console when the event is triggered
+
+        animator.SetLayerWeight(torsoLayerIndex, 0);
     }
 }

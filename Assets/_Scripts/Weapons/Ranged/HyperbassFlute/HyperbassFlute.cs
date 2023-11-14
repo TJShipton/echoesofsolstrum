@@ -67,11 +67,11 @@ public class HyperbassFlute : Weapon
             }
 
 
-            if (animator != null)
-            {
-                animator.SetTrigger("HyperbassAttack");
-            }
-
+            // if (animator != null)
+            // {
+            //     animator.SetTrigger("HyperbassAttack");
+            // }
+            animator.SetTrigger("HyperbassAttack");
             weaponData.StartCooldown();
         }
 

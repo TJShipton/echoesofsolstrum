@@ -23,9 +23,10 @@ public class FreezeProjectile : MonoBehaviour
         if (agent != null && enemyAnimator != null)
         {
             agent.isStopped = true; // Stop the enemy from moving
-            enemyAnimator.SetBool("isTwerking", true); // Assuming 'isTwerking' is the animation trigger
+            enemyAnimator.SetBool("IsTwerking", true);
 
             enemy.Invoke("Unfreeze", freezeDuration); // Schedule the unfreeze action
+            
         }
         else
         {
