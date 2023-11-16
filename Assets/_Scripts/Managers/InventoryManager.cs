@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
@@ -25,11 +26,9 @@ public class InventoryManager : MonoBehaviour
     public List<ModchipInventoryItem> modchipInventory = new List<ModchipInventoryItem>();
     private int selectedModchipSlotIndex = -1; // Initialize to -1 to indicate no slot is selected
 
-    //// Dictionary to keep track of modchip UI elements
-    //private Dictionary<string, Button> modchipUIElements = new Dictionary<string, Button>();
-
     public List<Button> modchipSlotButtons;
 
+    public bool isMenuActive = false;
 
 
     void Awake()
@@ -90,11 +89,19 @@ public class InventoryManager : MonoBehaviour
 
     void Update()
     {
-        // Check if the Escape key is pressed
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // Toggle the visibility of the inGameMenu
-            inGameMenu.gameObject.SetActive(!inGameMenu.gameObject.activeSelf);
+            bool isMenuActive = inGameMenu.gameObject.activeSelf;
+            inGameMenu.gameObject.SetActive(!isMenuActive);
+
+            // Toggle game pause
+            Time.timeScale = isMenuActive ? 1 : 0;
+
+            // Notify the PlayerController about the menu state change
+            if (PlayerController.instance != null)
+            {
+                PlayerController.instance.SetUIState(!isMenuActive);
+            }
         }
     }
 
@@ -248,6 +255,8 @@ public class InventoryManager : MonoBehaviour
     {
         for (int i = 0; i < modchipSlotButtons.Count; i++)
         {
+            Button slotButton = modchipSlotButtons[i];
+
             if (i < modchipInventory.Count)
             {
                 ModchipInventoryItem modchipItem = modchipInventory[i];
@@ -257,26 +266,44 @@ public class InventoryManager : MonoBehaviour
                     continue;
                 }
 
-                Button slotButton = modchipSlotButtons[i];
                 Image slotImage = slotButton.GetComponent<Image>();
                 slotImage.sprite = modchipItem.modchipData.modSprite;
                 slotButton.onClick.RemoveAllListeners();
                 slotButton.onClick.AddListener(() => EquipModchipToSelectedSlot(modchipItem));
+
+                // Adding selection and deselection event triggers
+                AddEventTriggersToModchipButton(slotButton, modchipItem);
             }
             else
             {
-                // For empty slots, reset to default empty sprite
-                Button slotButton = modchipSlotButtons[i];
                 Image slotImage = slotButton.GetComponent<Image>();
-                slotImage.sprite = emptyModchipSlotSprite; // Assuming you have a default sprite for empty slots
+                slotImage.sprite = emptyModchipSlotSprite;
                 slotButton.onClick.RemoveAllListeners();
             }
         }
     }
 
+    private void AddEventTriggersToModchipButton(Button button, ModchipInventoryItem item)
+    {
+        EventTrigger trigger = button.gameObject.GetComponent<EventTrigger>() ?? button.gameObject.AddComponent<EventTrigger>();
 
+        EventTrigger.Entry entrySelect = new EventTrigger.Entry();
+        entrySelect.eventID = EventTriggerType.Select;
+        entrySelect.callback.AddListener((data) => { OnModchipSelect(item); });
+        trigger.triggers.Add(entrySelect);
 
+        EventTrigger.Entry entryDeselect = new EventTrigger.Entry();
+        entryDeselect.eventID = EventTriggerType.Deselect;
+        entryDeselect.callback.AddListener((data) => { TooltipSystem.Instance.HideTooltip(); });
+        trigger.triggers.Add(entryDeselect);
+    }
 
+    private void OnModchipSelect(ModchipInventoryItem modchipData)
+    {
+        // You need to implement the GetDetails method in ModchipInventoryItem.
+        string modchipDetails = modchipData.GetDetails();
+        TooltipSystem.Instance.ShowTooltip(modchipDetails);
+    }
 
 
 
@@ -316,15 +343,14 @@ public class InventoryManager : MonoBehaviour
 
     private void UpdateEquipSlotUI(int slotIndex, ModchipInventoryItem modchipItem)
     {
-        // Find the UI element corresponding to the slotIndex
-        // This is an example. Modify it based on how your UI is structured.
+
         Button slotButton = GetSlotButton(slotIndex);
         if (slotButton != null)
         {
             Image slotImage = slotButton.GetComponent<Image>();
             if (slotImage != null)
             {
-                // Set the sprite to modchip's sprite or some other indicator
+                // Set the sprite to modchip's sprite 
                 slotImage.sprite = modchipItem.modchipData.modSprite;
             }
         }
@@ -332,8 +358,7 @@ public class InventoryManager : MonoBehaviour
 
     private Button GetSlotButton(int slotIndex)
     {
-        // This is a placeholder. You need to implement it based on your UI structure.
-        // For example, you might have an array or list of buttons corresponding to slots.
+
         return slotIndex == 2 ? modchipSlotButton1 : modchipSlotButton2;
     }
 

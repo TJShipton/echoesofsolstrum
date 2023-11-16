@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class ModchipData : ScriptableObject
 {
-    public string modchipName;
     public GameObject modchipPrefab;
+    public string modchipName;
+    public string modchipDescription;
     public int modDamage;
     public int modRange;
     public float modDuration;

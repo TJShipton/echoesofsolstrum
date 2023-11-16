@@ -1,11 +1,31 @@
+using TMPro;
 using UnityEngine;
 
 public class ModchipPickup : MonoBehaviour
 {
     public ModchipData modchipData; // Assign this in the inspector with your ModchipData ScriptableObject
     private bool isPickedUp = false;
+    public TextMeshProUGUI modchipUnlockText;
+    public float modchipUnlockDisplayDuration = 2.0f;
+
+    private void Start()
+    {
+        modchipUnlockText = HudManager.instance.GetModchipUnlockText();
+
+        if (modchipUnlockText == null)
+        {
+            Debug.LogError("Unlock Text not assigned!");
+        }
+        else
+        {
+            modchipUnlockText.gameObject.SetActive(false);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
+        HideModchipObject();
+
         if (!isPickedUp && other.CompareTag("Player"))
         {
             isPickedUp = true;
@@ -24,13 +44,61 @@ public class ModchipPickup : MonoBehaviour
             inventoryManager.AddModchip(modchipItem);
             Debug.Log("Modchip added to inventory");
 
+            ShowModchipUnlockText($"{modchipData.modchipName} Modchip Unlocked");
 
-            // Deactivate or destroy the pickup object
-            gameObject.SetActive(false); // or Destroy(gameObject);
         }
         else
         {
             Debug.LogError("InventoryManager instance not found.");
         }
     }
+
+    private void ShowModchipUnlockText(string message)
+    {
+        if (modchipUnlockText != null)
+        {
+            modchipUnlockText.text = message;
+            modchipUnlockText.gameObject.SetActive(true);
+
+            StartCoroutine(HideModchipUnlockTextAfterDelay());
+        }
+        else
+        {
+            Debug.LogError("Unlock Text not assigned!");
+        }
+    }
+
+    private System.Collections.IEnumerator HideModchipUnlockTextAfterDelay()
+    {
+
+        yield return new WaitForSeconds(modchipUnlockDisplayDuration);
+
+        if (modchipUnlockText != null)
+        {
+            modchipUnlockText.gameObject.SetActive(false);
+
+        }
+        HideModchipObject();
+
+
+
+    }
+
+    private void HideModchipObject()
+    {
+        // Disable all the renderers in the Blueprint object and its children
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        foreach (Renderer rend in renderers)
+        {
+            rend.enabled = false;
+        }
+
+        // Disable the collider so it can't be interacted with again
+        Collider col = GetComponent<Collider>();
+        if (col != null)
+        {
+            col.enabled = false;
+        }
+    }
+
 }

@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 public class HudManager : MonoBehaviour
 {
@@ -16,7 +15,12 @@ public class HudManager : MonoBehaviour
     // Unity event that is triggered when Sol changes
     public UnityEvent OnSolChanged;
 
-   
+    [SerializeField]
+    private TextMeshProUGUI weaponUnlockText; //weapon unlock text 
+
+    [SerializeField]
+    private TextMeshProUGUI modchipUnlockText; //weapon unlock text 
+
     void Awake()
     {
         // Singleton pattern
@@ -89,5 +93,15 @@ public class HudManager : MonoBehaviour
             solTextMenu.text = " " + CurrencyManager.instance.solCurrency;
         }
     }
-   
+
+    public TextMeshProUGUI GetWeaponUnlockText()
+    {
+        return weaponUnlockText;
+    }
+
+    public TextMeshProUGUI GetModchipUnlockText()
+    {
+        return modchipUnlockText;
+    }
+
 }

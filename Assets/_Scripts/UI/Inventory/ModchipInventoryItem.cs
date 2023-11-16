@@ -55,7 +55,23 @@ public class ModchipInventoryItem : InventoryItem
         }
     }
 
-
+    public string GetDetails()
+    {
+        if (modchipData != null)
+        {
+            // Format the details string as required
+            return $"Name: {modchipData.modchipName}\n" +
+                   $"Decsription: {modchipData.modchipDescription}\n" +
+                   $"Damage: {modchipData.modDamage}\n" +
+                   $"Range: {modchipData.modRange}\n" +
+                   $"Duration: {modchipData.modDuration} seconds\n" +
+                   $"Cooldown: {modchipData.modCooldown} seconds";
+        }
+        else
+        {
+            return "Modchip data not available.";
+        }
+    }
 
 
 }

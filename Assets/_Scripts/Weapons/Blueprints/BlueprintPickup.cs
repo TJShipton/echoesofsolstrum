@@ -1,19 +1,16 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class BlueprintPickup : MonoBehaviour
 {
     public WeaponBlueprint blueprint;
-    [SerializeField] 
+    [SerializeField]
     private TextMeshProUGUI unlockText;
     public float displayDuration = 2.0f;
 
-
-
-
     private void Start()
     {
-        unlockText = GameManager.instance.GetUnlockText();
+        unlockText = HudManager.instance.GetWeaponUnlockText();
 
         if (unlockText == null)
         {
@@ -56,7 +53,7 @@ public class BlueprintPickup : MonoBehaviour
         {
             unlockText.text = message;
             unlockText.gameObject.SetActive(true);
-           
+
             StartCoroutine(HideUnlockTextAfterDelay());
         }
         else
@@ -67,13 +64,13 @@ public class BlueprintPickup : MonoBehaviour
 
     private System.Collections.IEnumerator HideUnlockTextAfterDelay()
     {
-        
+
         yield return new WaitForSeconds(displayDuration);
-        
+
         if (unlockText != null)
         {
             unlockText.gameObject.SetActive(false);
-            
+
         }
 
         HideBlueprintObject(); // Call the method to hide the Blueprint object

@@ -119,7 +119,14 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     }
 
-    private void HandleUIStateChange(bool isMenuOpen)
+    public void SetUIState(bool isOpen)
+    {
+        isUIOpen = isOpen;
+        HandleUIStateChange(isOpen);
+    }
+
+
+    public void HandleUIStateChange(bool isMenuOpen)
     {
         isUIOpen = isMenuOpen; // Update the internal state.
 

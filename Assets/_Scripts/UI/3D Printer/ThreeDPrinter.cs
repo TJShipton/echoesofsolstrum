@@ -151,31 +151,39 @@ public class ThreeDPrinter : MonoBehaviour, IInteractable
 
     public void CloseMenu()
     {
-        if (!isPlayerNear) return; // Early return if the player is not near
+        if (!isPlayerNear) return;
 
         weaponPanel.SetActive(false);
         isWeaponPanelActive = false;
         if (eventSystem != null)
         {
-            eventSystem.SetSelectedGameObject(null); // Reset the selected object in the EventSystem
+            eventSystem.SetSelectedGameObject(null);
         }
-        promptText.gameObject.SetActive(true); // Make the prompt text reappear
+        promptText.gameObject.SetActive(true);
+
+        Time.timeScale = 1;  // Unpause the game
     }
 
     private void ToggleWeaponSelectPanel()
     {
-        // Check if the player is near, if not, return early.
         if (!isPlayerNear) return;
 
         if (isWeaponPanelActive)
         {
             UIManager.Instance.CloseCurrentMenu();
+            weaponPanel.SetActive(false);
+            isWeaponPanelActive = false;
+            Time.timeScale = 1;  // Resume the game
         }
         else
         {
             UIManager.Instance.HandleMenuOpen(this);
+            weaponPanel.SetActive(true);
+            isWeaponPanelActive = true;
+            Time.timeScale = 0;  // Pause the game
         }
     }
+
 
     private void ShowWeaponOptions()
     {
@@ -307,6 +315,8 @@ public class ThreeDPrinter : MonoBehaviour, IInteractable
                 InventoryManager.instance.UpdateWeaponInventoryUI();
                 UIManager.Instance.CloseCurrentMenu();
                 Debug.Log("Weapon Equipped");
+                UIManager.Instance.CloseCurrentMenu();
+                Time.timeScale = 1;  // Unpause the game
             }
             else
             {
