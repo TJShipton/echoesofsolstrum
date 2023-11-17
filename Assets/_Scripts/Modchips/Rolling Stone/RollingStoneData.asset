@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b3b81fb74929a74ea656c995952da3b, type: 3}
   m_Name: RollingStoneData
   m_EditorClassIdentifier: 
-  modchipName: Rolling Stone
   modchipPrefab: {fileID: 4563154083060249962, guid: 43cf468e60786d742b7304b5fc0658a2,
     type: 3}
-  modDamage: 0
-  modRange: 0
-  modDuration: 0
-  modCooldown: 0
+  modchipName: Rolling Stone
+  modchipDescription: Roll a massive boulder that damages all enemies in its path
+  modDamage: 50
+  modRange: 100
+  modDuration: 5
+  modCooldown: 10
   modSprite: {fileID: 21300000, guid: fd2a80917eb34fc48841b841d1b3397f, type: 3}

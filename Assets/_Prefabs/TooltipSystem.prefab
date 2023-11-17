@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f607c9c1a7241754897e754912347c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipPanel: {fileID: 0}
+  modchipTooltipPanel: {fileID: 0}
   tooltipText: {fileID: 0}

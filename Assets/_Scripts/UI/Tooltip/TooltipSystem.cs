@@ -1,60 +1,70 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class TooltipSystem : MonoBehaviour
 {
     public static TooltipSystem Instance;
 
-    public GameObject tooltipPanel;
-    public Text tooltipText;
+    public GameObject modchipTooltipPanel;
+    public TextMeshProUGUI tooltipText;
+
+
 
     private void Awake()
     {
+
         if (Instance != null && Instance != this)
         {
+            Debug.Log("Destroying duplicate instance of TooltipSystem");
             Destroy(gameObject);
             return;
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject); // Keep the instance alive across scenes.
+        DontDestroyOnLoad(gameObject);
+
+
+        tooltipText = modchipTooltipPanel.GetComponentInChildren<TextMeshProUGUI>();
+        if (tooltipText == null)
+        {
+            Debug.LogError("TextMeshProUGUI component not found in ModchipTooltipPanel's children.");
+            return;
+        }
 
         HideTooltip(); // Start with the tooltip hidden
     }
 
 
-    public void ShowTooltip(string text)
+    public void ShowTooltip(string text, Vector3 position)
     {
-        if (tooltipPanel == null || tooltipText == null)
+        if (modchipTooltipPanel == null || tooltipText == null)
         {
             Debug.LogError("Tooltip components are not assigned.");
             return;
         }
-        tooltipPanel.SetActive(true);
+        modchipTooltipPanel.SetActive(true);
         tooltipText.text = text;
-        UpdatePosition();
+        UpdatePosition(position); // Pass position here
     }
+
 
     public void HideTooltip()
     {
-        tooltipPanel.SetActive(false);
-    }
-
-    private void UpdatePosition()
-    {
-        // Ensure that the tooltip follows the mouse or is positioned correctly.
-        Vector2 position = Input.mousePosition;
-        // Adjust the position here if needed
-        tooltipPanel.transform.position = position;
-    }
-
-    private void Update()
-    {
-        // If the tooltip is active, make sure it follows the cursor or updates its position.
-        if (tooltipPanel.activeSelf)
+        if (modchipTooltipPanel != null)
         {
-            UpdatePosition();
+            modchipTooltipPanel.SetActive(false);
         }
     }
+
+    public void UpdatePosition(Vector3 position)
+    {
+        float offsetX = 150f; // Example offset, adjust as needed
+        float offsetY = 10f; // Example offset, adjust as needed
+
+        Vector3 tooltipPosition = position + new Vector3(offsetX, offsetY, 0);
+        modchipTooltipPanel.transform.position = tooltipPosition;
+    }
+
+
+
 }

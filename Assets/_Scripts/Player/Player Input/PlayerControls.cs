@@ -413,6 +413,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleGameMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""1588093e-ddba-4789-90af-d99abed2559f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -434,6 +443,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b43a727b-bc39-48d9-876a-49ecbe0396af"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -558,6 +578,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f20e4aa4-f1aa-4bd1-9096-4cb4694b1c2a"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ToggleGameMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""25467601-f87d-4735-a051-e807918b01c5"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""ToggleGameMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -610,6 +652,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
         m_UI_Scrollwheel = m_UI.FindAction("Scrollwheel", throwIfNotFound: true);
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
+        m_UI_ToggleGameMenu = m_UI.FindAction("ToggleGameMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -772,6 +815,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_Click;
     private readonly InputAction m_UI_Scrollwheel;
     private readonly InputAction m_UI_RightClick;
+    private readonly InputAction m_UI_ToggleGameMenu;
     public struct UIActions
     {
         private @PlayerControls m_Wrapper;
@@ -783,6 +827,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Click => m_Wrapper.m_UI_Click;
         public InputAction @Scrollwheel => m_Wrapper.m_UI_Scrollwheel;
         public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
+        public InputAction @ToggleGameMenu => m_Wrapper.m_UI_ToggleGameMenu;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -813,6 +858,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @RightClick.started += instance.OnRightClick;
             @RightClick.performed += instance.OnRightClick;
             @RightClick.canceled += instance.OnRightClick;
+            @ToggleGameMenu.started += instance.OnToggleGameMenu;
+            @ToggleGameMenu.performed += instance.OnToggleGameMenu;
+            @ToggleGameMenu.canceled += instance.OnToggleGameMenu;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -838,6 +886,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @RightClick.started -= instance.OnRightClick;
             @RightClick.performed -= instance.OnRightClick;
             @RightClick.canceled -= instance.OnRightClick;
+            @ToggleGameMenu.started -= instance.OnToggleGameMenu;
+            @ToggleGameMenu.performed -= instance.OnToggleGameMenu;
+            @ToggleGameMenu.canceled -= instance.OnToggleGameMenu;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -892,5 +943,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnClick(InputAction.CallbackContext context);
         void OnScrollwheel(InputAction.CallbackContext context);
         void OnRightClick(InputAction.CallbackContext context);
+        void OnToggleGameMenu(InputAction.CallbackContext context);
     }
 }

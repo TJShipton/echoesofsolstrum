@@ -242,6 +242,63 @@
             either [EventID] or [EventIDAttribute].
             </summary>
         </member>
+        <member name="P:SonicBloom.Koreo.EditorUI.MIDIConverter.MIDIPath">
+            <summary>
+            Gets or sets a valid version of the last path used from the EditorPrefs system.  This
+            is a path to a directory, not a file.
+            </summary>
+            <value>The stored MIDI path.</value>
+        </member>
+        <member name="M:SonicBloom.Koreo.EditorUI.MIDIConverter.GetScrollViewHeight">
+            <summary>
+            Calculates the size of the scroll view based on current window size, start position, and
+             some spacing rules.  This is currently shared across multiple views.  Break it up if UI
+             layouts change!
+            </summary>
+            <returns>The height of flexible scroll views.</returns>
+        </member>
+        <member name="M:SonicBloom.Koreo.EditorUI.MIDIConverter.CheckUpdateScrollStartPos">
+            <summary>
+            Sets, if necessary, the start y position of the scroll views.  This must
+             be calculated in the Repaint OnGUI flow because GetLastRect doesn't
+             return usable values in Layout OnGUI.  Annoyingly, the sizing values
+             appear to only be cared about on the Layout OnGUI pass.
+            </summary>
+        </member>
+        <member name="M:SonicBloom.Koreo.EditorUI.TrackContainer.RestoreTrack(SonicBloom.MIDI.Objects.Track)">
+            <summary>
+            Restores the track reference, reconnecting all internal Channel
+             references.
+            </summary>
+            <returns><c>true</c>, if the track was restored, <c>false</c> otherwise.</returns>
+            <param name="tr">The track to restore.</param>
+        </member>
+        <member name="M:SonicBloom.Koreo.EditorUI.TrackContainer.GetMIDIEvents(SonicBloom.MIDI.Objects.Song,System.Int32,System.Single,System.Collections.Generic.List{SonicBloom.Koreo.KoreoMIDIEvent})">
+            <summary>
+            Adds <c>KoreoMIDIEvent</c>s to the <paramref name="events"/> list.
+            </summary>
+            <param name="songDef">The song definition.</param>
+            <param name="sampleRate">The sample rate.</param>
+            <param name="timeOffset">The start time offset.</param>
+            <param name="events">The list of events to which to append.</param>
+        </member>
+        <member name="P:SonicBloom.Koreo.EditorUI.ChannelContainer.ChannelNum">
+            <summary>
+            Returns the ChannelNumber assigned to the MIDI Channel in
+             this Container.  This is the "name" of the channel, not
+             the index [1, 16].
+            </summary>
+            <value>The channel number.</value>
+        </member>
+        <member name="M:SonicBloom.Koreo.EditorUI.ChannelContainer.GetMIDIEvents(SonicBloom.MIDI.Objects.Song,System.Int32,System.Single,System.Collections.Generic.List{SonicBloom.Koreo.KoreoMIDIEvent})">
+            <summary>
+            Adds <c>KoreoMIDIEvent</c>s to the <paramref name="events"/> list.
+            </summary>
+            <param name="songDef">The song definition.</param>
+            <param name="sampleRate">The sample rate.</param>
+            <param name="timeOffset">The start time offset.</param>
+            <param name="events">The list of events to which to append.</param>
+        </member>
         <member name="T:SonicBloom.Koreo.EditorUI.AudioAnalysis">
             <summary>
             The AudioAnalysis static class collects methods used in audio analysis together into one place.

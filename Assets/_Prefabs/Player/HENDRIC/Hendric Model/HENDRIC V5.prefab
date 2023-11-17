@@ -165,32 +165,32 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 2593bd343e5cad04ba049806f852dc0f,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 358.03265
+      value: 253.6017
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2593bd343e5cad04ba049806f852dc0f,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 358.03268
+      value: 253.60172
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2593bd343e5cad04ba049806f852dc0f,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 358.03256
+      value: 253.60164
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2593bd343e5cad04ba049806f852dc0f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.78
+      value: -0.13
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2593bd343e5cad04ba049806f852dc0f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.43
+      value: -6.28
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2593bd343e5cad04ba049806f852dc0f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -14.25
+      value: -12.71
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2593bd343e5cad04ba049806f852dc0f,
         type: 3}
@@ -327,8 +327,8 @@ Cloth:
   m_ExternalAcceleration: {x: 0, y: 0, z: 0}
   m_RandomAcceleration: {x: 0, y: 0, z: 0}
   m_WorldVelocityScale: 0.8
-  m_WorldAccelerationScale: 0.5
-  m_Friction: 0.2
+  m_WorldAccelerationScale: 0.1
+  m_Friction: 0.8
   m_CollisionMassScale: 0.5
   m_UseContinuousCollision: 1
   m_UseVirtualParticles: 1
@@ -1004,17 +1004,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a498bc41d269a3541b2ba6e8b0295ea4,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.035338797
+      value: 0.05294862
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a498bc41d269a3541b2ba6e8b0295ea4,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.035338797
+      value: 0.05294862
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a498bc41d269a3541b2ba6e8b0295ea4,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.035338797
+      value: 0.05294862
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a498bc41d269a3541b2ba6e8b0295ea4,
         type: 3}
@@ -1034,22 +1034,22 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a498bc41d269a3541b2ba6e8b0295ea4,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7468036
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a498bc41d269a3541b2ba6e8b0295ea4,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a498bc41d269a3541b2ba6e8b0295ea4,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.6650448
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a498bc41d269a3541b2ba6e8b0295ea4,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a498bc41d269a3541b2ba6e8b0295ea4,
         type: 3}
@@ -1059,7 +1059,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a498bc41d269a3541b2ba6e8b0295ea4,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 83.372
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a498bc41d269a3541b2ba6e8b0295ea4,
         type: 3}
@@ -1325,6 +1325,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a498bc41d269a3541b2ba6e8b0295ea4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a498bc41d269a3541b2ba6e8b0295ea4,
         type: 3}
@@ -1815,6 +1820,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: a61df3c7-87e5-4d9f-98b5-33821e3b5da6
     m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
+        m_MethodName: OnToggleGameMenu
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1588093e-ddba-4789-90af-d99abed2559f
+    m_ActionName: UI/OpenInGameMenu[/DualSenseGamepadHID/start,/XInputControllerWindows/start,/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

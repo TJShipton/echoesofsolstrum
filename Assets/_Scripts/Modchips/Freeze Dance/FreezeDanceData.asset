@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b3b81fb74929a74ea656c995952da3b, type: 3}
   m_Name: FreezeDanceData
   m_EditorClassIdentifier: 
-  modchipName: FreezeDance
   modchipPrefab: {fileID: 6501417004662764527, guid: 52f4c55934d9b2944b37fb84eabbbc7f,
     type: 3}
+  modchipName: FreezeDance
+  modchipDescription: Make those suckers dance!
   modDamage: 0
   modRange: 100
   modDuration: 3

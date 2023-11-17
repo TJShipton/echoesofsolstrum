@@ -25,6 +25,8 @@ TagManager:
   - WeaponHolder
   - LockedOverlay
   - ModchipHolder
+  - ModchipTooltipText
+  - ModchipTooltipPanel
   layers:
   - Default
   - TransparentFX

@@ -2002,6 +2002,426 @@
             </summary>
             <returns>The name of the currently playing <c>AudioClip</c>.</returns>
         </member>
+        <member name="T:SonicBloom.Koreo.Players.SampleSyncMusicPlayer">
+            <summary>
+            This audio player is EXPERIMENTAL.  This audio player guarantees that all configured
+            audio layers play back in a sample-synchronized fashion.  Currently this comes at a
+            tradeoff in memory as all layers must be fully loaded in order to play back.
+            </summary>
+        </member>
+        <member name="E:SonicBloom.Koreo.Players.SampleSyncMusicPlayer.MusicEnded">
+            <summary>
+            Occurs when playback ends.
+            </summary>
+        </member>
+        <member name="F:SonicBloom.Koreo.Players.SampleSyncMusicPlayer.bus">
+            <summary>
+            The AudioBus component through which this audio player should play samples.
+            </summary>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.SampleSyncMusicPlayer.PlayMusic(SonicBloom.Koreo.Players.AudioGroup,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Plays the music in <paramref name="group"/> starting at sample time
+            <paramref name="startSampleOffset"/> for <paramref name="lengthInSamples"/> time.
+            If <paramref name="bReplaceIfExists"/> is <c>true</c>, the group will interrupt
+            current audio playback as well as any scheduled audio.
+            </summary>
+            <param name="group">The <c>AudioGroup</c> to play.</param>
+            <param name="startSampleOffset">The time in samples at which to begin playback
+            of <paramref name="group"/>.</param>
+            <param name="lengthInSamples">The amount of audio in samples to play.</param>
+            <param name="bReplaceIfExists">If set to <c>true</c>, this operation will interrupt
+            playing or scheduled audio; if false it will fail with a warning in the case that
+            audio is already playing.</param>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.SampleSyncMusicPlayer.ScheduleNextMusic(SonicBloom.Koreo.Players.AudioGroup,System.Int32,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Schedules <paramref name="group"/> for playback, beginning at<paramref name="startSampleOffset"/>
+            and set to continue for <paramref name="lengthInSamples"/>.  The <paramref name="curMusicTransLoc"/>
+            parameter allows you to schedule where in the playback of any currently
+            playing audio the transition should occur in sample time.  If the playhead
+            is beyond the specified location, the scheduling will fail.  If <paramref name="bReplaceIfExists"/>
+            is <c>true</c>, the scheduling will override any previously scheduled audio.
+            </summary>
+            <param name="group">The <c>AudioGroup</c> to schedule.</param>
+            <param name="curMusicTransLoc">The sample location in the currently playing audio
+            at which to transition.</param>
+            <param name="startSampleOffset">The sample position in <paramref name="group"/> at which
+            to begin playing audio.</param>
+            <param name="lengthInSamples">The amount of <paramref name="group"/> to play back in
+            samples.</param>
+            <param name="bReplaceIfExists">If set to <c>true</c>, this operation will interrupt
+            playing or scheduled audio; if false it will fail with a warning in the case that
+            audio is already playing.</param>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.SampleSyncMusicPlayer.Pause">
+            <summary>
+            Pause audio playback.
+            </summary>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.SampleSyncMusicPlayer.Continue">
+            <summary>
+            Unpauses audio playback.
+            </summary>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.SampleSyncMusicPlayer.Stop">
+            <summary>
+            Stops audio playback.
+            </summary>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.SampleSyncMusicPlayer.GetSampleTimeForClip(System.String)">
+            <summary>
+            Gets the current sample position of the audio with name <paramref name="clipName"/>.
+            </summary>
+            <returns>The current sample position of the audio with name <paramref name="clipName"/>.</returns>
+            <param name="clipName">The name of the <c>AudioClip</c> to check.</param>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.SampleSyncMusicPlayer.GetTotalSampleTimeForClip(System.String)">
+            <summary>
+            Gets the total sample time of the audio with the name <paramref name="clipName"/>.
+            </summary>
+            <returns>The total sample time of the audio with the name <paramref name="clipName"/>.</returns>
+            <param name="clipName">The name of the <c>AudioClip</c> to check.</param>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.SampleSyncMusicPlayer.GetIsPlaying(System.String)">
+            <summary>
+            Determines whether audio with name <paramref name="clipName"/> is playing.
+            </summary>
+            <returns><c>true</c>, if audio with name <paramref name="clipName"/> is
+            playing,<c>false</c> otherwise.</returns>
+            <param name="clipName">The name of the <c>AudioClip</c> to check.</param>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.SampleSyncMusicPlayer.GetPitch(System.String)">
+            <summary>
+            Gets the pitch of the audio with name <paramref name="clipName"/>.
+            
+            In this case, <paramref name="clipName"/> is ignored as pitch is a
+            global setting.
+            </summary>
+            <returns>The pitch of the audio.</returns>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.SampleSyncMusicPlayer.GetCurrentClipName">
+            <summary>
+            Gets the name of the current <c>AudioClip</c>.
+            </summary>
+            <returns>The name of the 'base' <c>AudioClip</c> of the currently playing
+            <c>AudioGroup</c>, if any.</returns>
+        </member>
+        <member name="T:SonicBloom.Koreo.Players.AudioBus">
+            <summary>
+            The <see cref="T:SonicBloom.Koreo.Players.AudioBus"/> manages the feeding of a specific buffer of audio
+            to the Audio System.  Samples are fed into the audio buffer when the underlying
+            audio system requests them.
+            </summary>
+        </member>
+        <member name="E:SonicBloom.Koreo.Players.AudioBus.AudioEnded">
+            <summary>
+            Occurs when Playback of an AudioGroup ends.
+            </summary>
+        </member>
+        <member name="P:SonicBloom.Koreo.Players.AudioBus.Pitch">
+            <summary>
+            Gets or sets the pitch.
+            </summary>
+            <value>The pitch.</value>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioBus.Init(UnityEngine.AudioSource,System.Int32,System.Int32)">
+            <summary>
+            Sets the internal <c>AudioSource</c> component with which to play audio.  Also initializes
+            an internal <c>AudioClip</c> with the specified channel count and frequency.
+            </summary>
+            <param name="com">The <c>AudioSource</c> component that this <see cref="T:SonicBloom.Koreo.Players.AudioBus"/> wraps.</param>
+            <param name="numChannels">The number of channels in the audio that will be played through the bus.</param>
+            <param name="frequency">The sample frequency of the audio that will be played through the bus.</param>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioBus.PlayAudio(SonicBloom.Koreo.Players.AudioGroup,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Begin playback of <paramref name="group"/>.  If other audio is already scheduled to play, returns
+            <c>false</c>.
+            </summary>
+            <returns><c>true</c>, if <paramref name="group"/> was played, <c>false</c> otherwise.</returns>
+            <param name="group">The <see cref="T:SonicBloom.Koreo.Players.AudioGroup"/> to play.</param>
+            <param name="startSampleOffset">The number of samples to offset playback from.</param>
+            <param name="sampleLength">The number of samples to play, starting at
+            <paramref name="startSampleOffset"/>.</param>
+            <param name="bReplaceIfExists">If set to <c>true</c>, this will override previously scheduled
+            audio to playback.</param>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioBus.PlayAudioScheduled(SonicBloom.Koreo.Players.AudioGroup,System.Int32,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            <para>Schedule's the provided Audio to be started at the sample location in the currently
+            playing track indicated in the curSongSampleTransLoc parameter.</para>
+            
+            <para>If no song is currently playing, the playback occurs immediately.</para>
+            
+            <para>If the currently playing song has already played (or been read) beyond the transition
+            point, this returns <c>false</c>.</para>
+            </summary>
+            <returns><c>true</c>, if audio was scheduled, <c>false</c> otherwise.</returns>
+            <param name="group">The audio group to schedule.</param>
+            <param name="curSongSampleTransLoc">The sample location in the currently playing song
+            to transition at.  A value of <c>0</c> means "when the current song ends".</param>
+            <param name="startSampleOffset">The start sample offset for the scheduled audio
+            group.</param>
+            <param name="sampleLength">The sample length of the audio to playback.  A value of
+            <c>0</c> means "until the end".</param>
+            <param name="bReplaceIfExists">If set to <c>true</c> any previously queued song will
+            be overwritten.</param>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioBus.Continue">
+            <summary>
+            Resumes playback of a Paused <c>AudioBus</c>.
+            </summary>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioBus.Pause">
+            <summary>
+            Pauses the <c>AudioBus</c>.
+            </summary>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioBus.Stop(System.Boolean)">
+            <summary>
+            Stops the <c>AudioBus</c>, optionally triggering the <see cref="E:SonicBloom.Koreo.Players.AudioBus.AudioEnded"/> callback.
+            </summary>
+            <param name="bDoCallback">If set to <c>true</c>, triggers the <see cref="E:SonicBloom.Koreo.Players.AudioBus.AudioEnded"/> callback.</param>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioBus.GetSampleTimeCurrentAudio">
+            <summary>
+            Returns the time in samples of the currently playing <c>AudioGroup</c>.
+            </summary>
+            <returns>The time in samples of the currently playing audio.</returns>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioBus.GetSampleTimeOfAudio(SonicBloom.Koreo.Players.AudioGroup)">
+            <summary>
+            Returns the playback position in samples of <paramref name="group"/>.
+            </summary>
+            <returns>The playback position in samples of <paramref name="group"/>.</returns>
+            <param name="group">The <c>AudioGroup</c> to retrieve timing information about.</param>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioBus.IsAudioPlaying(SonicBloom.Koreo.Players.AudioGroup)">
+            <summary>
+            Determines whether <paramref name="group"/> currently playing.
+            </summary>
+            <returns><c>true</c> if audio data from <paramref name="group"/> is playing; otherwise,
+            <c>false</c>.</returns>
+            <param name="group">The <c>AudioGroup</c> to check.</param>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioBus.IsPaused">
+            <summary>
+            Determines whether this <c>AudioBus</c> is paused.
+            </summary>
+            <returns><c>true</c> if this <c>AudioBus</c> is paused; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioBus.IsNextSongScheduled">
+            <summary>
+            Determines whether an <c>AudioGroup</c> is scheduled for playback.
+            </summary>
+            <returns><c>true</c> if an <c>AudioGroup</c> is scheduled; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="T:SonicBloom.Koreo.Players.AudioGroup">
+            <summary>
+            This class collects several audio layers, or stems, into one logical "piece" of
+            audio.  The properties revealed by the class are all based on the base layer; 
+            the <c>AudioLayer</c> at position 0 in the Audio Layers list.
+            </summary>
+        </member>
+        <member name="P:SonicBloom.Koreo.Players.AudioGroup.TotalSampleTime">
+            <summary>
+            Gets the total sample time of the <c>AudioGroup</c>.
+            </summary>
+            <value>The total sample time.</value>
+        </member>
+        <member name="P:SonicBloom.Koreo.Players.AudioGroup.Channels">
+            <summary>
+            Gets the number of audio channels used by the <c>AudioGroup</c>.
+            </summary>
+            <value>The number of audio channels.</value>
+        </member>
+        <member name="P:SonicBloom.Koreo.Players.AudioGroup.Frequency">
+            <summary>
+            Gets the frequency of the audio data (sample rate).
+            </summary>
+            <value>The frequency of the audio data.</value>
+        </member>
+        <member name="P:SonicBloom.Koreo.Players.AudioGroup.NumLayers">
+            <summary>
+            Gets the number <c>AudioLayer</c> layers.
+            </summary>
+            <value>The number layers.</value>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioGroup.InitLayerData">
+            <summary>
+            Initializes the audio data of all <c>AudioLayer</c>s.
+            </summary>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioGroup.ClearLayerData">
+            <summary>
+            Clears the audio data prepped by all <c>AudioLayer</c>s.
+            </summary>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioGroup.RegisterKoreography">
+            <summary>
+            Registers any Koreography configured within <c>AudioLayer</c>s.
+            </summary>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioGroup.UnregisterKoreography">
+            <summary>
+            Unregisters any Koreography configured within <c>AudioLayer</c>s.
+            </summary>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioGroup.IsKoreographyRegistered">
+            <summary>
+            Determines whether any Koreography configured within <c>AudioLayer</c>s is
+            loaded.
+            </summary>
+            <returns><c>true</c> if Koreography is registered; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioGroup.IsReady">
+            <summary>
+            Determines whether all layers are ready for playback.
+            </summary>
+            <returns><c>true</c> if all layers are ready for playback; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioGroup.IsEmpty">
+            <summary>
+            Determines whether or not this <c>AudioGroup</c> has any configured layers.
+            </summary>
+            <returns><c>true</c> if this <c>AudioGroup</c> contains at least one layer;
+            otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioGroup.ContainsClip(System.String)">
+            <summary>
+            Checks to see whether the <c>AudioClip</c> with name <paramref name="clipName"/> 
+            is used in any layer.
+            </summary>
+            <returns><c>true</c>, if <paramref name="clipName"/> was used in a layer,
+            <c>false</c> otherwise.</returns>
+            <param name="clipName">The name of the <c>AudioClip</c> to check.</param>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioGroup.GetBaseClip">
+            <summary>
+            Gets the <c>AudioClip</c> at position <c>0</c> in the <c>AudioLayer</c> list.
+            </summary>
+            <returns>The base clip.</returns>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioGroup.GetBaseClipName">
+            <summary>
+            Gets the name of the <c>AudioClip</c> at position <c>0</c> in the <c>AudioLayer</c> list.
+            </summary>
+            <returns>The name of the base clip.</returns>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioGroup.GetClipAtLayer(System.Int32)">
+            <summary>
+            Gets the the <c>AudioClip</c>, if any, of the <c>AudioLayer</c> at index
+            <paramref name="layerIdx"/>.
+            </summary>
+            <returns>The <c>AudioClip</c> at layer <paramref name="layerIdx"/>.</returns>
+            <param name="layerIdx">Layer index.</param>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioGroup.GetAudioData(System.Int32,System.Single[],System.Int32,System.Int32)">
+            <summary>
+            Fills <paramref name="data"/> with audio data compiled across all <c>AudioLayer</c>s.
+            </summary>
+            <param name="sampleTime">The position in the audio from which to begin reading.</param>
+            <param name="data">The audio data array to fill.</param>
+            <param name="dataOffset">The position in <paramref name="data"/> to begin filling from.</param>
+            <param name="amountToRead">The number of samples to read.</param>
+        </member>
+        <member name="T:SonicBloom.Koreo.Players.AudioLayer">
+            <summary>
+            <para>This class is a data supplier: it logically combines Koreography with an
+            <c>AudioClip</c> for playback purposes.</para>
+            
+            <para>Note that EITHER the Koreography or the clip is sufficient to work.  This
+            is designed to allow non-choreographed layers in the audio system.  In the
+            case that both exist, the <c>AudioClip</c> specified by the user is
+            preferred.  WARNING: this will cause issues with the specified Koreography
+            if the clip is different.</para>
+            </summary>
+        </member>
+        <member name="P:SonicBloom.Koreo.Players.AudioLayer.Clip">
+            <summary>
+            Gets the layer's <c>AudioClip</c>.
+            </summary>
+            <value>The <c>AudioClip</c>.</value>
+        </member>
+        <member name="P:SonicBloom.Koreo.Players.AudioLayer.ClipName">
+            <summary>
+            Gets the layer's <c>AudioClip</c>'s name.
+            </summary>
+            <value>The name of the <c>AudioClip</c>.</value>
+        </member>
+        <member name="P:SonicBloom.Koreo.Players.AudioLayer.Koreo">
+            <summary>
+            Gets the layer's Koreography.
+            </summary>
+            <value>The Koreography.</value>
+        </member>
+        <member name="P:SonicBloom.Koreo.Players.AudioLayer.TotalSampleTime">
+            <summary>
+            Gets the total sample time of the layer.
+            </summary>
+            <value>The total sample time.</value>
+        </member>
+        <member name="P:SonicBloom.Koreo.Players.AudioLayer.Channels">
+            <summary>
+            Gets the number of audio channels.
+            </summary>
+            <value>The number of audio channels.</value>
+        </member>
+        <member name="P:SonicBloom.Koreo.Players.AudioLayer.Frequency">
+            <summary>
+            Gets the audio data sample frequency (sample rate).
+            </summary>
+            <value>The audio data sample frequency.</value>
+        </member>
+        <member name="P:SonicBloom.Koreo.Players.AudioLayer.Volume">
+            <summary>
+            Gets or sets the volume of the layer.
+            </summary>
+            <value>The volume of the layer.</value>
+        </member>
+        <member name="P:SonicBloom.Koreo.Players.AudioLayer.TotalDataLength">
+            <summary>
+            Gets the total number of samples across all channels of audio data.
+            </summary>
+            <value>The total number of samples across all channels of audio data.</value>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioLayer.InitData">
+            <summary>
+            Initializes the audio data, reading all samples into a set
+            of buffers.  This cannot be a single buffer as Mono's Garbage
+            Collection fails for very large arrays, never properly freeing
+            the memory.
+            </summary>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioLayer.ClearData">
+            <summary>
+            Clears the audio buffers.
+            </summary>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioLayer.IsReady">
+            <summary>
+            Determines whether this <c>AudioLayer</c> is ready for playback.
+            </summary>
+            <returns><c>true</c> if this <c>AudioLayer</c> is ready for playback;
+            otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:SonicBloom.Koreo.Players.AudioLayer.ReadLayerAudioData(System.Int32,System.Single[],System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Reads <paramref name="amount"/> audio data from the buffers beginning at
+            <paramref name="sampleTimePos"/> into <paramref name="data"/> beginning at <paramref name="dataOffset"/>.
+            If <paramref name="bAdditive"/> is <c>true</c>, the audio data is multiplied
+            into <paramref name="data"/> rather than overwritten.
+            </summary>
+            <param name="sampleTimePos">Time in samples to begin reading from.</param>
+            <param name="data">The array to fill with audio data.</param>
+            <param name="dataOffset">The offset into <paramref name="data"/> at which to 
+            begin filling.</param>
+            <param name="amount">The amount of audio data to read into <paramref name="data"/>.</param>
+            <param name="bAdditive">If set to <c>true</c>, samples will be multiplied (mixed)
+            into <paramref name="data"/>; if set to <c>false</c> the samples will replace
+            anything in <paramref name="data"/>.</param>
+        </member>
         <member name="T:SonicBloom.Koreo.Players.AudioSourceVisor">
             <summary>
             The Audio Source Visor adds Koreographer event triggering support to
