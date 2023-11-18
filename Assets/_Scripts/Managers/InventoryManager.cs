@@ -88,8 +88,6 @@ public class InventoryManager : MonoBehaviour
 
         UpdateWeaponInventoryUI(); // Update the UI to reflect the initial slot state
 
-
-
     }
 
     void OnEnable()
@@ -115,8 +113,6 @@ public class InventoryManager : MonoBehaviour
             uiActionMap.Disable();
         }
     }
-
-
     void Update()
     {
 
@@ -205,9 +201,6 @@ public class InventoryManager : MonoBehaviour
         return currentSelectedSlot?.Item;
     }
 
-
-
-
     public void AddWeapon(Weapon weapon)
     {
         // Create a new WeaponInventoryItem for the picked weapon
@@ -284,9 +277,6 @@ public class InventoryManager : MonoBehaviour
         modchipInventoryPanel.gameObject.SetActive(true);
     }
 
-
-
-
     private void UpdateModchipInventoryUI()
     {
         for (int i = 0; i < modchipSlotButtons.Count; i++)
@@ -296,7 +286,6 @@ public class InventoryManager : MonoBehaviour
                 ModchipInventoryItem modchipItem = modchipInventory[i];
                 if (modchipItem.modchipData == null || modchipItem.modchipData.modSprite == null)
                 {
-                    //Debug.LogError("Modchip data or sprite is null for: " + modchipItem.ItemId);
                     continue;
                 }
 
@@ -307,11 +296,13 @@ public class InventoryManager : MonoBehaviour
                 slotButton.onClick.RemoveAllListeners();
                 slotButton.onClick.AddListener(() => EquipModchipToSelectedSlot(modchipItem));
 
+                // Inside the UpdateModchipInventoryUI method of InventoryManager
                 if (tooltipTrigger != null && modchipItem != null)
                 {
-                    string tooltipText = modchipItem.GetDetails();
-                    tooltipTrigger.SetTooltipText(tooltipText);
+                    //pass the entire ModchipData object
+                    tooltipTrigger.SetModchipData(modchipItem.modchipData);
                 }
+
 
             }
             else
@@ -319,17 +310,11 @@ public class InventoryManager : MonoBehaviour
                 // For empty slots, reset to default empty sprite
                 Button slotButton = modchipSlotButtons[i];
                 Image slotImage = slotButton.GetComponent<Image>();
-                slotImage.sprite = emptyModchipSlotSprite; // Assuming you have a default sprite for empty slots
+                slotImage.sprite = emptyModchipSlotSprite; // default sprite for empty slots
                 slotButton.onClick.RemoveAllListeners();
             }
         }
     }
-
-
-
-
-
-
 
     private void EquipModchipToSelectedSlot(ModchipInventoryItem modchipItem)
     {
@@ -386,7 +371,6 @@ public class InventoryManager : MonoBehaviour
     private void UpdateEquipSlotUI(int slotIndex, ModchipInventoryItem modchipItem)
     {
         // Find the UI element corresponding to the slotIndex
-        // This is an example. Modify it based on how your UI is structured.
         Button slotButton = GetSlotButton(slotIndex);
         if (slotButton != null)
         {
@@ -401,8 +385,6 @@ public class InventoryManager : MonoBehaviour
 
     private Button GetSlotButton(int slotIndex)
     {
-        // This is a placeholder. You need to implement it based on your UI structure.
-        // For example, you might have an array or list of buttons corresponding to slots.
         return slotIndex == 2 ? modchipSlotButton1 : modchipSlotButton2;
     }
 
@@ -419,9 +401,9 @@ public class InventoryManager : MonoBehaviour
 
                     if (slotToRemove.UIButton != null)
                     {
-                        //Debug.Log("Button: " + slotToRemove.UIButton.name);
+
                         slotToRemove.UIButton.name = "Empty Slot";
-                        //Debug.Log("New Name: " + slotToRemove.UIButton.name);
+
                     }
                     else
                     {
@@ -433,7 +415,7 @@ public class InventoryManager : MonoBehaviour
                         Destroy(weaponItem.weaponPrefab);  // Destroy the weapon game object
                     }
 
-                    slotToRemove.Item = null;  // Assume InventorySlot.Item has a setter method
+                    slotToRemove.Item = null;  // InventorySlot.Item has a setter method
                     break;  // Exit the loop once the item is removed
                 }
             }
@@ -447,9 +429,6 @@ public class InventoryManager : MonoBehaviour
             WeaponManager.instance.UpdateWeapons();
         }
     }
-
-
-    // Method to swap weapons
 
     public void LogInventoryState()
     {
@@ -500,7 +479,6 @@ public class InventoryManager : MonoBehaviour
     {
         if (currentSelectedSlot != null && currentSelectedSlot.Item is WeaponInventoryItem weaponItem)
         {
-            //Debug.Log("Current Selected Weapon: " + weaponItem.weaponPrefab.name);  // Log the current weapon name
             return weaponItem.weaponPrefab.GetComponent<Weapon>();
         }
 

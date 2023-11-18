@@ -8,13 +8,13 @@ public class ModchipInventoryItem : InventoryItem
     public ModchipData modchipData;
     private GameObject player;
     private Transform modchipHolder;
-    // Updated constructor that includes ModchipData as a parameter
+
     public ModchipInventoryItem(string id, GameObject modchipPrefab, ModchipData modchipData)
         : base(id, InventoryItemType.Modchip)
     {
         this.modchipPrefab = modchipPrefab;
-        this.modchipData = modchipData; // Set the modchipData correctly
-        this.icon = modchipData.modSprite; // Now this line should work fine
+        this.modchipData = modchipData; // Set the modchipData 
+        this.icon = modchipData.modSprite;
 
         // Find the player and modchipHolder
         player = GameObject.FindGameObjectWithTag("Player");
@@ -36,7 +36,7 @@ public class ModchipInventoryItem : InventoryItem
         {
             GameObject instantiatedModchip = UnityEngine.Object.Instantiate(modchipPrefab, modchipHolder);
             instantiatedModchip.SetActive(true);
-            // Additional activation logic if needed
+
         }
         else
         {
@@ -51,7 +51,7 @@ public class ModchipInventoryItem : InventoryItem
         if (modchipPrefab != null)
         {
             modchipPrefab.SetActive(false);
-            // Additional deactivation logic if needed
+
         }
     }
 
@@ -59,7 +59,7 @@ public class ModchipInventoryItem : InventoryItem
     {
         if (modchipData != null)
         {
-            // Format the details string as required
+            // Format the details  
             return $"Name: {modchipData.modchipName}\n" +
                    $"Decsription: {modchipData.modchipDescription}\n" +
                    $"Damage: {modchipData.modDamage}\n" +

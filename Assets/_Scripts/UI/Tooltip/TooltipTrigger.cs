@@ -3,42 +3,51 @@ using UnityEngine.EventSystems;
 
 public class TooltipTrigger : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    private string tooltipText; // The text to display in the tooltip.
-    private bool isGamepadActive; // To track if the gamepad is being used
 
-    // Method to set the tooltip text from outside
-    public void SetTooltipText(string text)
+    private bool isGamepadActive; // To track if the gamepad is being used
+    private TooltipSystem tooltipSystem;
+    private ModchipData modchipData;
+
+
+    private void Awake()
     {
-        tooltipText = text;
+        // Initialize tooltipSystem from the singleton instance
+        tooltipSystem = TooltipSystem.Instance;
     }
 
-    // This method will be called when the object becomes the selected UI element
+
+    public void SetModchipData(ModchipData data)
+    {
+        modchipData = data;
+    }
+
+
     public void OnSelect(BaseEventData eventData)
     {
-        if (!string.IsNullOrEmpty(tooltipText))
+        if (modchipData != null)
         {
             isGamepadActive = true; // Gamepad is active
             ShowTooltip();
         }
     }
 
-    // This method will be called when the object is no longer the selected UI element
+
     public void OnDeselect(BaseEventData eventData)
     {
         TooltipSystem.Instance.HideTooltip();
     }
 
-    // This method will be called when the mouse pointer enters the UI element
+
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!string.IsNullOrEmpty(tooltipText))
+        if (modchipData != null)
         {
             isGamepadActive = false; // Mouse is active
             ShowTooltip();
         }
     }
 
-    // This method will be called when the mouse pointer exits the UI element
+
     public void OnPointerExit(PointerEventData eventData)
     {
         TooltipSystem.Instance.HideTooltip();
@@ -47,7 +56,8 @@ public class TooltipTrigger : MonoBehaviour, ISelectHandler, IDeselectHandler, I
     private void ShowTooltip()
     {
         Vector3 tooltipPosition = isGamepadActive ? GetGamepadTooltipPosition() : GetMouseTooltipPosition();
-        TooltipSystem.Instance.ShowTooltip(tooltipText, tooltipPosition);
+        TooltipSystem.Instance.ShowTooltip(modchipData, tooltipPosition);
+
     }
 
     private Vector3 GetGamepadTooltipPosition()

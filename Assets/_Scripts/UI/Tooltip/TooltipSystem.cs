@@ -6,8 +6,13 @@ public class TooltipSystem : MonoBehaviour
     public static TooltipSystem Instance;
 
     public GameObject modchipTooltipPanel;
-    public TextMeshProUGUI tooltipText;
 
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI descriptionText;
+    public TextMeshProUGUI damageText;
+    public TextMeshProUGUI rangeText;
+    public TextMeshProUGUI durationText;
+    public TextMeshProUGUI cooldownText;
 
 
     private void Awake()
@@ -23,30 +28,32 @@ public class TooltipSystem : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-
-        tooltipText = modchipTooltipPanel.GetComponentInChildren<TextMeshProUGUI>();
-        if (tooltipText == null)
-        {
-            Debug.LogError("TextMeshProUGUI component not found in ModchipTooltipPanel's children.");
-            return;
-        }
-
         HideTooltip(); // Start with the tooltip hidden
     }
 
 
-    public void ShowTooltip(string text, Vector3 position)
+    public void ShowTooltip(ModchipData modchipData, Vector3 position)
     {
-        if (modchipTooltipPanel == null || tooltipText == null)
+
+
+        if (modchipTooltipPanel == null || modchipData == null)
         {
-            Debug.LogError("Tooltip components are not assigned.");
+            Debug.LogError("Tooltip components or data are not assigned.");
             return;
         }
-        modchipTooltipPanel.SetActive(true);
-        tooltipText.text = text;
-        UpdatePosition(position); // Pass position here
-    }
 
+        modchipTooltipPanel.SetActive(true);
+
+        // Set individual fields
+        nameText.text = modchipData.modchipName;
+        descriptionText.text = modchipData.modchipDescription;
+        damageText.text = $"Damage: {modchipData.modDamage}";
+        rangeText.text = $"Range: {modchipData.modRange}";
+        durationText.text = $"Duration: {modchipData.modDuration} seconds";
+        cooldownText.text = $"Cooldown: {modchipData.modCooldown} seconds";
+
+        UpdatePosition(position);
+    }
 
     public void HideTooltip()
     {
@@ -58,8 +65,8 @@ public class TooltipSystem : MonoBehaviour
 
     public void UpdatePosition(Vector3 position)
     {
-        float offsetX = 150f; // Example offset, adjust as needed
-        float offsetY = 10f; // Example offset, adjust as needed
+        float offsetX = 150f;
+        float offsetY = 10f;
 
         Vector3 tooltipPosition = position + new Vector3(offsetX, offsetY, 0);
         modchipTooltipPanel.transform.position = tooltipPosition;
