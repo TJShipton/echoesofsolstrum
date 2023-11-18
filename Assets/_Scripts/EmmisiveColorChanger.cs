@@ -14,22 +14,25 @@ public class EmissiveColorChanger : MonoBehaviour
         // Ensure the material is set to use emission
         material.EnableKeyword("_EMISSION");
     }
-
-    void Update()
+    public void TriggerColorChange()
     {
         // Calculate the hue shift over time
         float hueShift = Mathf.PingPong(Time.time * colorChangeSpeed, 1);
 
-        // Convert hue shift to RGB color
+        //// Convert hue shift to RGB color
         Color baseColor = Color.HSVToRGB(hueShift, 1f, 1f);
 
-        // Set the color's alpha channel to control the intensity of the emissive color
-        Color finalColor = baseColor * Mathf.LinearToGammaSpace(emissiveIntensity);
+        SetEmissiveColor(baseColor);
+    }
 
-        // Set the emissive color of the material
+    // Method to set the emissive color of the material
+    private void SetEmissiveColor(Color color)
+    {
+
+        Color finalColor = color * Mathf.LinearToGammaSpace(emissiveIntensity);
         material.SetColor("_EmissionColor", finalColor);
-
-        // Update the Global Illumination for dynamic changes
         DynamicGI.SetEmissive(GetComponent<Renderer>(), finalColor);
     }
+
+
 }
