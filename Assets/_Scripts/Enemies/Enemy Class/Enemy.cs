@@ -92,13 +92,8 @@ public class Enemy : MonoBehaviour, IDamageable
         {
             agent.isStopped = false;
 
-            // // Reset animation to idle or default state
-            // if (Animator != null)
-            // {
-            
-            //     Animator.SetBool("IsWalking", true);
-            // }
-             Animator.SetBool("IsTwerking", false);
+
+            Animator.SetBool("IsTwerking", false);
         }
     }
 

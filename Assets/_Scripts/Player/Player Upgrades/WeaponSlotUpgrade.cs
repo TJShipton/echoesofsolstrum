@@ -16,12 +16,12 @@ public class WeaponSlotUpgrade : IPlayerUpgrade
     {
         {
 
-            InventorySlot secondSlot = InventoryManager.instance.slots[1];
+            WeaponSlot secondSlot = WeaponInventoryManager.instance.weaponSlots[1];
             secondSlot.IsLocked = false; // Unlock the second slot
             Debug.Log("Second slot unlocked.");
 
             // Call UpdateInventoryUI to refresh the UI and show the unlocked slot sprite
-            InventoryManager.instance.UpdateWeaponInventoryUI();
+            WeaponInventoryManager.instance.UpdateWeaponInventoryUI();
         }
     }
 

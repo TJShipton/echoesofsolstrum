@@ -15,7 +15,7 @@ public class WeaponPickup : MonoBehaviour
     void PickUp(GameObject player)
     {
         // Get the singleton instance of InventoryManager
-        InventoryManager inventoryManager = InventoryManager.instance;
+        WeaponInventoryManager inventoryManager = WeaponInventoryManager.instance;
         if (inventoryManager != null)
         {
             // Call InstantiateNewWeapon method from WeaponManager

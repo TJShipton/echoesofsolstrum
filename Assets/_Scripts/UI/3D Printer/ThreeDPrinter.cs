@@ -295,7 +295,7 @@ public class ThreeDPrinter : MonoBehaviour, IInteractable
 
     private void OnWeaponButtonClicked(string weaponName)  // New method to handle button click
     {
-        bool wasWeaponPicked = InventoryManager.instance.PickWeapon(weaponName, weaponManager.weaponHolder);
+        bool wasWeaponPicked = WeaponInventoryManager.instance.PickWeapon(weaponName, weaponManager.weaponHolder);
         if (wasWeaponPicked)
         {
 
@@ -312,7 +312,7 @@ public class ThreeDPrinter : MonoBehaviour, IInteractable
                 InventoryItem newWeaponInventoryItem = new WeaponInventoryItem(weaponName, weaponPrefab);
 
                 // Update UI and state in ThreeDPrinter
-                InventoryManager.instance.UpdateWeaponInventoryUI();
+                WeaponInventoryManager.instance.UpdateWeaponInventoryUI();
                 UIManager.Instance.CloseCurrentMenu();
                 Debug.Log("Weapon Equipped");
                 UIManager.Instance.CloseCurrentMenu();

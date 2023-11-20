@@ -69,7 +69,7 @@ public class TooltipTrigger : MonoBehaviour, ISelectHandler, IDeselectHandler, I
     private Vector3 GetMouseTooltipPosition()
     {
         float offsetX = 150f;
-        float offsetY = 100f;
+        float offsetY = 30f;
         Vector3 mousePosition = Input.mousePosition;
         return new Vector3(mousePosition.x + offsetX, mousePosition.y + offsetY, mousePosition.z);
     }

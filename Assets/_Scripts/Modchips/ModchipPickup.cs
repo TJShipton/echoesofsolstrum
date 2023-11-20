@@ -34,24 +34,35 @@ public class ModchipPickup : MonoBehaviour
     }
     private void PickUp(GameObject player)
     {
-        InventoryManager inventoryManager = InventoryManager.instance;
+        ModchipInventoryManager inventoryManager = ModchipInventoryManager.instance;
         if (inventoryManager != null)
         {
             // Create a ModchipInventoryItem from the ModchipData
             ModchipInventoryItem modchipItem = new ModchipInventoryItem(modchipData.modchipName, gameObject, modchipData);
 
+            // Debugging modchipData
+            if (modchipData != null && modchipData.modSprite != null)
+            {
+                //Debug.Log($"Picking up modchip: {modchipData.modchipName}, Sprite: {modchipData.modSprite.name}");
+            }
+            else
+            {
+                //Debug.LogError("Modchip data or sprite is null.");
+            }
+
             // Add the modchip to the general modchip inventory, not directly equip it
-            inventoryManager.AddModchip(modchipItem);
-            Debug.Log("Modchip added to inventory");
+            ModchipInventoryManager.instance.AddModchip(modchipItem);
+
+            //Debug.Log("Modchip added to inventory");
 
             ShowModchipUnlockText($"{modchipData.modchipName} Modchip Unlocked");
-
         }
         else
         {
-            Debug.LogError("InventoryManager instance not found.");
+            //Debug.LogError("InventoryManager instance not found.");*/
         }
     }
+
 
     private void ShowModchipUnlockText(string message)
     {

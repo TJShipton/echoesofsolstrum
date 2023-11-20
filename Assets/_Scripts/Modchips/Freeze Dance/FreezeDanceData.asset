@@ -20,4 +20,4 @@ MonoBehaviour:
   modRange: 100
   modDuration: 3
   modCooldown: 0
-  modSprite: {fileID: 21300000, guid: 3cf25fff8ab5d304792a90f2e1495790, type: 3}
+  modSprite: {fileID: 21300000, guid: 26df033abe15bae44bf6c3a03b8859cf, type: 3}

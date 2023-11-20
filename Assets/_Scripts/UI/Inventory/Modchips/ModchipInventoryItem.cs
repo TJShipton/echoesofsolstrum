@@ -6,6 +6,7 @@ public class ModchipInventoryItem : InventoryItem
 {
     public GameObject modchipPrefab;
     public ModchipData modchipData;
+    private GameObject modchipInstance;
     private GameObject player;
     private Transform modchipHolder;
 
@@ -16,32 +17,32 @@ public class ModchipInventoryItem : InventoryItem
         this.modchipData = modchipData; // Set the modchipData 
         this.icon = modchipData.modSprite;
 
-        // Find the player and modchipHolder
-        player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            PlayerController playerController = player.GetComponent<PlayerController>();
-            if (playerController != null)
-            {
-                modchipHolder = playerController.modchipHolder.transform;
-            }
-        }
 
 
     }
 
-    public void ActivateModchip()
+    public void ActivateModchip(GameObject targetHolder)
     {
-        if (modchipPrefab != null && modchipHolder != null)
+        if (modchipPrefab != null && targetHolder != null)
         {
-            GameObject instantiatedModchip = UnityEngine.Object.Instantiate(modchipPrefab, modchipHolder);
-            instantiatedModchip.SetActive(true);
+            if (modchipInstance != null)
+            {
+                UnityEngine.Object.Destroy(modchipInstance); // Corrected line
+            }
 
+            modchipInstance = UnityEngine.Object.Instantiate(modchipPrefab, targetHolder.transform);
+            modchipInstance.SetActive(true);
         }
         else
         {
             Debug.LogError("Modchip prefab or holder is null.");
         }
+    }
+
+
+    public Modchip GetModchip()
+    {
+        return modchipInstance != null ? modchipInstance.GetComponent<Modchip>() : null;
     }
 
 

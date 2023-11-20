@@ -20,6 +20,7 @@ public abstract class Modchip : MonoBehaviour
     public virtual void ModAttack()
     {
 
+
     }
 
 

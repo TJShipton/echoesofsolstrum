@@ -4,7 +4,7 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviour
 {
     public static WeaponManager instance; // Singleton instance
-    private InventoryManager inventoryManager;
+    private WeaponInventoryManager weaponInventoryManager;
 
     public List<Weapon> availableWeapons; // List of weapons the player has
     public Weapon currentWeapon;
@@ -44,7 +44,7 @@ public class WeaponManager : MonoBehaviour
         }
 
 
-        inventoryManager = InventoryManager.instance;
+        weaponInventoryManager = WeaponInventoryManager.instance;
 
     }
 
@@ -149,11 +149,11 @@ public class WeaponManager : MonoBehaviour
 
     public void UpdateWeapons()
     {
-        if (inventoryManager != null)
+        // Check if WeaponInventoryManager instance is available
+        if (WeaponInventoryManager.instance != null)
         {
-            Weapon newCurrentWeapon = inventoryManager.GetCurrentWeapon();
-            weaponInventory = inventoryManager.GetAllWeapons();
-            // Log the newCurrentWeapon and currentWeapon before they are updated
+            Weapon newCurrentWeapon = WeaponInventoryManager.instance.GetCurrentWeapon();
+            weaponInventory = WeaponInventoryManager.instance.GetAllWeapons();
 
             // Deactivate the previous weapon and activate the new weapon
             if (currentWeapon != null && newCurrentWeapon != currentWeapon)
@@ -166,20 +166,11 @@ public class WeaponManager : MonoBehaviour
             }
 
             currentWeapon = newCurrentWeapon;  // Update the current weapon reference
-
         }
         else
         {
-            Debug.LogWarning("InventoryManager is not set on WeaponManager.");
-        }
-
-        // Log the current weapon in WeaponManager
-        if (currentWeapon != null)
-        {
-            //Debug.Log("Current Weapon in WeaponManager: " + currentWeapon.name);
+            Debug.LogWarning("WeaponInventoryManager instance is not set on WeaponManager.");
         }
     }
-
 }
-
 

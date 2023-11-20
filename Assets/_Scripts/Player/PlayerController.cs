@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,7 +13,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     public static PlayerController instance;
 
     public Transform characterModel;
-    public GameObject modchipHolder;
+    public GameObject modchipHolder1; // Holder for slot 1 modchips
+    public GameObject modchipHolder2; // Holder for slot 2 modchips
     public LayerMask groundLayer;
 
     public float speed = 50f;
@@ -51,6 +51,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     private UIManager UIManager;
 
     private bool isUIOpen = false;
+
+
+
+
 
 
     private void Awake()
@@ -309,15 +313,15 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void Atck1()
     {
         // Ensure the InventoryManager instance and slots list are ready before trying to select a slot
-        if (InventoryManager.instance != null && InventoryManager.instance.slots.Count > 0)
+        if (WeaponInventoryManager.instance != null && WeaponInventoryManager.instance.weaponSlots.Count > 0)
         {
             // Select the slot 0
-            InventoryManager.instance.SelectSlot(0);
+            WeaponInventoryManager.instance.SelectWeaponSlot(0);
             // Trigger the attack on the weapon in slot 0
             TriggerAttack();
 
             // Activate the weapon during the attack
-            Weapon currentWeapon = InventoryManager.instance.GetCurrentWeapon();
+            Weapon currentWeapon = WeaponInventoryManager.instance.GetCurrentWeapon();
             if (currentWeapon != null)
             {
                 currentWeapon.gameObject.SetActive(true);
@@ -342,15 +346,15 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void Atck2()
     {
         // Ensure the InventoryManager instance and slots list are ready before trying to select a slot
-        if (InventoryManager.instance != null && InventoryManager.instance.slots.Count > 1)
+        if (WeaponInventoryManager.instance != null && WeaponInventoryManager.instance.weaponSlots.Count > 1)
         {
             // Select the slot 0
-            InventoryManager.instance.SelectSlot(1);
+            WeaponInventoryManager.instance.SelectWeaponSlot(1);
             // Trigger the attack on the weapon in slot 0
             TriggerAttack();
 
             // Activate the weapon during the attack
-            Weapon currentWeapon = InventoryManager.instance.GetCurrentWeapon();
+            Weapon currentWeapon = WeaponInventoryManager.instance.GetCurrentWeapon();
             if (currentWeapon != null)
             {
                 currentWeapon.gameObject.SetActive(true);
@@ -366,7 +370,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void TriggerAttack()
     {
-        Weapon currentWeapon = InventoryManager.instance.GetCurrentWeapon();
+        Weapon currentWeapon = WeaponInventoryManager.instance.GetCurrentWeapon();
         if (currentWeapon != null)
         {
             if (!currentWeapon.gameObject.activeSelf)
@@ -375,7 +379,7 @@ public class PlayerController : MonoBehaviour, IDamageable
                 currentWeapon.gameObject.SetActive(true);
 
                 // deactivate the other weapon(s)
-                foreach (Weapon weapon in InventoryManager.instance.GetAllWeapons())
+                foreach (Weapon weapon in WeaponInventoryManager.instance.GetAllWeapons())
                 {
                     if (weapon != currentWeapon)
                     {
@@ -402,45 +406,27 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void OnCast1(InputAction.CallbackContext context)
     {
-        Debug.Log("Cast1 action triggered");
-
         if (context.started)
         {
             Cast1();
         }
 
     }
-    private void Cast1()
+    public void Cast1()
     {
-        // Search for the first selected modchip slot
-        InventorySlot modchipSlot = InventoryManager.instance.slots
-            .FirstOrDefault(slot => slot.Type == InventorySlot.SlotType.Modchip &&
-                                    slot.IsSelected &&
-                                    slot.Item != null &&
-                                    slot.Item.ItemType == InventoryItemType.Modchip);
-
-        foreach (var slot in InventoryManager.instance.slots.Where(s => s.Type == InventorySlot.SlotType.Modchip))
+        ModchipInventoryItem modchipItem = ModchipInventoryManager.instance.GetModchipInventoryItemForSlot(0);
+        if (modchipItem != null)
         {
-            Debug.Log($"Slot {slot.SlotNumber}: Selected={slot.IsSelected}, Item={slot.Item?.ItemId}, ItemType={slot.Item?.ItemType}");
-        }
-
-        if (modchipSlot != null && modchipSlot.Item is ModchipInventoryItem modchipItem && modchipItem.modchipData != null)
-        {
-            Modchip modchipInstance = GetComponentInChildren<Modchip>(); // Assuming it's a child of the Player GameObject
-            if (modchipInstance != null)
+            modchipItem.ActivateModchip(modchipHolder1);
+            Modchip modchip = modchipItem.GetModchip();
+            if (modchip != null)
             {
-                modchipInstance.ModAttack();
+                modchip.ModAttack();
             }
-            else
-            {
-                Debug.LogError("Modchip component not found on the player.");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("No selected modchip or the selected modchip slot is empty.");
         }
     }
+
+
 
     public void OnCast2(InputAction.CallbackContext context)
     {
@@ -450,10 +436,23 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    private void Cast2()
+    public void Cast2()
     {
-
+        ModchipInventoryItem modchipItem = ModchipInventoryManager.instance.GetModchipInventoryItemForSlot(1);
+        if (modchipItem != null)
+        {
+            modchipItem.ActivateModchip(modchipHolder2);
+            Modchip modchip = modchipItem.GetModchip();
+            if (modchip != null)
+            {
+                modchip.ModAttack();
+            }
+        }
     }
+
+
+
+
 
     public void TakeDamage(int damageAmount, Canvas HUDCanvas)
     {
@@ -536,8 +535,6 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void DisableTorsoLayer()
     {
-        Debug.Log("DisableTorsoLayer called."); // This should print to the console when the event is triggered
-
         animator.SetLayerWeight(torsoLayerIndex, 0);
     }
 }
