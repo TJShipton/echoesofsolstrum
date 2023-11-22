@@ -1895,7 +1895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dee1819dd709f245968747d3c4bb21f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorChanger: {fileID: 0}
+  colorChanger: {fileID: 4937566217306776472}
   eventID: BassDrum
 --- !u!137 &7188235540593963004
 SkinnedMeshRenderer:
@@ -1917,7 +1917,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4589d9193ede82c4ead07a14b51e8fec, type: 2}
+  - {fileID: 2100000, guid: cc908ae292b26504ca4d5d83010434c0, type: 2}
   - {fileID: 2100000, guid: ea6f5c30ceeaa0b4ebdb47173072c867, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -1964,7 +1964,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorChangeSpeed: 1
-  emissiveIntensity: 1
+  emissiveIntensity: 2500
 --- !u!4 &6636675249779818895 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7208441673433506407, guid: a498bc41d269a3541b2ba6e8b0295ea4,

@@ -4,18 +4,16 @@ using UnityEngine.SceneManagement;
 public class HudCanvas : MonoBehaviour
 {
     public static HudCanvas instance;
-    //public Slider playerHealthBar; // Reference to health bar
-    //public TextMeshProUGUI playerHealthText; // Reference to health text
 
     void Awake()
     {
 
 
-        // Singleton pattern
+        //Singleton pattern
         if (instance == null)
         {
             instance = this;
-            SingletonManager.instance.RegisterSingleton(this); // Register with SingletonManager
+            DontDestroyOnLoad(gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;  // Subscribe to the sceneLoaded event
         }
         else

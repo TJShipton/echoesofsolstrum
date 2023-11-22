@@ -26,7 +26,7 @@ public class HudManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            SingletonManager.instance.RegisterSingleton(this); // Register with SingletonManager
+
         }
         else
         {
@@ -45,6 +45,15 @@ public class HudManager : MonoBehaviour
 
     void Start()
     {
+        if (weaponUnlockText == null)
+        {
+            Debug.LogError("WeaponUnlockText is not assigned in HudManager.");
+        }
+        if (modchipUnlockText == null)
+        {
+            Debug.LogError("ModchipUnlockText is not assigned in HudManager.");
+        }
+
         // Only find and set the solTextHUD if it's not already set
         if (solTextHUD == null)
         {

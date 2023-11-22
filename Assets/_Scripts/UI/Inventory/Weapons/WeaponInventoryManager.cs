@@ -29,7 +29,7 @@ public class WeaponInventoryManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            SingletonManager.instance.RegisterSingleton(this); // Register with SingletonManager
+
         }
         else
         {
@@ -357,11 +357,11 @@ public class WeaponInventoryManager : MonoBehaviour
             }
             else
             {
-                inventoryState += "Empty Slot\n";
+                //inventoryState += "Empty Slot\n";
             }
         }
 
-        Debug.Log(inventoryState);
+        //Debug.Log(inventoryState);
     }
 
 

@@ -31,7 +31,7 @@ public class UIManager : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
-            SingletonManager.instance.RegisterSingleton(this); // Register with SingletonManager
+
         }
         else
         {

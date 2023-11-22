@@ -17,7 +17,7 @@ public class CurrencyManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            SingletonManager.instance.RegisterSingleton(this); // Register with SingletonManager
+
 
             // Initialize available upgrades
             availableUpgrades = new List<IPlayerUpgrade>

@@ -9,7 +9,7 @@ public class EnemyCanvas : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            SingletonManager.instance.RegisterSingleton(this); // Register with SingletonManager
+
         }
         else
         {

@@ -14,7 +14,7 @@ public class MusicManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            SingletonManager.instance.RegisterSingleton(this); // Register with SingletonManager
+
         }
         else
         {
