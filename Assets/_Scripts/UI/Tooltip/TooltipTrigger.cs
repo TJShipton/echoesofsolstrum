@@ -12,7 +12,7 @@ public class TooltipTrigger : MonoBehaviour, ISelectHandler, IDeselectHandler, I
     private void Awake()
     {
         // Initialize tooltipSystem from the singleton instance
-        tooltipSystem = TooltipSystem.Instance;
+        tooltipSystem = TooltipSystem.instance;
     }
 
 
@@ -34,7 +34,7 @@ public class TooltipTrigger : MonoBehaviour, ISelectHandler, IDeselectHandler, I
 
     public void OnDeselect(BaseEventData eventData)
     {
-        TooltipSystem.Instance.HideTooltip();
+        TooltipSystem.instance.HideTooltip();
     }
 
 
@@ -50,13 +50,13 @@ public class TooltipTrigger : MonoBehaviour, ISelectHandler, IDeselectHandler, I
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        TooltipSystem.Instance.HideTooltip();
+        TooltipSystem.instance.HideTooltip();
     }
 
     private void ShowTooltip()
     {
         Vector3 tooltipPosition = isGamepadActive ? GetGamepadTooltipPosition() : GetMouseTooltipPosition();
-        TooltipSystem.Instance.ShowTooltip(modchipData, tooltipPosition);
+        TooltipSystem.instance.ShowTooltip(modchipData, tooltipPosition);
 
     }
 
@@ -68,8 +68,8 @@ public class TooltipTrigger : MonoBehaviour, ISelectHandler, IDeselectHandler, I
 
     private Vector3 GetMouseTooltipPosition()
     {
-        float offsetX = 150f;
-        float offsetY = 30f;
+        float offsetX = 120f;
+        float offsetY = 20f;
         Vector3 mousePosition = Input.mousePosition;
         return new Vector3(mousePosition.x + offsetX, mousePosition.y + offsetY, mousePosition.z);
     }

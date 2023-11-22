@@ -18,6 +18,7 @@ public class ModchipInventoryManager : MonoBehaviour
 
     public Transform modchipEquipPanel;
     public Transform modchipInventoryPanel;
+    public Transform modchipInventoryPanelHolder;
     public Transform inGameMenu;
 
 
@@ -34,20 +35,18 @@ public class ModchipInventoryManager : MonoBehaviour
     public GameObject firstSelectedButton;
     public TooltipSystem tooltipSystem;
 
-
-
-    void Awake()
+    private void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            SingletonManager.instance.RegisterSingleton(this); // Register with SingletonManager
         }
         else
         {
             Destroy(gameObject);
-            Debug.LogWarning("Attempted to initialize a second InventoryManager instance.");
         }
+
 
     }
 
@@ -114,6 +113,7 @@ public class ModchipInventoryManager : MonoBehaviour
 
     public void OpenModchipInventory()
     {
+        modchipInventoryPanelHolder.gameObject.SetActive(true);
         modchipInventoryPanel.gameObject.SetActive(true);
     }
 
@@ -201,6 +201,7 @@ public class ModchipInventoryManager : MonoBehaviour
         // Update the UI of the equip slot
         UpdateEquipSlotUI(selectedModchipSlotIndex, modchipItem);
 
+        modchipInventoryPanelHolder.gameObject.SetActive(false);
         modchipInventoryPanel.gameObject.SetActive(false);
 
         selectedModchipSlotIndex = -1; // Reset the selected slot index

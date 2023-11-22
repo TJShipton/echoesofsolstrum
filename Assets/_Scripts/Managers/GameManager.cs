@@ -16,19 +16,15 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
 
-        // Singleton pattern
-
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            SingletonManager.instance.RegisterSingleton(this); // Register with SingletonManager
         }
         else
         {
             Destroy(gameObject);
         }
-
-
 
     }
 

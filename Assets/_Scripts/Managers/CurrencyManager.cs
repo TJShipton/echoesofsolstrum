@@ -17,23 +17,23 @@ public class CurrencyManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            SingletonManager.instance.RegisterSingleton(this); // Register with SingletonManager
+
+            // Initialize available upgrades
+            availableUpgrades = new List<IPlayerUpgrade>
+            {
+                new DoubleJumpUpgrade(),
+                new BeefinessUpgrade(),
+                new WeaponSlotUpgrade()
+                // Add more upgrades here as you implement them
+            };
+
+            TestSolfatherSpawn.OnSolfatherSpawned += InitializeUpgradeButtons;
         }
         else
         {
             Destroy(gameObject);
         }
-
-        // Initialize available upgrades
-        availableUpgrades = new List<IPlayerUpgrade>
-        {
-            new DoubleJumpUpgrade(),
-            new BeefinessUpgrade(),
-            new WeaponSlotUpgrade()
-            // Add more upgrades here as you implement them
-        };
-
-        TestSolfatherSpawn.OnSolfatherSpawned += InitializeUpgradeButtons;
     }
 
     private void InitializeUpgradeButtons(GameObject solfather)

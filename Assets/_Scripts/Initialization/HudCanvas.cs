@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using UnityEngine.SceneManagement;
 
 public class HudCanvas : MonoBehaviour
@@ -11,13 +9,13 @@ public class HudCanvas : MonoBehaviour
 
     void Awake()
     {
-        
+
 
         // Singleton pattern
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            SingletonManager.instance.RegisterSingleton(this); // Register with SingletonManager
             SceneManager.sceneLoaded += OnSceneLoaded;  // Subscribe to the sceneLoaded event
         }
         else

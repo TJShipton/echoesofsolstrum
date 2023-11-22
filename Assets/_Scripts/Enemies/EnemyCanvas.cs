@@ -6,18 +6,16 @@ public class EnemyCanvas : MonoBehaviour
 
     private void Awake()
     {
-
-        if (instance != null && instance != this)
+        if (instance == null)
         {
-
-            Destroy(gameObject);
+            instance = this;
+            SingletonManager.instance.RegisterSingleton(this); // Register with SingletonManager
         }
         else
         {
-
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
         }
+
     }
 
 

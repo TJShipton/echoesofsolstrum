@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TooltipSystem : MonoBehaviour
 {
-    public static TooltipSystem Instance;
+    public static TooltipSystem instance;
 
     public GameObject modchipTooltipPanel;
 
@@ -17,16 +17,16 @@ public class TooltipSystem : MonoBehaviour
 
     private void Awake()
     {
-
-        if (Instance != null && Instance != this)
+        if (instance == null)
         {
-            Debug.Log("Destroying duplicate instance of TooltipSystem");
+            instance = this;
+            SingletonManager.instance.RegisterSingleton(this); // Register with SingletonManager
+        }
+        else
+        {
             Destroy(gameObject);
-            return;
         }
 
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
 
         HideTooltip(); // Start with the tooltip hidden
     }

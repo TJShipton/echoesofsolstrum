@@ -23,11 +23,10 @@ public class HudManager : MonoBehaviour
 
     void Awake()
     {
-        // Singleton pattern
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            SingletonManager.instance.RegisterSingleton(this); // Register with SingletonManager
         }
         else
         {

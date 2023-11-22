@@ -28,13 +28,14 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (_instance == null)
         {
-            Destroy(this.gameObject);
+            _instance = this;
+            SingletonManager.instance.RegisterSingleton(this); // Register with SingletonManager
         }
         else
         {
-            _instance = this;
+            Destroy(gameObject);
         }
     }
 

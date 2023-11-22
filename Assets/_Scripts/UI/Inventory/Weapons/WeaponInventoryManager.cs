@@ -13,16 +13,10 @@ public class WeaponInventoryManager : MonoBehaviour
     public WeaponSlot currentSelectedWeaponSlot = null; // Currently selected weapon slot  // Slot of the currently equipped weapon
     public WeaponButtonCreator weaponButtonCreator;
     public Transform weaponInventoryPanel;  // UI panel to hold weapon buttons
-
     public Transform inGameMenu;
     public Transform weaponHolder;
-
     public Sprite lockedSlotSprite;
     public Sprite emptySlotSprite;
-
-
-
-
     public InputActionAsset inputActions;
     private InputAction toggleMenuAction;
     public GameObject firstSelectedButton;
@@ -35,13 +29,13 @@ public class WeaponInventoryManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            SingletonManager.instance.RegisterSingleton(this); // Register with SingletonManager
         }
         else
         {
             Destroy(gameObject);
-            Debug.LogWarning("Attempted to initialize a second InventoryManager instance.");
         }
+
 
         // Find the weaponHolder by tag
         weaponHolder = GameObject.FindGameObjectWithTag("WeaponHolder").transform;
