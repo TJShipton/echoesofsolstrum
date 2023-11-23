@@ -27,10 +27,12 @@ public class ModchipInventoryItem : InventoryItem
         {
             if (modchipInstance != null)
             {
-                UnityEngine.Object.Destroy(modchipInstance); // Corrected line
+                UnityEngine.Object.Destroy(modchipInstance);
             }
 
             modchipInstance = UnityEngine.Object.Instantiate(modchipPrefab, targetHolder.transform);
+            modchipInstance.transform.localPosition = Vector3.zero; // Reset local position
+            modchipInstance.transform.localRotation = Quaternion.identity; // Reset local rotation
             modchipInstance.SetActive(true);
         }
         else

@@ -15,11 +15,11 @@ public class HudManager : MonoBehaviour
     // Unity event that is triggered when Sol changes
     public UnityEvent OnSolChanged;
 
-    [SerializeField]
-    private TextMeshProUGUI weaponUnlockText; //weapon unlock text 
 
-    [SerializeField]
-    private TextMeshProUGUI modchipUnlockText; //weapon unlock text 
+    public TextMeshProUGUI weaponUnlockText; //weapon unlock text 
+
+
+    public TextMeshProUGUI modchipUnlockText; //weapon unlock text 
 
     void Awake()
     {
@@ -113,3 +113,4 @@ public class HudManager : MonoBehaviour
     }
 
 }
+

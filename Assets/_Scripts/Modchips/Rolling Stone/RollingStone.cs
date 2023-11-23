@@ -12,8 +12,6 @@ public class RollingStone : Modchip
     {
 
     }
-
-
     public override void ModAttack()
     {
         // Dynamically find the player's Rigidbody when needed
@@ -41,6 +39,9 @@ public class RollingStone : Modchip
 
     private void RollBoulder(Rigidbody playerRigidbody)
     {
+        Debug.Log("Player Position: " + PlayerController.instance.transform.position);
+        Debug.Log("Boulder Spawn Point Position: " + boulderSpawnpoint.transform.position);
+        Debug.Log("Boulder Spawn Point Local Position: " + boulderSpawnpoint.transform.localPosition);
 
         GameObject projectile = Instantiate(boulderPrefab, boulderSpawnpoint.transform.position, Quaternion.identity);
         if (projectile == null)
@@ -56,7 +57,9 @@ public class RollingStone : Modchip
             return;
         }
 
-        Vector3 forceDirection = playerRigidbody.transform.forward;
+        // Use the player's forward direction to determine the force direction
+        // This makes the boulder's direction independent of the spawn point's orientation
+        Vector3 forceDirection = PlayerController.instance.transform.forward;
         Vector3 totalForce = forceDirection.normalized * rollForce;
         rb.AddForce(totalForce, ForceMode.VelocityChange);
 
@@ -66,5 +69,6 @@ public class RollingStone : Modchip
             projectileScript.SetModchipData(modchipData);
         }
     }
+
 
 }

@@ -16,7 +16,6 @@ TagManager:
   - TotalSol
   - InventoryCanvas
   - Solfather
-  - UnlockText
   - WeaponUnlockText
   - SolfatherCanvas
   - PlayerUpgradePanel
@@ -27,6 +26,8 @@ TagManager:
   - ModchipHolder
   - ModchipTooltipText
   - ModchipTooltipPanel
+  - ModchipUnlockText
+  - UnlockText
   layers:
   - Default
   - TransparentFX

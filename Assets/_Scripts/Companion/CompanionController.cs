@@ -8,6 +8,9 @@ public class CompanionController : MonoBehaviour
     public GameObject player;
     public float followSpeed = 0.1f;
     public Vector3 offset = new Vector3(-2f, 1f, 0f);  // offset of the follower relative to the player
+    private Vector3 velocity = Vector3.zero;
+    public float smoothTime = 0.3F;
+
 
     public string bassDrumEventID = "BassDrum";
 
@@ -49,11 +52,37 @@ public class CompanionController : MonoBehaviour
         //Follow player
         Vector3 targetPosition = player.transform.position + offset;
 
-        // Lerp towards the target position
-        transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
 
+        // Check for change in direction
+        CheckForDirectionChange();
 
     }
+
+    void CheckForDirectionChange()
+    {
+        Vector3 playerMovement = player.transform.position - lastPosition;
+        if (playerMovement.x > 0 && !isFacingRight)
+        {
+            // Player has moved right and companion is facing left
+            Flip();
+        }
+        else if (playerMovement.x < 0 && isFacingRight)
+        {
+            // Player has moved left and companion is facing right
+            Flip();
+        }
+        lastPosition = player.transform.position;
+    }
+
+    void Flip()
+    {
+        // Rotate the companion by 90 degrees around the Y axis
+        isFacingRight = !isFacingRight;
+        float yRotation = isFacingRight ? 90 : 270;  // assuming 0 is right and 180 is left
+        transform.rotation = Quaternion.Euler(0, yRotation, 0);
+    }
+
 
     public void Shoot()
     {
