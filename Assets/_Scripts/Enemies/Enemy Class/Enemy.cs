@@ -41,8 +41,13 @@ public class Enemy : MonoBehaviour, IDamageable
         // Update health bar position to follow enemy
         if (healthBarInstance != null)
         {
-            Vector3 healthBarPos = transform.position;
-            healthBarPos.y += 2;  // Adjust as needed
+            // Define a float variable for the Y-axis offset
+            float yOffset = 3.5f; // Adjust as needed, can be a float value
+
+            // Create a new Vector3 for the health bar position
+            Vector3 healthBarPos = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z);
+
+            // Assign the new position to the health bar instance
             healthBarInstance.transform.position = healthBarPos;
         }
 

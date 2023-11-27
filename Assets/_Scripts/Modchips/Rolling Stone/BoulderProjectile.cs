@@ -11,15 +11,18 @@ public class BoulderProjectile : MonoBehaviour
         Destroy(gameObject, modchipData.modDuration);
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-        if (enemy != null)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            enemy.TakeDamage(modchipData.modDamage, enemyCanvas);
+            Enemy enemy = other.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(modchipData.modDamage, enemyCanvas);
+                // Optionally, destroy the projectile on enemy hit
+                // Destroy(gameObject);
+            }
         }
-        // Optionally, you can destroy the projectile on collision
-        // Destroy(gameObject);
     }
 
     public void SetModchipData(ModchipData data)

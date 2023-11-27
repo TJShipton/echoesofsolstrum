@@ -39,9 +39,6 @@ public class RollingStone : Modchip
 
     private void RollBoulder(Rigidbody playerRigidbody)
     {
-        Debug.Log("Player Position: " + PlayerController.instance.transform.position);
-        Debug.Log("Boulder Spawn Point Position: " + boulderSpawnpoint.transform.position);
-        Debug.Log("Boulder Spawn Point Local Position: " + boulderSpawnpoint.transform.localPosition);
 
         GameObject projectile = Instantiate(boulderPrefab, boulderSpawnpoint.transform.position, Quaternion.identity);
         if (projectile == null)

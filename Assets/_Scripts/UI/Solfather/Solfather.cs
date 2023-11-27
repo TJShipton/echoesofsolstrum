@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Solfather : MonoBehaviour, IInteractable
@@ -9,6 +10,8 @@ public class Solfather : MonoBehaviour, IInteractable
 
     public GameObject player;
     public float interactionDistance = 3.0f;
+    public InputActionAsset inputActions;
+
     public GameObject playerUpgradePanel;
     public TextMeshProUGUI promptText;
     public LayerMask clickableLayer;
@@ -16,7 +19,7 @@ public class Solfather : MonoBehaviour, IInteractable
     public CanvasGroup playerUpgradeCanvasGroup;  // Reference to the CanvasGroup component
 
     private bool isPlayerNear = false;
-   
+
     private bool isPlayerUpgradePanelActive = false;
     private Button firstButton = null;
 
@@ -32,6 +35,31 @@ public class Solfather : MonoBehaviour, IInteractable
 
         }
     }
+
+    void OnEnable()
+    {
+        // Activate the UI action map
+        var uiActionMap = inputActions.FindActionMap("UI");
+        if (uiActionMap != null)
+        {
+            uiActionMap.Enable();
+        }
+        else
+        {
+            Debug.LogError("UI Action Map not found in Input Actions.");
+        }
+    }
+
+    void OnDisable()
+    {
+        // Deactivate the UI action map
+        var uiActionMap = inputActions.FindActionMap("UI");
+        if (uiActionMap != null)
+        {
+            uiActionMap.Disable();
+        }
+    }
+
 
     // Update is called once per frame
     private void Update()
@@ -103,11 +131,23 @@ public class Solfather : MonoBehaviour, IInteractable
         if (isPlayerUpgradePanelActive)
         {
             UIManager.Instance.CloseCurrentMenu();
+            UnpauseGame();  // Unpause the game when the panel is closed
         }
         else
         {
             UIManager.Instance.HandleMenuOpen(this);
+            PauseGame();  // Pause the game when the panel is opened
         }
+    }
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    private void UnpauseGame()
+    {
+        Time.timeScale = 1;
     }
 
     // Call this method to open the player upgrade panel

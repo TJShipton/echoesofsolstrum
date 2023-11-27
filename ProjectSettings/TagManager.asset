@@ -38,12 +38,12 @@ TagManager:
   - Player
   - Companion
   - Enemy
-  - 3D Printer
+  - 
   - Weapon
   - Projectile
-  - InventoryCanvas
-  - Solfather
   - 
+  - 
+  - GroundCollider
   - 
   - 
   - 

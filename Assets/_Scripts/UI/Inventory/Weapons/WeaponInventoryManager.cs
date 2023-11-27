@@ -95,8 +95,6 @@ public class WeaponInventoryManager : MonoBehaviour
 
         if (!isMenuActive)
         {
-
-
             // Select the first button when opening the menu
             EventSystem.current.SetSelectedGameObject(firstSelectedButton);
         }

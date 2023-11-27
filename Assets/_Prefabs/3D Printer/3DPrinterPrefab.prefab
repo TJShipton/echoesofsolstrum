@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3834293158351426031}
   - component: {fileID: 849498827072983382}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: WeaponRaritySelector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 5108124761398146550}
   - component: {fileID: 8023600932544190244}
   - component: {fileID: 5787603539293983224}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: 3DPrinterCanvas
   m_TagString: InventoryCanvas
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 5200365118587115494}
   - component: {fileID: 5208062392938382518}
   - component: {fileID: 3482952765803218525}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: WeaponPanelBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5809578216295763375}
   - component: {fileID: 3404906581203094352}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: WeaponRarityProbabilites
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -315,7 +315,7 @@ GameObject:
   - component: {fileID: 4498061112994401005}
   - component: {fileID: 5330848289445826865}
   - component: {fileID: 3444259613376172072}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: PrinterPromptCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -416,7 +416,7 @@ GameObject:
   - component: {fileID: 1839432943180970467}
   - component: {fileID: 6734480657106465466}
   - component: {fileID: 4606470857589531177}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -491,7 +491,7 @@ GameObject:
   - component: {fileID: 5101715318651774060}
   - component: {fileID: 8067913209279316094}
   - component: {fileID: 6112437257526503614}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: PrinterPromptText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -626,7 +626,7 @@ GameObject:
   - component: {fileID: 4105976355676333466}
   - component: {fileID: 3783999141713295992}
   - component: {fileID: 6386610266962385573}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: WeaponSelectPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -728,7 +728,7 @@ GameObject:
   - component: {fileID: 307260320680587369}
   - component: {fileID: 5154381990368252156}
   - component: {fileID: 7787862058404954324}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: content (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -803,7 +803,7 @@ GameObject:
   - component: {fileID: 5063160969107340912}
   - component: {fileID: 6723747765458162513}
   - component: {fileID: 2765018591600089863}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: content (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -879,7 +879,7 @@ GameObject:
   - component: {fileID: 3859992575969312622}
   - component: {fileID: 4310610222867838829}
   - component: {fileID: 400061612252607226}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: WeaponPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -983,7 +983,7 @@ GameObject:
   - component: {fileID: 1183588778870717197}
   - component: {fileID: 1906749872818103548}
   - component: {fileID: 3346277235970600977}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: 3DPrinterPrefab
   m_TagString: 3D Printer
   m_Icon: {fileID: 0}
